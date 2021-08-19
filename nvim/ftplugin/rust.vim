@@ -1,0 +1,2 @@
+" Rust filetype
+set matchpairs=(:),{:},[:],<:>

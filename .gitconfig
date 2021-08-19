@@ -1,0 +1,34 @@
+[user]
+	name = Lukas Bjarre
+	email = lukas.bjarre@gmail.com
+	signingkey = <KEY>
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore
+	pager = delta
+[alias]
+	graph = log --oneline --graph --decorate --all
+	merged-branches = ! git branch --merged | gegrep -v '\\* .*|  develop|  master'
+	dmerged = ! git merged-branches | xargs git branch -d
+	st = status
+	co = commit
+	a = add
+	ch = checkout
+	chb = checkout -b
+	pfwl = push --force-with-lease
+	amend = commit --amend --no-edit
+[push]
+	followTags = true
+	default = current
+[commit]
+	gpgsign = true
+[merge]
+	tool = vimdiff
+	ff = false
+[pull]
+	rebase = true
+[delta]
+	syntax-theme = gruvbox-light
+	side-by-side = true
+	navigate = true
+
