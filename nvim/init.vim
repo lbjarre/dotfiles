@@ -52,14 +52,14 @@ syntax on
 
 " Looks & feel
 set background=light
-colorscheme dim
+colorscheme default
 
 " Custom statusline
 lua require('skr.statusline')
 
 " colorcolumns
 set colorcolumn=80,100
-highlight ColorColumn ctermbg=230
+highlight ColorColumn ctermbg=235
 
 " whitespace character diplay
 set showbreak=↪\
