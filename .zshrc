@@ -21,3 +21,5 @@ eval "$(zoxide init zsh)"
 ## fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+## Starship
+eval "$(starship init zsh)"
