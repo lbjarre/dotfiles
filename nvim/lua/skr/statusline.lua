@@ -3,7 +3,7 @@
 
 -- Helper func for creating a highlight group
 local function hlgroup(name, fg, bg)
-    vim.cmd("highlight " .. name .. " ctermfg=" .. fg .. " ctermbg=" .. bg)
+  vim.cmd("highlight " .. name .. " ctermfg=" .. fg .. " ctermbg=" .. bg)
 end
 
 hlgroup("StatusModeNormal", 0, 7)
