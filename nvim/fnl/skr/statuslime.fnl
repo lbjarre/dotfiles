@@ -66,37 +66,27 @@
     (let [m (. (vim.api.nvim_get_mode) :mode)]
      (fmt-mode m)))
 
+(fn fmt-lsp [clients]
+    (if (or (= clients nil)
+            (= (length clients) 0))
+        ""
+        (= (length clients) 1)
+        (. clients 1 :name)
+        (length clients)))
+
 (fn get-lsp []
-    "get and stringify status for active lsp clients"
     (let [clients (vim.lsp.get_active_clients)]
-     (if (or (= clients nil)
-             (= (length clients) 0))
-         ""
-         (= (length clients) 1)
-         (. clients 1 :name)
-         (length clients))))
+     (fmt-lsp clients)))
 
 (fn statusline []
     "string for current statusline"
-    (..
-     ;; Left side
-     ;;   mode
-     (get-mode)
-     (hl-ify hl.main)
-     ;;   current file
-     " %f"
-     ;; Separator
-     "%= "
-     ;; Right side
-     (hl-ify hl.left)
-     ;;   lsp info
-     (get-lsp)
-     ;;   line and col
-     " %l,%c"
-     ;;   percent way through file
-     " %p%% "
-     ;;   filetype
-     vim.bo.filetype
+    (table.concat
+      ;; Left side
+     [(get-mode) (hl-ify hl.main) "%f"
+      ;; Separator
+      "%="
+      ;; Right side
+      (hl-ify hl.left) (get-lsp) "%l,%c" "%p%%" vim.bo.filetype ""]
      " "))
 
 {: statusline}
