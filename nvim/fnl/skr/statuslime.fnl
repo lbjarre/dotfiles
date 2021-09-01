@@ -1,36 +1,37 @@
-(local hlgroup-normal "StatusModeNormal")
-(local hlgroup-insert "StatusModeInsert")
-(local hlgroup-visual "StatusModeVisual")
-(local hlgroup-replace "StatusModeReplace")
-(local hlgroup-main "StatusMain")
-(local hlgroup-left "StatusLeft")
+(local hl
+       {:normal "StatusModeNormal"
+        :insert "StatusModeInsert"
+        :visual "StatusModeVisual"
+        :replace "StatusModeReplace"
+        :main "StatusMain"
+        :left "StatusLeft"})
 
 (let [set-hl (fn [name fg bg]
               (vim.cmd (..
                         "highlight " name
                         " ctermfg=" fg
                         " ctermbg=" bg)))]
-    (set-hl hlgroup-normal 0 7)
-    (set-hl hlgroup-insert 0 4)
-    (set-hl hlgroup-visual 0 11)
-    (set-hl hlgroup-replace 0 1)
-    (set-hl hlgroup-main 0 15)
-    (set-hl hlgroup-left 0 7))
+    (set-hl hl.normal 0 7)
+    (set-hl hl.insert 0 4)
+    (set-hl hl.visual 0 11)
+    (set-hl hl.replace 0 1)
+    (set-hl hl.main 0 15)
+    (set-hl hl.left 0 7))
 
 ;; mapping from short mode names to full names and optional highlight groups
 (local modes-printnames
      ;; normal modes
-    {:n   {:name "normal"             :hl hlgroup-normal}
-     :no  {:name "n·operator pending" :hl hlgroup-normal}
+    {:n   {:name "normal"             :hl hl.normal}
+     :no  {:name "n·operator pending" :hl hl.normal}
      ;; visual modes
-     :v   {:name "visual"             :hl hlgroup-visual}
-     :V   {:name "v·line"             :hl hlgroup-visual}
-     "" {:name "v·block"            :hl hlgroup-visual}
+     :v   {:name "visual"             :hl hl.visual}
+     :V   {:name "v·line"             :hl hl.visual}
+     "" {:name "v·block"            :hl hl.visual}
      ;; insert mode
-     :i   {:name "insert"             :hl hlgroup-insert}
+     :i   {:name "insert"             :hl hl.insert}
      ;; replace modes
-     :R   {:name "replace"            :hl hlgroup-replace}
-     :Rv  {:name "v·replace"          :hl hlgroup-replace}
+     :R   {:name "replace"            :hl hl.replace}
+     :Rv  {:name "v·replace"          :hl hl.replace}
      ;; rest of the modes
      ;; these are all taken from some other plugin, don't really know what they
      ;; all actually do
@@ -50,24 +51,26 @@
     "escape highlight group for status line printing"
     (.. "%#" hl "#"))
 
-(fn get-mode []
-    "read the current mode and output escaped string"
-    (let [mode-raw (. (vim.api.nvim_get_mode) :mode)
-          from-table (. modes-printnames mode-raw)
-          hlgroup-default hlgroup-normal]
+(fn fmt-mode [mode-short]
+    (let [hl-default hl.normal
+          from-table (. modes-printnames mode-short)]
      (match from-table
         ;; name and hl group -> use all
-        {:name name :hl hl} (.. (hl-ify hl) " " name " ")
+        {:name name :hl hl!} (.. (hl-ify hl!) " " name " ")
         ;; just name -> default hl group
-        {:name name}        (.. (hl-ify hlgroup-default) name " ")
+        {:name name} (.. (hl-ify hl-default) " " name " ")
         ;; otherwise -> default hl group and raw mode name
-        _                   (.. (hl-ify hlgroup-default) mode-raw " "))))
+        _ (.. (hl-ify hl-default) " " mode-short " "))))
 
+(fn get-mode []
+    (let [m (. (vim.api.nvim_get_mode) :mode)]
+     (fmt-mode m)))
 
 (fn get-lsp []
     "get and stringify status for active lsp clients"
     (let [clients (vim.lsp.get_active_clients)]
-     (if (or (= clients nil) (= (length clients) 0))
+     (if (or (= clients nil)
+             (= (length clients) 0))
          ""
          (= (length clients) 1)
          (. clients 1 :name)
@@ -78,15 +81,14 @@
     (..
      ;; Left side
      ;;   mode
-     " "
      (get-mode)
-     (hl-ify hlgroup-main)
+     (hl-ify hl.main)
      ;;   current file
      " %f"
      ;; Separator
      "%= "
      ;; Right side
-     (hl-ify hlgroup-left)
+     (hl-ify hl.left)
      ;;   lsp info
      (get-lsp)
      ;;   line and col

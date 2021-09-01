@@ -18,6 +18,7 @@ colorscheme default
 " colorcolumns
 set colorcolumn=80,100
 highlight ColorColumn ctermbg=235
+highlight NormalFloat ctermbg=239
 
 " whitespace character diplay
 set showbreak=↪\
