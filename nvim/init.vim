@@ -15,10 +15,14 @@ lua require('skr')
 set background=dark
 colorscheme default
 
-" colorcolumns
 set colorcolumn=80,100
 highlight ColorColumn ctermbg=235
+
 highlight NormalFloat ctermbg=239
+highlight Pmenu ctermbg=239 ctermfg=15
+
+highlight Comment cterm=italic ctermfg=247
+highlight Constant ctermfg=darkblue
 
 " whitespace character diplay
 set showbreak=↪\

@@ -36,6 +36,8 @@ M.setup = function()
     'gopls',
     'hls',
     'pylsp',
+    'tsserver',
+    'graphql',
   }
   for _, server in ipairs(lsp_servers) do
     lspconfig[server].setup { on_attach = on_attach }

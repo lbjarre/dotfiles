@@ -1,7 +1,12 @@
 # ZSHRC
 
+autoload -Uz compinit
+compinit
+
 ## Export TTY for GPG, needed for the password prompt
 export GPG_TTY=$(tty)
+
+export EDITOR=nvim
 
 ## rust toolchain
 [ -f ~/.cargo/env ] && source ~/.cargo/env
@@ -23,3 +28,13 @@ eval "$(zoxide init zsh)"
 
 ## Starship
 eval "$(starship init zsh)"
+
+## k8s
+if [ $(command -v kubectl) ]; then
+    source <(kubectl completion zsh)
+    alias k=kubectl
+    complete -F __start_kubectl k
+fi
+
+[ $(command -v kubectx) ] && alias kc=kubectx
+

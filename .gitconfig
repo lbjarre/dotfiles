@@ -7,7 +7,7 @@
 	excludesfile = ~/.gitignore
 	pager = delta
 [alias]
-	graph = log --oneline --graph --decorate --all
+	graph = log --graph --all --pretty=format:\"%C(auto)%h %C(auto,bold)%<(60)%s (%C(blue)%an%C(reset), %C(green)%ar%C(reset)) %C(auto)%d%C(reset)\"
 	merged-branches = ! git branch --merged | gegrep -v '\\* .*|  develop|  master'
 	dmerged = ! git merged-branches | xargs git branch -d
 	st = status
