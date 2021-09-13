@@ -5,7 +5,7 @@ local M = {}
 
 -- Custom on_attach function
 local on_attach = function(client)
-    completion.on_attach(client) -- LSP based completions
+    --completion.on_attach(client) -- LSP based completions
     local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
 
     -- Enable inlay hints for rust, thanks TJ!

@@ -69,6 +69,14 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["cmp-buffer"] = {
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/cmp-buffer"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+  },
   ["completion-nvim"] = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/completion-nvim"
@@ -76,6 +84,11 @@ _G.packer_plugins = {
   ["git-messenger.vim"] = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/git-messenger.vim"
+  },
+  ["hotpot.nvim"] = {
+    config = { "\27LJ\2\n&\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\vhotpot\frequire\0" },
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/hotpot.nvim"
   },
   ["indent-guides.nvim"] = {
     loaded = true,
@@ -90,6 +103,7 @@ _G.packer_plugins = {
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/lush.nvim"
   },
   ["nvim-cmp"] = {
+    config = { "\27LJ\2\n1\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\bcmp\frequire\0" },
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/nvim-cmp"
   },
@@ -155,6 +169,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/vim-toml"
   },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+  },
   ["which-key.nvim"] = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/which-key.nvim"
@@ -162,14 +180,22 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18skr.telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
+-- Config for: nvim-cmp
+time([[Config for nvim-cmp]], true)
+try_loadstring("\27LJ\2\n1\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\bcmp\frequire\0", "config", "nvim-cmp")
+time([[Config for nvim-cmp]], false)
 -- Config for: nvim-lspconfig
 time([[Config for nvim-lspconfig]], true)
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fskr.lsp\frequire\0", "config", "nvim-lspconfig")
 time([[Config for nvim-lspconfig]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18skr.telescope\frequire\0", "config", "telescope.nvim")
+time([[Config for telescope.nvim]], false)
+-- Config for: hotpot.nvim
+time([[Config for hotpot.nvim]], true)
+try_loadstring("\27LJ\2\n&\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\vhotpot\frequire\0", "config", "hotpot.nvim")
+time([[Config for hotpot.nvim]], false)
 if should_profile then save_profiles() end
 
 end)

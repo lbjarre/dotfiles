@@ -23,7 +23,14 @@ return require('packer').startup(function()
   use 'nvim-lua/completion-nvim'
 
   -- Completion & snippets
-  use 'hrsh7th/nvim-cmp' -- TODO: configure
+  use {
+    'hrsh7th/nvim-cmp', -- TODO: configure
+    requires = {
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/cmp-buffer",
+    },
+  }
+  use 'hrsh7th/cmp-nvim-lsp'
 
   -- Treesitter
   use {
@@ -59,6 +66,6 @@ return require('packer').startup(function()
   use 'tpope/vim-commentary'
 
   -- Lang specific plugins
-  use 'cespare/vim-toml'
+  use { 'cespare/vim-toml', branch = "main" }
   use 'b4b4r07/vim-hcl'
 end)

@@ -88,6 +88,6 @@ augroup end
 " LSP setup
 " Some settings to make the autocomplete more sensible (don't insert things
 " willy nilly without me pressing any buttons etc)
-set completeopt=menuone,noinsert,noselect
+set completeopt=menu,menuone,noinsert,noselect
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
