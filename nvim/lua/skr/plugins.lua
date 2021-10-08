@@ -20,7 +20,6 @@ return require('packer').startup(function()
     config = function() require('skr.lsp').setup() end,
   }
   use 'nvim-lua/lsp_extensions.nvim'
-  use 'nvim-lua/completion-nvim'
 
   -- Completion & snippets
   use {
@@ -30,8 +29,25 @@ return require('packer').startup(function()
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp",
+      'saadparwaiz1/cmp_luasnip',
     },
+    config = function(args)
+      R('cmp').setup {
+        snippet = {
+          expand = function(args)
+            R('luasnip').lsp_expand(args.body)
+          end,
+        },
+        sources = {
+          { name = 'buffer' },
+          { name = 'path' },
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        },
+      }
+    end
   }
+  use 'L3MON4D3/LuaSnip'
 
   -- Treesitter
   use {
@@ -41,6 +57,7 @@ return require('packer').startup(function()
 
   -- Debugging
   use 'mfussenegger/nvim-dap' -- TODO: configure
+  use 'rcarriga/nvim-dap-ui'
 
   -- Telescope
   use {

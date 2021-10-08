@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  LuaSnip = {
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/LuaSnip"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/cmp-buffer"
@@ -77,9 +81,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
   },
-  ["completion-nvim"] = {
+  ["cmp-path"] = {
     loaded = true,
-    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/completion-nvim"
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/cmp-path"
+  },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/cmp_luasnip"
   },
   ["git-messenger.vim"] = {
     loaded = true,
@@ -103,13 +111,17 @@ _G.packer_plugins = {
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/lush.nvim"
   },
   ["nvim-cmp"] = {
-    config = { "\27LJ\2\n1\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\bcmp\frequire\0" },
+    config = { "\27LJ\2\n=\0\1\4\0\4\0\a6\1\0\0'\3\1\0B\1\2\0029\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\15lsp_expand\fluasnip\6RÂ\1\1\1\6\0\r\0\0216\1\0\0'\3\1\0B\1\2\0029\1\2\0015\3\6\0005\4\4\0003\5\3\0=\5\5\4=\4\a\0034\4\5\0005\5\b\0>\5\1\0045\5\t\0>\5\2\0045\5\n\0>\5\3\0045\5\v\0>\5\4\4=\4\f\3B\1\2\1K\0\1\0\fsources\1\0\1\tname\fluasnip\1\0\1\tname\rnvim_lsp\1\0\1\tname\tpath\1\0\1\tname\vbuffer\fsnippet\1\0\0\vexpand\1\0\0\0\nsetup\bcmp\6R\0" },
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/nvim-cmp"
   },
   ["nvim-dap"] = {
     loaded = true,
     path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/Users/lubj/.local/share/nvim/site/pack/packer/start/nvim-dap-ui"
   },
   ["nvim-lspconfig"] = {
     config = { "\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fskr.lsp\frequire\0" },
@@ -180,22 +192,22 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-cmp
-time([[Config for nvim-cmp]], true)
-try_loadstring("\27LJ\2\n1\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\bcmp\frequire\0", "config", "nvim-cmp")
-time([[Config for nvim-cmp]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fskr.lsp\frequire\0", "config", "nvim-lspconfig")
-time([[Config for nvim-lspconfig]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\18skr.telescope\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fskr.lsp\frequire\0", "config", "nvim-lspconfig")
+time([[Config for nvim-lspconfig]], false)
 -- Config for: hotpot.nvim
 time([[Config for hotpot.nvim]], true)
 try_loadstring("\27LJ\2\n&\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\vhotpot\frequire\0", "config", "hotpot.nvim")
 time([[Config for hotpot.nvim]], false)
+-- Config for: nvim-cmp
+time([[Config for nvim-cmp]], true)
+try_loadstring("\27LJ\2\n=\0\1\4\0\4\0\a6\1\0\0'\3\1\0B\1\2\0029\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\15lsp_expand\fluasnip\6RÂ\1\1\1\6\0\r\0\0216\1\0\0'\3\1\0B\1\2\0029\1\2\0015\3\6\0005\4\4\0003\5\3\0=\5\5\4=\4\a\0034\4\5\0005\5\b\0>\5\1\0045\5\t\0>\5\2\0045\5\n\0>\5\3\0045\5\v\0>\5\4\4=\4\f\3B\1\2\1K\0\1\0\fsources\1\0\1\tname\fluasnip\1\0\1\tname\rnvim_lsp\1\0\1\tname\tpath\1\0\1\tname\vbuffer\fsnippet\1\0\0\vexpand\1\0\0\0\nsetup\bcmp\6R\0", "config", "nvim-cmp")
+time([[Config for nvim-cmp]], false)
 if should_profile then save_profiles() end
 
 end)

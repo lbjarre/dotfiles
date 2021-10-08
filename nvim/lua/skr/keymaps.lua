@@ -16,6 +16,13 @@ nmap { 'K',          "<cmd>lua vim.lsp.buf.hover()<cr>" }
 nmap { '<leader>la', "<cmd>lua require('skr.telescope').lsp_code_actions()<cr>" }
 nmap { 'gd',         "<cmd>lua require('skr.telescope').lsp_def()<cr>" }
 nmap { 'gr',         "<cmd>lua require('skr.telescope').lsp_ref()<cr>" }
+nmap { 'gi',         "<cmd>lua require('skr.telescope').lsp_impl()<cr>"}
 nmap { '<leader>ld', "<cmd>lua require('skr.telescope').lsp_ws_diagnostics()<cr>" }
 nmap { '<leader>ls', "<cmd>lua require('skr.telescope').lsp_doc_symbols()<cr>" }
 
+-- DAP
+
+nmap { '<leader>db', "<cmd>lua require('dap').toggle_breakpoint()<cr>"}
+nmap { '<leader>dc', "<cmd>lua require('dap').continue()<cr>"}
+nmap { '<leader>ds', "<cmd>lua require('dap').step_over()<cr>"}
+nmap { '<leader>du', "<cmd>lua require('dapui').toggle()<cr>"}

@@ -56,6 +56,10 @@ M.lsp_ref = function()
   builtin.lsp_references()
 end
 
+M.lsp_impl = function()
+  builtin.lsp_implementations()
+end
+
 M.lsp_ws_diagnostics = function()
   builtin.lsp_workspace_diagnostics()
 end

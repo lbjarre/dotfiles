@@ -11,29 +11,38 @@ function R(name)
 end
 
 -- plugins
-R('skr.plugins')
+require('skr.plugins')
 
 -- keymaps
-R('skr.keymaps')
-
-R('cmp').setup {
-  sources = {
-      { name = 'buffer' },
-      { name = 'path' },
-      { name = 'nvim_lsp' },
-  },
-}
+require('skr.keymaps')
 
 -- other required setup
+require('cmp').setup {
+  snippet = {
+    expand = function(args)
+      R('luasnip').lsp_expand(args.body)
+    end,
+  },
+  sources = {
+    { name = 'buffer' },
+    { name = 'path' },
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
 require('skr.lsp').setup()
 require('skr.telescope').setup()
+require('skr.dap')
+-- R('skr.snippets').setup()
+-- R('indent_guides').setup()
+R('which-key').setup()
+-- R('skr.color')
+
 require('nvim-treesitter.configs').setup {
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+  },
 }
--- require('skr.dap')
-require('indent_guides').setup()
-require('which-key').setup()
-require('skr.color')
 
 -- custom statusline
 vim.o.statusline = [[%!luaeval("require('skr.statuslime').statusline()")]]

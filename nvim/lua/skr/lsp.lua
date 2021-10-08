@@ -1,11 +1,9 @@
 local lspconfig = require('lspconfig')
-local completion = require('completion')
 
 local M = {}
 
 -- Custom on_attach function
 local on_attach = function(client)
-    --completion.on_attach(client) -- LSP based completions
     local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
 
     -- Enable inlay hints for rust, thanks TJ!
@@ -38,6 +36,7 @@ M.setup = function()
     'pylsp',
     'tsserver',
     'graphql',
+    'terraformls',
   }
   for _, server in ipairs(lsp_servers) do
     lspconfig[server].setup { on_attach = on_attach }
