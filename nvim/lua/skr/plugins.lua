@@ -20,6 +20,7 @@ return require('packer').startup(function()
     config = function() require('skr.lsp').setup() end,
   }
   use 'nvim-lua/lsp_extensions.nvim'
+  use 'folke/trouble.nvim'
 
   -- Completion & snippets
   use {
@@ -70,6 +71,7 @@ return require('packer').startup(function()
   -- Look & feel
   use 'rktjmp/lush.nvim' -- TODO: configure
   use 'simrat39/symbols-outline.nvim' -- TODO: configure
+  use { 'kyazdani42/nvim-web-devicons', config = function() require('nvim-web-devicons').setup {} end }
 
   -- Other stuff
   use 'glepnir/indent-guides.nvim'
