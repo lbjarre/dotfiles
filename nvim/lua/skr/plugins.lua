@@ -71,7 +71,16 @@ return require('packer').startup(function()
   -- Look & feel
   use 'rktjmp/lush.nvim' -- TODO: configure
   use 'simrat39/symbols-outline.nvim' -- TODO: configure
-  use { 'kyazdani42/nvim-web-devicons', config = function() require('nvim-web-devicons').setup {} end }
+  use {
+    'kyazdani42/nvim-web-devicons',
+    config = function() require('nvim-web-devicons').setup {} end,
+  }
+
+  -- Integrations with external services
+  use {
+    'pwntester/octo.nvim',
+    config = function() require('octo').setup() end,
+  }
 
   -- Other stuff
   use 'glepnir/indent-guides.nvim'

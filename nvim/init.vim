@@ -24,13 +24,6 @@ highlight Pmenu ctermbg=239 ctermfg=15
 highlight Comment cterm=italic ctermfg=247
 highlight Constant ctermfg=darkblue
 
-" whitespace character diplay
-set showbreak=↪\
-set listchars=tab:\ \ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-" Good alternative setting for tab listchar: "tab:→\ "
-" I think it adds a bit too much noise in tab-indented languages though
-set list
-
 " Startify
 let g:startify_lists = [
     \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
@@ -44,35 +37,10 @@ let g:startify_bookmarks = [
     \ ]
 let g:startify_change_to_dir=0 " don't cd into the files dir
 
-" Swapfiles are stupid
-set noswapfile
-set nobackup
-set nowritebackup
-
-set hidden
-set showcmd
-set autoindent
-set nostartofline
-
-" Line numbers: relative numbers, but show absolute number on the current line
-set number
-set relativenumber
-
-set mouse=a
-set noshowmode
-
 " Default tab setup
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-
-" Sensible splits
-set splitright
-set splitbelow
-
-" timeout lens for sequences
-set timeoutlen=500
-set ttimeoutlen=10
 
 " leader-yank, yanks into the system clipboard
 nnoremap <leader>y "*y
@@ -88,6 +56,6 @@ augroup end
 " LSP setup
 " Some settings to make the autocomplete more sensible (don't insert things
 " willy nilly without me pressing any buttons etc)
-set completeopt=menu,menuone,noinsert,noselect
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+"set completeopt=menu,menuone,noinsert,noselect
+"let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
