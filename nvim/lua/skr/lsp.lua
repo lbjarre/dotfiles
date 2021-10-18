@@ -16,7 +16,7 @@ local on_attach = function(client)
     end
 
     -- Enable autoformatting on some langs
-    if vim.tbl_contains({'go', 'rust', 'haskell'}, filetype) then
+    if vim.tbl_contains({'go', 'rust', 'haskell', 'typescript'}, filetype) then
         vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
     end
 end
