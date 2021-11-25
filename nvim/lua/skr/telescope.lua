@@ -25,6 +25,16 @@ M.setup = function()
   }
 end
 
+M.files = function()
+  opts = {
+    hidden = true,
+  }
+  local ok = pcall(builtin.git_files, opts)
+  if not ok then
+    builtin.find_files(opts)
+  end
+end
+
 M.search_buf = function()
   builtin.current_buffer_fuzzy_find(themes.get_ivy {
     layout_config = { prompt_position = 'top' },

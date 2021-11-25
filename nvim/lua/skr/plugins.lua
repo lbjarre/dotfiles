@@ -7,7 +7,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup(function()
-
   -- hotpot, for fennel goodness
   use {
     'rktjmp/hotpot.nvim',
@@ -24,7 +23,7 @@ return require('packer').startup(function()
 
   -- Completion & snippets
   use {
-    'hrsh7th/nvim-cmp', -- TODO: configure
+    'hrsh7th/nvim-cmp',
     requires = {
       "hrsh7th/vim-vsnip",
       "hrsh7th/cmp-buffer",
@@ -32,8 +31,8 @@ return require('packer').startup(function()
       "hrsh7th/cmp-nvim-lsp",
       'saadparwaiz1/cmp_luasnip',
     },
-    config = function(args)
-      R('cmp').setup {
+    config = function()
+      require('cmp').setup {
         snippet = {
           expand = function(args)
             R('luasnip').lsp_expand(args.body)
@@ -54,6 +53,15 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
+    requires = {
+      'windwp/nvim-ts-autotag',
+    },
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        highlight = { enable = true },
+        autotag = { enable = true },
+      }
+    end,
   }
 
   -- Debugging

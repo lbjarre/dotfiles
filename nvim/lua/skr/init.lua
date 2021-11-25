@@ -84,9 +84,9 @@ R('which-key').setup()
 -- R('skr.color')
 
 require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true,
-  },
+  highlight = { enable = true },
+  autotag = { enable = true },
 }
 
+require('nvim-ts-autotag').setup()
 

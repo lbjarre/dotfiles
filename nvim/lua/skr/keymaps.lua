@@ -3,7 +3,7 @@ local nmap = function(key)
 end
 
 -- Telescope
-nmap { '<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>" }
+nmap { '<leader>ff', "<cmd>lua require('skr.telescope').files()<cr>" }
 nmap { '<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>" }
 nmap { '<leader>/',  "<cmd>lua require('skr.telescope').search_buf()<cr>" }
 nmap { '<leader>fs', "<cmd>lua require('skr.telescope').grep_string()<CR>" }

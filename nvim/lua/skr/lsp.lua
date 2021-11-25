@@ -1,6 +1,23 @@
 local lspconfig = require('lspconfig')
 
-local M = {}
+local servers = {
+  'rust_analyzer',
+  'gopls',
+  'hls',
+  'pylsp',
+  'tsserver',
+  'graphql',
+  'terraformls',
+  'cssls',
+}
+
+local ft_autofmt = {
+  'go',
+  'rust',
+  'haskell',
+  'typescript',
+  'typescripsreact',
+}
 
 -- Custom on_attach function
 local on_attach = function(client)
@@ -16,10 +33,12 @@ local on_attach = function(client)
     end
 
     -- Enable autoformatting on some langs
-    if vim.tbl_contains({'go', 'rust', 'haskell', 'typescript'}, filetype) then
+    if vim.tbl_contains(ft_autofmt, filetype) then
         vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
     end
 end
+
+local M = {}
 
 M.setup = function()
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -29,16 +48,7 @@ M.setup = function()
   )
 
   -- Setup and attach all servers
-  local lsp_servers = {
-    'rust_analyzer',
-    'gopls',
-    'hls',
-    'pylsp',
-    'tsserver',
-    'graphql',
-    'terraformls',
-  }
-  for _, server in ipairs(lsp_servers) do
+  for _, server in ipairs(servers) do
     lspconfig[server].setup { on_attach = on_attach }
   end
 end
