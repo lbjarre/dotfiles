@@ -12,6 +12,7 @@ end
 
 -- plugins
 require('skr.plugins')
+require('hotpot')
 
 -- various options
 
@@ -58,6 +59,7 @@ vim.o.statusline = [[%!luaeval("require('skr.statuslime').statusline()")]]
 
 -- keymaps
 require('skr.keymaps')
+require('skr.keymaps_fnl')
 
 -- other required setup
 -- TODO: I have tried to add all this to packer options like config, but does
