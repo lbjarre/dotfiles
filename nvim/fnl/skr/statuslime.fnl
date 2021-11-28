@@ -1,22 +1,10 @@
 (local hl
-       {:normal "StatusModeNormal"
-        :insert "StatusModeInsert"
-        :visual "StatusModeVisual"
-        :replace "StatusModeReplace"
-        :main "StatusMain"
-        :left "StatusLeft"})
-
-(let [set-hl (fn [name fg bg]
-              (vim.cmd (..
-                        "highlight " name
-                        " ctermfg=" fg
-                        " ctermbg=" bg)))]
-    (set-hl hl.normal 0 7)
-    (set-hl hl.insert 0 4)
-    (set-hl hl.visual 0 11)
-    (set-hl hl.replace 0 1)
-    (set-hl hl.main 0 15)
-    (set-hl hl.left 0 7))
+       {:normal "StatusLineModeNormal"
+        :insert "StatusLineModeInsert"
+        :visual "StatusLineModeVisual"
+        :replace "StatusLineModeReplace"
+        :main "StatusLine"
+        :left "StatusLineAlt"})
 
 ;; mapping from short mode names to full names and optional highlight groups
 (local modes-printnames

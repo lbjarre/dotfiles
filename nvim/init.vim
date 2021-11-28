@@ -2,7 +2,7 @@
 " A lot of this stuff is things that I don't fully understand, it's so easy to
 " just copy-n-paste stuff off the internet.
 "
-let mapleader = "\<Space>"
+let mapleader = "\<space>"
 
 let $GIT_TERMINAL_PROMPTS=1
 
@@ -13,16 +13,9 @@ lua require('skr')
 
 " Looks & feel
 set background=dark
-colorscheme default
-
+set termguicolors
+colorscheme skr
 set colorcolumn=80,100
-highlight ColorColumn ctermbg=235
-
-highlight NormalFloat ctermbg=239
-highlight Pmenu ctermbg=239 ctermfg=15
-
-highlight Comment cterm=italic ctermfg=247
-highlight Constant ctermfg=darkblue
 
 " Startify
 let g:startify_lists = [

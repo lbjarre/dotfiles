@@ -55,17 +55,19 @@ return require('packer').startup(function()
     run = ':TSUpdate',
     requires = {
       'windwp/nvim-ts-autotag',
+      'nvim-treesitter/playground',
     },
     config = function()
       require('nvim-treesitter.configs').setup {
         highlight = { enable = true },
         autotag = { enable = true },
+        playground = { enable = true },
       }
     end,
   }
 
   -- Debugging
-  use 'mfussenegger/nvim-dap' -- TODO: configure
+  use 'mfussenegger/nvim-dap'
   use 'rcarriga/nvim-dap-ui'
 
   -- Telescope
@@ -77,7 +79,7 @@ return require('packer').startup(function()
   use 'nvim-telescope/telescope-fzy-native.nvim'
 
   -- Look & feel
-  use 'rktjmp/lush.nvim' -- TODO: configure
+  use 'rktjmp/lush.nvim'
   use 'simrat39/symbols-outline.nvim' -- TODO: configure
   use {
     'kyazdani42/nvim-web-devicons',
@@ -91,7 +93,6 @@ return require('packer').startup(function()
   }
 
   -- Other stuff
-  use 'glepnir/indent-guides.nvim'
   use 'folke/which-key.nvim'
   use 'rhysd/git-messenger.vim'
   use 'mhinz/vim-startify'
