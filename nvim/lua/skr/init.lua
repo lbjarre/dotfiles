@@ -5,66 +5,93 @@ function P(x)
   return x
 end
 
+-- R forcefully reloads a lua module.
 function R(name)
+  -- default to this init module if name is missing.
+  if not name then name = 'skr' end
+
   require('plenary.reload').reload_module(name)
   return require(name)
 end
 
 -- plugins
-require('skr.plugins')
-require('hotpot')
+R('skr.plugins')
+R('hotpot')
 
 -- various options
+local opt = vim.opt
+
+-- looks
+opt.background = 'dark'
+opt.termguicolors = true
+vim.cmd [[ colorscheme skr ]]
+opt.colorcolumn = { 80, 100 }
+
+vim.g.startify_lists = {
+  { type = "dir", header = { '  MRU ' .. vim.fn.getcwd() } },
+}
+vim.g.startify_change_to_dir = 0
 
 -- whitespace chars
-vim.o.showbreak = "↪"
-vim.o.listchars = "tab:  ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨"
--- Good alternative setting for tab listchar: "tab:→\ "
--- I think it adds a bit too much noise in tab-indented languages though
+opt.showbreak = '↪'
+opt.listchars = {
+  tab = '→ ',
+  eol = '↲',
+  nbsp = '␣',
+  trail = '•',
+  extends = '⟩',
+  precedes = '⟨',
+}
+opt.list = true
 
 -- idk these are just copy pasted over
-vim.o.swapfile = false
-vim.o.backup = false
-vim.o.writebackup = false
+opt.swapfile = false
+opt.backup = false
+opt.writebackup = false
 
-vim.o.hidden = true
-vim.o.showcmd = true
-vim.o.autoindent = true
-vim.o.startofline = false
+opt.hidden = true
+opt.showcmd = true
+opt.autoindent = true
+opt.startofline = false
+
+-- default tab setup
+opt.shiftwidth = 4
+opt.softtabstop = 4
+opt.expandtab = true
 
 -- allow mouse usage, even though it brings shame to my family name
-vim.o.mouse = 'a'
+opt.mouse = 'a'
 
 -- left column
-vim.o.number = true
-vim.o.relativenumber = true
-vim.o.signcolumn = 'yes'
+opt.number = true
+opt.relativenumber = true
+opt.signcolumn = 'yes'
 
 -- sensible splits
-vim.o.splitright = true
-vim.o.splitbelow = true
+opt.splitright = true
+opt.splitbelow = true
 
 -- timeouts for sequences
-vim.o.timeoutlen = 500
-vim.o.ttimeoutlen = 10
+opt.timeoutlen = 500
+opt.ttimeoutlen = 10
 
 -- visual stuff: don't show the mode in the command line since I have it in the statusline
-vim.o.showmode = false
+opt.showmode = false
 
 -- autocomplete options, don't allow for willy nilly inserts without me telling it to
-vim.o.completeopt = 'menu,menuone,noinsert'
+opt.completeopt = 'menu,menuone,noinsert'
 
 -- custom statusline
-vim.o.statusline = [[%!luaeval("require('skr.statuslime').statusline()")]]
+opt.statusline = [[%!luaeval("R('skr.statuslime').statusline()")]]
 
 -- keymaps
-require('skr.keymaps')
-require('skr.keymaps_fnl')
+R('skr.keymaps')
+R('skr.keymaps_fnl')
 
 -- other required setup
 -- TODO: I have tried to add all this to packer options like config, but does
 --       not work? Need to understand what packer is doing I guess.
-require('cmp').setup {
+R('cmp').setup {
   snippet = {
     expand = function(args)
       R('luasnip').lsp_expand(args.body)
@@ -77,18 +104,18 @@ require('cmp').setup {
     { name = 'luasnip' },
   },
 }
-require('skr.lsp').setup()
-require('skr.telescope').setup()
-require('skr.dap')
+R('skr.lsp').setup()
+R('skr.telescope').setup()
+R('skr.dap')
 -- R('skr.snippets').setup()
 -- R('indent_guides').setup()
 R('which-key').setup()
 -- R('skr.color')
 
-require('nvim-treesitter.configs').setup {
+R('nvim-treesitter.configs').setup {
   highlight = { enable = true },
   autotag = { enable = true },
 }
 
-require('nvim-ts-autotag').setup()
+R('nvim-ts-autotag').setup()
 

@@ -18,7 +18,7 @@
   in this module to get the mapping to work."
   (import-tbl path (require path)))
 
-(fn map [key cmd]
+(fn map [mode key cmd]
   "Set a keymap. Hardcoded to nnoremap and with silent=true atm."
   (let [cmd-esc (match (type cmd)
                   ;; strings just pass through
@@ -29,8 +29,14 @@
                            (.. "<cmd>lua require('" path "')." name "()<cr>" )
                            _ nil))]
     (vim.api.nvim_set_keymap
-      :n key cmd-esc
+      mode key cmd-esc
       {:noremap true :silent true})))
+
+(fn nmap [key cmd]
+  (map :n key cmd))
+
+(fn vmap [key cmd]
+  (map :v key cmd))
 
 (local skr-tlscp (import :skr.telescope))
 (local tlscp     (import :telescope.builtin))
@@ -39,27 +45,33 @@
 (local dap       (import :dap))
 (local dapui     (import :dapui))
 
-;; General Telescope stuff
-(map :<leader>ff skr-tlscp.files)
-(map :<leader>fg tlscp.live_grep)
-(map "<leader>/" skr-tlscp.search_buf)
-(map :<leader>fs skr-tlscp.grep_string)
-(map :<leader>fl skr-tlscp.lsp_workspace_symbols)
+;; Clipboard yank/pasting
+(nmap :<leader>y "\"*y")
+(vmap :<leader>y "\"*y")
+(nmap :<leader>p "\"*p")
+(nmap :<leader>P "\"*P")
+
+;; Telescope
+(nmap :<leader>ff skr-tlscp.files)
+(nmap :<leader>fg tlscp.live_grep)
+(nmap "<leader>/" skr-tlscp.search_buf)
+(nmap :<leader>fs skr-tlscp.grep_string)
+(nmap :<leader>fl skr-tlscp.lsp_workspace_symbols)
 
 ;; LSP
-(map :dn         lsp-diag.goto_next)
-(map :dp         lsp-diag.goto_prev)
-(map :K          lsp-buf.hover)
-(map :<leader>la skr-tlscp.lsp_code_actions)
-(map :gd         skr-tlscp.lsp_def)
-(map :gr         skr-tlscp.lsp_ref)
-(map :gi         skr-tlscp.lsp_impl)
-(map :<leader>ld skr-tlscp.lsp_ws_diagnostics)
-(map :<leader>ls skr-tlscp.lsp_doc_symbols)
+(nmap :dn         lsp-diag.goto_next)
+(nmap :dp         lsp-diag.goto_prev)
+(nmap :K          lsp-buf.hover)
+(nmap :<leader>la skr-tlscp.lsp_code_actions)
+(nmap :gd         skr-tlscp.lsp_def)
+(nmap :gr         skr-tlscp.lsp_ref)
+(nmap :gi         skr-tlscp.lsp_impl)
+(nmap :<leader>ld skr-tlscp.lsp_ws_diagnostics)
+(nmap :<leader>ls skr-tlscp.lsp_doc_symbols)
 
 ;; DAP
-(map :<leader>db dap.toggle_breakpoint)
-(map :<leader>dc dap.continue)
-(map :<leader>ds dap.step_over)
-(map :<leader>du dapui.toggle)
+(nmap :<leader>db dap.toggle_breakpoint)
+(nmap :<leader>dc dap.continue)
+(nmap :<leader>ds dap.step_over)
+(nmap :<leader>du dapui.toggle)
 
