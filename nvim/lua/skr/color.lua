@@ -1,55 +1,99 @@
 local lush = require('lush')
 local hsl = lush.hsl
 
-local bg_dark = hsl(210, 0, 15)
-local grey = hsl(210, 0, 30)
-local white = hsl(210, 0, 70)
+local bw = {
+  dark = hsl(210, 0, 15),
+  grey = hsl(210, 0, 30),
+  lightgrey = hsl(210, 0, 45),
+  light = hsl(210, 0, 70),
+  bright = hsl(210, 0, 85),
+}
 
-local main = hsl(210, 50, 60)
-local accent = main.rotate(-60).darken(30)
+local blue = {
+  light = hsl(210, 50, 60),
+  mid = hsl(210, 50, 35),
+  dark = hsl(210, 50, 20),
+}
 
-local red = hsl(360, 70, 20)
-local yellow = main.rotate(190).darken(25)
+local green = {
+  light = hsl(150, 50, 50),
+  mid = hsl(150, 50, 35),
+  dark = hsl(150, 50, 15),
+}
+
+local red = {
+  light = hsl(360, 55, 60),
+  mid = hsl(360, 55, 35),
+  dark = hsl(360, 55, 20),
+}
+
+local yellow = {
+  light = hsl(40, 50, 50),
+  mid = hsl(40, 50, 45),
+  dark = hsl(40, 50, 35),
+}
+
+local main = blue
+local accent = green
+
+local italic = 'italic'
+local bold = 'bold'
+local reverse = 'reverse'
 
 return lush(function()
   return {
     -- Main text elements
-    Normal     { fg = white },
-    Comment    { fg = grey.lighten(15), gui = "italic" }, 
-    Statement  { fg = main, gui = "italic" },
-    Operator   { fg = main },
-    Constant   { fg = accent },
-    Special    { fg = grey.lighten(20) },
-    Identifier { fg = white },
-    SignColumn { Normal, bg = bg_dark },
-    Type       { fg = accent, gui = "bold" },
-    PreProc    { fg = main.darken(30) },
-    Title      { fg = main, gui = "bold" },
-    Directory  { Title, gui = "" },
+    Normal     { fg = bw.light },
+    Comment    { fg = bw.lightgrey, gui = italic }, 
+    Statement  { fg = main.light, gui = italic },
+    Operator   { fg = main.light },
+    Constant   { fg = accent.mid },
+    String     { Constant },
+    Special    { fg = bw.lightgrey },
+    Identifier { fg = bw.light },
+    SignColumn { Normal, bg = bw.dark },
+    Type       { Constant, gui = bold },
+    PreProc    { fg = main.mid, gui = italic },
+    Title      { fg = main.light, gui = bold },
+    Directory  { Title, gui = '' },
+    SpecialKey { fg = main.light.lighten(40) },
+    MatchParen { bg = main.dark },
+
+    -- Treesitter elements
+    TSFuncBuiltin { fg = main.mid, gui = italic },
 
     -- Backgrounds
-    ColorColumn { Normal, bg = bg_dark },
-    Pmenu       { Normal, bg = grey.darken(20) },
-    PmenuSel    { Pmenu,  bg = Pmenu.bg.lighten(40), fg = Pmenu.fg.darken(70) },
-    Visual      { Normal, bg = grey.darken(20) },
+    ColorColumn { Normal, bg = bw.dark },
+    Pmenu       { Normal, bg = bw.grey.darken(20) },
+    PmenuSel    { Pmenu,  bg = bw.light, fg = bw.dark },
+    Visual      { gui = reverse },
+    VertSplit   { bg = bw.dark, fg = bw.grey },
+
+    -- Diffs
+    DiffAdd    { bg = green.mid,  fg = bw.bright },
+    DiffChange { bg = yellow.mid, fg = bw.bright },
+    DiffDelete { bg = red.mid,    fg = bw.bright },
+    DiffText   { bg = bw.grey,    fg = bw.bright },
 
     -- Others
-    LineNr       { fg = grey },
-    CursorLineNr { fg = grey.lighten(20) },
-    Search       { bg = grey.saturate(10) },
+    LineNr       { fg = bw.grey },
+    CursorLineNr { fg = bw.grey.lighten(20) },
+    Search       { bg = bw.grey.saturate(10) },
     WildMenu     { Search },
     NonText      { LineNr, fg = LineNr.fg.darken(30) },
     Whitespace   { LineNr, fg = LineNr.fg.darken(30) },
-    Error        { bg = red },
+    Error        { bg = red.dark },
     ErrorMsg     { Error },
-    Todo         { bg = yellow, fg = Normal.fg.lighten(50) },
+    WarningMsg   { Error },
+    Todo         { bg = yellow.dark, fg = Normal.fg.lighten(50) },
 
     -- Statusline
-    StatusLine            { Normal, bg = grey.darken(40) },
-    StatusLineAlt         { Normal, bg = grey },
+    StatusLine            { Normal, bg = bw.grey.darken(40) },
+    StatusLineNC          { fg = StatusLine.bg, bg = StatusLine.bg.darken(20) },
+    StatusLineAlt         { Normal, bg = bw.grey, fg = bw.light },
     StatusLineModeNormal  { StatusLineAlt },
-    StatusLineModeInsert  { Normal, bg = main.darken(60) },
-    StatusLineModeVisual  { Normal, bg = yellow, fg = Normal.fg.lighten(50) },
-    StatusLineModeReplace { Normal, bg = red },
+    StatusLineModeInsert  { Normal, bg = blue.dark, fg = bw.light },
+    StatusLineModeVisual  { Normal, bg = yellow.dark, fg = bw.bright },
+    StatusLineModeReplace { Normal, bg = red.dark, fg = bw.light },
   }
 end)

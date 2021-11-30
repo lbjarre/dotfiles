@@ -99,10 +99,12 @@
       ;; separator
      [{:s "%="}]
       ;; right side
-     [{:s (get-lsp) :hl hl.alt}
-      {:s "%l,%c"}
-      {:s "%p%%"}
-      {:s vim.bo.filetype}
+     [{:s "" :hl hl.alt}
+      (let [lsp (get-lsp)]
+        {:s (when (not= lsp "")
+              (.. "lsp:" lsp))})
+      {:s (.. "pos:" "[%l:%c:%p%%]")}
+      {:s (.. "ft:" vim.bo.filetype)}
       {:s ""}]]))
   (table.concat segments " "))
 

@@ -26,7 +26,7 @@
                   ;; tables -> check if it is an import table
                   :table (match cmd
                            {: path : name : value}
-                           (.. "<cmd>lua require('" path "')." name "()<cr>" )
+                           (.. "<cmd>lua require('" path "')." name "()<cr>")
                            _ nil))]
     (vim.api.nvim_set_keymap
       mode key cmd-esc

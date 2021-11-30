@@ -27,6 +27,8 @@ opt.termguicolors = true
 vim.cmd [[ colorscheme skr ]]
 opt.colorcolumn = { 80, 100 }
 
+-- startify
+-- todo: how difficult can it be to rewrite this myself?
 vim.g.startify_lists = {
   { type = "dir", header = { '  MRU ' .. vim.fn.getcwd() } },
 }
@@ -86,7 +88,6 @@ opt.statusline = [[%!luaeval("R('skr.statuslime').statusline()")]]
 
 -- keymaps
 R('skr.keymaps')
-R('skr.keymaps_fnl')
 
 -- other required setup
 -- TODO: I have tried to add all this to packer options like config, but does

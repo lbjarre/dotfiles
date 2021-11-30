@@ -3,6 +3,9 @@ local builtin = require('telescope.builtin')
 local themes = require('telescope.themes')
 local previewers = require('telescope.previewers')
 
+local opt_timeout = { timeout = 3000 }
+local merge = function(...) return vim.tbl_extend('force', ...) end
+
 local M = {}
 
 M.setup = function()
@@ -49,33 +52,33 @@ M.grep_string = function()
 end
 
 M.lsp_workspace_symbols = function()
-  builtin.lsp_workspace_symbols {
-    query = vim.fn.input("search: "),
-  }
+  local opt = merge({ query = vim.fn.input('search: ') }, opt_timeout)
+  builtin.lsp_workspace_symbols(opt)
 end
 
 M.lsp_code_actions = function()
-  builtin.lsp_code_actions(themes.get_dropdown())
+  builtin.lsp_code_actions(themes.get_dropdown(opt_timeout))
 end
 
+
 M.lsp_def = function()
-  builtin.lsp_definitions()
+  builtin.lsp_definitions(opt_timeout)
 end
 
 M.lsp_ref = function()
-  builtin.lsp_references()
+  builtin.lsp_references(opt_timeout)
 end
 
 M.lsp_impl = function()
-  builtin.lsp_implementations()
+  builtin.lsp_implementations(opt_timeout)
 end
 
 M.lsp_ws_diagnostics = function()
-  builtin.lsp_workspace_diagnostics()
+  builtin.lsp_workspace_diagnostics(opt_timeout)
 end
 
 M.lsp_doc_symbols = function()
-  builtin.lsp_document_symbols()
+  builtin.lsp_document_symbols(opt_timeout)
 end
 
 return M

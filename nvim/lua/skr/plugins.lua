@@ -19,6 +19,7 @@ return require('packer').startup(function()
     config = function() require('skr.lsp').setup() end,
   }
   use 'nvim-lua/lsp_extensions.nvim'
+  use 'nvim-lua/lsp-status.nvim'
   use 'folke/trouble.nvim'
 
   -- Completion & snippets
