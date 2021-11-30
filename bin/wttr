@@ -1,0 +1,60 @@
+#!/bin/sh
+# Get the current weather from wttr.in, with some caching
+
+# cache location
+CACHE_FILE=${WTTR_CACHE:-"${HOME}/.cache/wttr/cached"}
+# cache ttl in seconds
+CACHE_TTL=${WTTR_CACHE_TTL:-300}
+
+debug() {
+    # set the WTTR_DEBUG env var to print debug logs
+    [ ${WTTR_DEBUG} ] && echo "$@" >&2
+}
+
+debug "cache file: ${CACHE_FILE}, cache ttl: ${CACHE_TTL}"
+
+# curl required
+if [ ! $(command -v curl) ]; then
+    echo "error: missing curl"
+    exit 1
+fi
+# create cache dir if not present
+if [ ! -d $(dirname ${CACHE_FILE}) ]; then
+    debug "creating dir for cache"
+    mkdir -p $(dirname ${CACHE_FILE})
+fi
+
+read_cache() {
+    read FETCHED_AT
+    NOW=$(date +%s)
+    DIFF=$((NOW - FETCHED_AT))
+    if [ ${DIFF} -lt ${CACHE_TTL} ]; then
+        debug "cache hit: fetched at=${FETCHED_AT}, now=${NOW}, diff=${DIFF}"
+        read CACHED_RESULT
+        echo ${CACHED_RESULT}
+    fi
+}
+
+write_cache() {
+    NOW=$(date +%s)
+    echo "${NOW}\n${1}"
+}
+
+# check first in cache
+if [ -f ${CACHE_FILE} ]; then
+    CACHED=$(read_cache < ${CACHE_FILE})
+    if [ "${CACHED}" ]; then
+        echo ${CACHED}
+        exit 0
+    fi
+fi
+
+# else fetch from wttr.in
+debug "cache miss, fetching from wttr.in"
+WEATHER=$(curl wttr.in/?format="%l:+%c+%t+(%f)+%p\n")
+
+# write to cache
+write_cache "${WEATHER}" > ${CACHE_FILE}
+
+# echo to stdout
+echo $WEATHER

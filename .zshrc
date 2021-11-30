@@ -7,7 +7,10 @@ compinit
 ## Export TTY for GPG, needed for the password prompt
 export GPG_TTY=$(tty)
 
+## I did not choose the vim life -- it chose me
 export EDITOR=nvim
+alias vim=nvim
+alias vi=nvim
 
 ## rust toolchain
 [ -f ~/.cargo/env ] && source ~/.cargo/env
