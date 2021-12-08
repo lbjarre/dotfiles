@@ -11,7 +11,7 @@ debug() {
     [ ${WTTR_DEBUG} ] && echo "$@" >&2
 }
 
-debug "cache file: ${CACHE_FILE}, cache ttl: ${CACHE_TTL}"
+debug "cache: file=${CACHE_FILE}, ttl=${CACHE_TTL}"
 
 # curl required
 if [ ! $(command -v curl) ]; then
@@ -51,7 +51,7 @@ fi
 
 # else fetch from wttr.in
 debug "cache miss, fetching from wttr.in"
-WEATHER=$(curl wttr.in/?format="%l:+%c+%t+(%f)+%p\n")
+WEATHER=$(curl wttr.in/?format="%c+%t+(%f)+%p\n" 2>/dev/null)
 
 # write to cache
 write_cache "${WEATHER}" > ${CACHE_FILE}

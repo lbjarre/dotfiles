@@ -62,6 +62,10 @@ return lush(function()
     -- Treesitter elements
     TSFuncBuiltin { fg = main.mid, gui = italic },
 
+    -- Diagnostics
+    DiagnosticError { fg = red.mid },
+    DiagnosticWarn  { fg = yellow.mid },
+
     -- Backgrounds
     ColorColumn { Normal, bg = bw.dark },
     Pmenu       { Normal, bg = bw.grey.darken(20) },
