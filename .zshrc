@@ -1,6 +1,9 @@
 # ZSHRC
 
-fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+export PATH="${HOME}/bin:${PATH}"
+
+# Autocomplete stuff
+[ $(command -v brew)] && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -Uz compinit
 compinit
 
@@ -25,13 +28,20 @@ alias la="exa --group-directories-first -la"
 alias lt="exa --group-directories-first -lT"
 
 ## Zoxide
-eval "$(zoxide init zsh)"
+[ $(command -v zoxide) ] && eval "$(zoxide init zsh)"
 
 ## fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+fzf_files=(
+    ~/.fzf.zsh
+    /usr/share/fzf/completion.zsh
+    /usr/share/fzf/key-bindings.zsh
+)
+for file in ${fzf_files}; do
+    [ -f "${file}" ] && source "${file}"
+done
 
 ## Starship
-eval "$(starship init zsh)"
+[ $(command -v starship) ] && eval "$(starship init zsh)"
 
 ## k8s
 if [ $(command -v kubectl) ]; then
