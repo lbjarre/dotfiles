@@ -1,3 +1,6 @@
+-- plugins
+require('skr.plugins')
+
 -- P is a print-inspect helper, prints the expanded table and returns the
 -- argument back to the caller.
 function P(x)
@@ -15,7 +18,6 @@ function R(name)
 end
 
 -- plugins
-R('skr.plugins')
 R('hotpot')
 
 -- various options

@@ -1,4 +1,3 @@
-
 -- Bootstrap packer
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -85,6 +84,14 @@ return require('packer').startup(function()
   use {
     'kyazdani42/nvim-web-devicons',
     config = function() require('nvim-web-devicons').setup {} end,
+  }
+  use {
+    'stevearc/dressing.nvim',
+    config = function()
+      local dressing = require('dressing')
+      dressing.setup()
+      dressing.patch()
+    end,
   }
 
   -- Integrations with external services

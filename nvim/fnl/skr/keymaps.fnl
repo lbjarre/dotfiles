@@ -68,6 +68,7 @@
 (nmap :gi         skr-tlscp.lsp_impl)
 (nmap :<leader>ld skr-tlscp.lsp_ws_diagnostics)
 (nmap :<leader>ls skr-tlscp.lsp_doc_symbols)
+(nmap :<leader>lr lsp-buf.rename)
 
 ;; DAP
 (nmap :<leader>db dap.toggle_breakpoint)

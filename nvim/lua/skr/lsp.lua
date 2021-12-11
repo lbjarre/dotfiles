@@ -62,19 +62,4 @@ M.inlay_hints = function()
   }
 end
 
-local popup = require('plenary.popup')
-
-M.rename = function()
-  local win = popup.create('', {
-    title = 'Rename',
-    minwidth = 40,
-    padding = {},
-    border = true,
-    should_enter = true,
-    relative = 'cursor',
-  })
-  local buf = vim.api.nvim_win_get_buf(win)
-  vim.api.nvim_buf_set_keymap(buf, 'i', '<cr>', '<esc>:q<cr>', { noremap = true, silent = true })
-end
-
 return M
