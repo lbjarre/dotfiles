@@ -1,0 +1,19 @@
+#!/bin/sh
+
+case $1 in
+    inc)
+        xbacklight -inc 5
+        ;;
+    dec)
+        xbacklight -dec 5
+        ;;
+esac
+
+LIGHT=$(printf "%d" $(xbacklight))
+dunstify \
+    -a Backlight \
+    -t 1000 \
+    -h string:x-dunst-stack-tag:backlight \
+    -h int:value:${LIGHT} \
+    "Backlight: ${LIGHT}%"
+

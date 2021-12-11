@@ -1,0 +1,22 @@
+#!/bin/sh
+
+SINK=$(pactl get-default-sink)
+case $1 in
+    inc)
+        pactl set-sink-volume ${SINK} +5%
+        ;;
+    dec)
+        pactl set-sink-volume ${SINK} -5%
+        ;;
+esac
+
+# really hackish way to do this
+VOL=$(pactl get-sink-volume ${SINK} | awk '{ print $5 }' | sed 's/[^0-9]*//g')
+dunstify \
+    -a Volume \
+    -i audio-volume-high \
+    -t 1000 \
+    -h string:x-dunst-stack-tag:volume \
+    -h int:value:${VOL} \
+    "Volume: ${VOL}%"
+

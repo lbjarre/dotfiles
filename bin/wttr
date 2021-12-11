@@ -37,7 +37,7 @@ read_cache() {
 
 write_cache() {
     NOW=$(date +%s)
-    echo "${NOW}\n${1}"
+    printf "%s\n%s\n" "${NOW}" "${1}"
 }
 
 # check first in cache
