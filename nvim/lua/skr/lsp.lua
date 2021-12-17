@@ -8,6 +8,7 @@ local servers = {
   'gopls',
   'hls',
   'pylsp',
+  'sumneko_lua',
   'tsserver',
   'graphql',
   'terraformls',

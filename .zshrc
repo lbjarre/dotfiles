@@ -3,7 +3,7 @@
 export PATH="${HOME}/bin:${PATH}"
 
 # Autocomplete stuff
-[ $(command -v brew)] && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+[ $(command -v brew) ] && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -Uz compinit
 compinit
 
@@ -47,7 +47,7 @@ done
 if [ $(command -v kubectl) ]; then
     source <(kubectl completion zsh)
     alias k=kubectl
-    complete -F __start_kubectl k
+    compdef __start_kubectl k
 fi
 
 [ $(command -v kubectx) ] && alias kc=kubectx
