@@ -44,7 +44,7 @@ return lush(function()
   return {
     -- Main text elements
     Normal     { fg = bw.light },
-    Comment    { fg = bw.lightgrey, gui = italic }, 
+    Comment    { fg = bw.lightgrey, gui = italic },
     Statement  { fg = main.light, gui = italic },
     Operator   { fg = main.light },
     Constant   { fg = accent.mid },
@@ -52,15 +52,15 @@ return lush(function()
     Special    { fg = bw.lightgrey },
     Identifier { fg = bw.light },
     SignColumn { Normal, bg = bw.dark },
-    Type       { Constant, gui = bold },
-    PreProc    { fg = main.mid, gui = italic },
+    Type       { fg = bw.bright, gui = bold },
+    PreProc    { Statement },
     Title      { fg = main.light, gui = bold },
     Directory  { Title, gui = '' },
     SpecialKey { fg = main.light.lighten(40) },
     MatchParen { bg = main.dark },
 
     -- Treesitter elements
-    TSFuncBuiltin { fg = main.mid, gui = italic },
+    TSFuncBuiltin { fg = bw.bright, gui = italic },
 
     -- Diagnostics
     DiagnosticError { fg = red.mid },

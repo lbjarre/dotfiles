@@ -93,6 +93,16 @@ return require('packer').startup(function()
       dressing.patch()
     end,
   }
+  use {
+    'folke/zen-mode.nvim',
+    config = function() require('zen-mode').setup {
+      options = {
+        signcolumn = "no",
+        number = false,
+        relativenumber = false,
+      },
+    } end
+  }
 
   -- Integrations with external services
   use {
