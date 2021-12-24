@@ -46,7 +46,7 @@ return lush(function()
     Normal     { fg = bw.light },
     Comment    { fg = bw.lightgrey, gui = italic },
     Statement  { fg = main.light, gui = italic },
-    Operator   { fg = main.light },
+    Operator   { fg = bw.bright, gui = bold },
     Constant   { fg = accent.mid },
     String     { Constant },
     Special    { fg = bw.lightgrey },
