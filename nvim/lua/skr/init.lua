@@ -88,6 +88,11 @@ opt.completeopt = 'menu,menuone,noinsert'
 -- custom statusline
 opt.statusline = [[%!luaeval("R('skr.statuslime').statusline()")]]
 
+-- augroups
+vim.cmd [[
+  au TextYankPost * silent! lua vim.highlight.on_yank()
+]]
+
 -- keymaps
 R('skr.keymaps')
 
@@ -115,10 +120,10 @@ R('skr.dap')
 R('which-key').setup()
 -- R('skr.color')
 
-R('nvim-treesitter.configs').setup {
-  highlight = { enable = true },
-  autotag = { enable = true },
-}
-
-R('nvim-ts-autotag').setup()
+-- R('nvim-ts-autotag').setup()
+-- R('nvim-treesitter.configs').setup {
+--   highlight = { enable = true },
+--   autotag = { enable = true },
+--   playground = { enable = true },
+-- }
 

@@ -74,7 +74,7 @@ M.lsp_impl = function()
 end
 
 M.lsp_ws_diagnostics = function()
-  builtin.lsp_workspace_diagnostics(opt_timeout)
+  builtin.diagnostics(opt_timeout)
 end
 
 M.lsp_doc_symbols = function()

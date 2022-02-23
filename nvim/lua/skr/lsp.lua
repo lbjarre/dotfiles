@@ -1,7 +1,6 @@
 local lspconfig = require('lspconfig')
 local ext_diagnostic = require('lsp_extensions.workspace.diagnostic')
 local ext_inlay_hints = require('lsp_extensions.inlay_hints')
-local lspstatus = require('lsp-status')
 
 local servers = {
   'rust_analyzer',
@@ -36,15 +35,11 @@ local on_attach = function(client)
   if vim.tbl_contains(ft_autofmt, filetype) then
       vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
   end
-
-  lspstatus.on_attach(client)
 end
 
 local M = {}
 
 M.setup = function()
-  lspstatus.register_progress()
-
   -- Setup and attach all servers
   for _, server in ipairs(servers) do
     lspconfig[server].setup { 

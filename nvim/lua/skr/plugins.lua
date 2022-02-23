@@ -5,7 +5,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd 'packadd packer.nvim'
 end
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
   -- hotpot, for fennel goodness
   use {
     'rktjmp/hotpot.nvim',
@@ -18,8 +18,14 @@ return require('packer').startup(function()
     config = function() require('skr.lsp').setup() end,
   }
   use 'nvim-lua/lsp_extensions.nvim'
-  use 'nvim-lua/lsp-status.nvim'
+  -- use 'nvim-lua/lsp-status.nvim'
   use 'folke/trouble.nvim'
+  use {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup()
+    end
+  }
 
   -- Completion & snippets
   use {
@@ -58,10 +64,12 @@ return require('packer').startup(function()
       'nvim-treesitter/playground',
     },
     config = function()
+      require('nvim-ts-autotag').setup()
       require('nvim-treesitter.configs').setup {
         highlight = { enable = true },
         autotag = { enable = true },
         playground = { enable = true },
+        indent = { enable = true },
       }
     end,
   }
@@ -94,6 +102,12 @@ return require('packer').startup(function()
     end,
   }
   use {
+    'rcarriga/nvim-notify',
+    config = function()
+      vim.notify = require('notify')
+    end
+  }
+  use {
     'folke/zen-mode.nvim',
     config = function() require('zen-mode').setup {
       options = {
@@ -106,6 +120,11 @@ return require('packer').startup(function()
 
   -- Integrations with external services
   use {
+    'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function() require('gitsigns').setup() end
+  }
+  use {
     'pwntester/octo.nvim',
     config = function() require('octo').setup() end,
   }
@@ -114,7 +133,6 @@ return require('packer').startup(function()
   use 'folke/which-key.nvim'
   use 'rhysd/git-messenger.vim'
   use 'mhinz/vim-startify'
-  use 'machakann/vim-highlightedyank'
   use 'justinmk/vim-dirvish'
 
   -- Church of Tpope

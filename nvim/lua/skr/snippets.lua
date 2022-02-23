@@ -30,7 +30,7 @@ vim.treesitter.set_query(
   ]]
 )
 
-local go_return_type = function(info) 
+local go_return_type = function(info)
   local cursor = tsutil.get_node_at_cursor()
   local scope = tslocals.get_scope_tree(cursor, 0)
 

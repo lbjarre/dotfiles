@@ -64,6 +64,7 @@
 (nmap :K          lsp-buf.hover)
 (nmap :<leader>la skr-tlscp.lsp_code_actions)
 (nmap :gd         skr-tlscp.lsp_def)
+(nmap :gt         lsp-buf.type_definition)
 (nmap :gr         skr-tlscp.lsp_ref)
 (nmap :gi         skr-tlscp.lsp_impl)
 (nmap :<leader>ld skr-tlscp.lsp_ws_diagnostics)
