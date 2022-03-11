@@ -1,0 +1,29 @@
+#!/bin/sh
+# fzf-select-tmux-window: fzf selector for switching between tmux windows.
+
+# Lists out all tmux-windows for fzf.
+# Creates 4 :-separated columns, containing:
+#   1. tmux session name
+#   2. tmux window id
+#   3. empty filler, for aligning
+#   4. text info for fzf
+list_windows() {
+    tmux list-windows -a -F "#{session_name}:#{window_id}: :#{window_name} #{pane_current_path}" | column -s' ' -t
+}
+
+# fzf command for selecting the window.
+fzf_sel() {
+    fzf-tmux -p --delimiter=: --with-nth=4 --header="switch tmux window" --header-first
+}
+
+# Main procedure.
+main() {
+    # Ask for the wanted selection from user, or exit.
+    line=$(list_windows | fzf_sel) || exit 0
+    # Split output on `:`.
+    args=(${line//:/ })
+    # Switch to the window in tmux.
+    tmux select-window -t ${args[1]} && tmux switch-client -t ${args[0]}
+}
+
+main
