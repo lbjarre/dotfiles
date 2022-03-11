@@ -41,7 +41,7 @@ return require('packer').startup(function(use)
       require('cmp').setup {
         snippet = {
           expand = function(args)
-            R('luasnip').lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
           end,
         },
         sources = {
@@ -53,7 +53,12 @@ return require('packer').startup(function(use)
       }
     end
   }
-  use 'L3MON4D3/LuaSnip'
+  use {
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require('luasnip').config.setup()
+    end,
+  }
 
   -- Treesitter
   use {
@@ -66,10 +71,10 @@ return require('packer').startup(function(use)
     config = function()
       require('nvim-ts-autotag').setup()
       require('nvim-treesitter.configs').setup {
-        highlight = { enable = true },
-        autotag = { enable = true },
+        highlight  = { enable = true },
+        autotag    = { enable = true },
         playground = { enable = true },
-        indent = { enable = true },
+        indent     = { enable = true },
       }
     end,
   }
@@ -104,7 +109,9 @@ return require('packer').startup(function(use)
   use {
     'rcarriga/nvim-notify',
     config = function()
-      vim.notify = require('notify')
+      -- TODO: getting a lot of notifications around highlight groups on this
+      -- that makes nvim basically useless, need to figure it out.
+      -- vim.notify = require('notify')
     end
   }
   use {
@@ -134,6 +141,7 @@ return require('packer').startup(function(use)
   use 'rhysd/git-messenger.vim'
   use 'mhinz/vim-startify'
   use 'justinmk/vim-dirvish'
+  use 'jbyuki/venn.nvim'
 
   -- Church of Tpope
   use 'tpope/vim-surround'

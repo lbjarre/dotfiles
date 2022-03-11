@@ -20,6 +20,7 @@ local ft_autofmt = {
   'haskell',
   'typescript',
   'typescripsreact',
+  'terraform',
 }
 
 -- Custom on_attach function

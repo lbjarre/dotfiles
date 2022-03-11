@@ -96,9 +96,13 @@ vim.cmd [[
 -- keymaps
 R('skr.keymaps')
 
+-- snippets
+R('skr.snippets')
+
 -- other required setup
 -- TODO: I have tried to add all this to packer options like config, but does
 --       not work? Need to understand what packer is doing I guess.
+--R('luasnip').config.setup()
 R('cmp').setup {
   snippet = {
     expand = function(args)
