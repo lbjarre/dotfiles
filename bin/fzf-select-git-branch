@@ -1,0 +1,17 @@
+#!/bin/sh
+# fzf-select-git-branch: fzf selector for switching between git branches.
+
+fzf_list() {
+    git branch --list --format='%(refname:short)' 
+}
+
+fzf_select() {
+    fzf --preview='git log --graph {} --color=always'
+}
+
+main() {
+    selection=$(fzf_list | fzf_select) || exit 0
+    git switch ${selection}
+}
+
+main

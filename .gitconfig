@@ -8,8 +8,9 @@
 	pager = delta
 [alias]
 	graph = log --graph --all --pretty=format:\"%C(auto)%h %C(auto,bold)%<(60)%s (%C(blue)%an%C(reset), %C(green)%ar%C(reset)) %C(auto)%d%C(reset)\"
-	merged-branches = ! git branch --merged | gegrep -v '\\* .*|  develop|  master'
+	merged-branches = ! git branch --merged | egrep -v '\\* .*|  develop|  master'
 	dmerged = ! git merged-branches | xargs git branch -d
+	sb = !fzf-select-git-branch
 	st = status
 	co = commit
 	a = add
@@ -17,6 +18,8 @@
 	chb = checkout -b
 	pfwl = push --force-with-lease
 	amend = commit --amend --no-edit
+[init]
+	defaultBranch = main
 [push]
 	followTags = true
 	default = current
@@ -27,6 +30,8 @@
 	ff = false
 [pull]
 	rebase = true
+[fetch]
+	prune = true
 [delta]
 	syntax-theme = base16
 	side-by-side = true
