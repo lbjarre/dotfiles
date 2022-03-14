@@ -9,9 +9,13 @@ fzf_select() {
     fzf --preview='git log --graph {} --color=always'
 }
 
+fzf_use() {
+    git switch $1
+}
+
 main() {
     selection=$(fzf_list | fzf_select) || exit 0
-    git switch ${selection}
+    fzf_use ${selection}
 }
 
 main
