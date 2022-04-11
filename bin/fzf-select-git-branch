@@ -1,16 +1,23 @@
 #!/bin/sh
 # fzf-select-git-branch: fzf selector for switching between git branches.
 
+
+
 fzf_list() {
-    git branch --list --format='%(refname:short)' 
+    git branch --list --format='%(refname:short)# #%(refname:short) %(upstream:remotename) %(upstream:track)' \
+        | column -s' ' -t
 }
 
 fzf_select() {
-    fzf --preview='git log --graph {} --color=always'
+    fzf --header="switch git branch" \
+        --delimiter='#' \
+        --with-nth='3' \
+        --preview='git log --graph {} --color=always'
 }
 
 fzf_use() {
-    git switch $1
+    sel=(${1//#/ })
+    git switch ${sel[0]}
 }
 
 main() {

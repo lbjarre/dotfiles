@@ -6,6 +6,7 @@ $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
+$jobs\
 $cmd_duration\
 $line_break\
 $character"""
@@ -14,3 +15,6 @@ $character"""
 truncation_length = 3
 truncate_to_repo = true
 fish_style_pwd_dir_length = 1
+
+[jobs]
+symbol = "+ "

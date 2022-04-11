@@ -11,7 +11,9 @@
 #   i.  tmux window name
 #   ii. working directory of a pane in the window (which one? honestly dont know)
 fzf_list() {
-    tmux list-windows -a -F "#{session_name}:#{window_id}: :#{window_name} #{pane_current_path}" | column -s' ' -t
+    tmux list-windows -a -F "#{session_name}:#{window_id}: :#{window_name} #{pane_current_path}" \
+        | sed "s|${HOME}|~|" \
+        | column -s' ' -t
 }
 
 # fzf command for selecting the window.

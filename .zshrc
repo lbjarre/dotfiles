@@ -52,3 +52,8 @@ fi
 
 [ $(command -v kubectx) ] && alias kc=kubectx
 
+if [ $(command -v kubectl-krew) ]; then
+    export PATH="${PATH}:${HOME}/.krew/bin"
+    source <(kubectl-krew completion zsh)
+fi
+

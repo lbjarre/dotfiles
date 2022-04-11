@@ -1,0 +1,31 @@
+#!/bin/sh
+
+fzf_list() {
+    git branch --list --format='%(refname:short)#{#%(refname:short){%(upstream:remotename) %(upstream:track)' \
+        | column -s'{' -t
+}
+
+fzf_select() {
+    fzf --header="delete git branches" \
+        --multi \
+        --delimiter='#' \
+        --with-nth=3
+}
+
+fzf_use() {
+    IFS=$'\n' lines=(${@})
+    branches=()
+    for l in ${lines[@]}
+    do
+        IFS=' ' fields=(${l//#/ })
+        branches=(${branches[@]} ${fields[0]})
+    done
+    git branch -D ${branches[@]}
+}
+
+main() {
+    selection=$(fzf_list | fzf_select) || exit 0
+    fzf_use "${selection}"
+}
+
+main

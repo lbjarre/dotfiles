@@ -26,8 +26,12 @@
 [commit]
 	gpgsign = true
 [merge]
-	tool = vimdiff
+	tool = nvim
 	ff = false
+[mergetool]
+	prompt = false
+[mergetool "nvim"]
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [pull]
 	rebase = true
 [fetch]

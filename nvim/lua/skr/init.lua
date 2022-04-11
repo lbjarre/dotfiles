@@ -97,7 +97,7 @@ vim.cmd [[
 R('skr.keymaps')
 
 -- snippets
-R('skr.snippets')
+R('skr.fnlsnip').setup()
 
 -- other required setup
 -- TODO: I have tried to add all this to packer options like config, but does

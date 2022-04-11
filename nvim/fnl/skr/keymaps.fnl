@@ -45,6 +45,9 @@
 (local dap       (import :dap))
 (local dapui     (import :dapui))
 
+;; Generic keymaps
+(nmap :<leader>cn "<cmd>cnext<cr>")
+
 ;; Clipboard yank/pasting
 (nmap :<leader>y "\"*y")
 (vmap :<leader>y "\"*y")

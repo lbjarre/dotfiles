@@ -21,6 +21,7 @@ local ft_autofmt = {
   'typescript',
   'typescripsreact',
   'terraform',
+  'hcl',
 }
 
 -- Custom on_attach function
