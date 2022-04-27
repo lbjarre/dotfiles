@@ -1,49 +1,15 @@
-(fn import-tbl [path tbl]
-  "Creates an 'import-table', which stores information about the path it was
-  imported from. Getting an item out from that table will return another table
-  with the .path and .name keys set, which can be used to determine the import
-  string for the given item."
-  (setmetatable
-    {:__table tbl
-     :__path path}
-    {:__index (fn [tbl key]
-                (if (= key :__path)
-                  (. tbl :__path)
-                  {: path
-                   :name key
-                   :value (. tbl :__table key)}))}))
-
-(fn import [path]
-  "Import a module and store info about the importing. Use instead of 'require'
-  in this module to get the mapping to work."
-  (import-tbl path (require path)))
-
-(fn map [mode key cmd]
-  "Set a keymap. Hardcoded to nnoremap and with silent=true atm."
-  (let [cmd-esc (match (type cmd)
-                  ;; strings just pass through
-                  :string cmd
-                  ;; tables -> check if it is an import table
-                  :table (match cmd
-                           {: path : name : value}
-                           (.. "<cmd>lua require('" path "')." name "()<cr>")
-                           _ nil))]
-    (vim.api.nvim_set_keymap
-      mode key cmd-esc
-      {:noremap true :silent true})))
+(local skr-tlscp (require :skr.telescope))
+(local tlscp     (require :telescope.builtin))
+(local lsp-diag  (require :vim.lsp.diagnostic))
+(local lsp-buf   (require :vim.lsp.buf))
+(local dap       (require :dap))
+(local dapui     (require :dapui))
 
 (fn nmap [key cmd]
-  (map :n key cmd))
+  (vim.keymap.set :n key cmd {:remap false :silent true}))
 
 (fn vmap [key cmd]
-  (map :v key cmd))
-
-(local skr-tlscp (import :skr.telescope))
-(local tlscp     (import :telescope.builtin))
-(local lsp-diag  (import :vim.lsp.diagnostic))
-(local lsp-buf   (import :vim.lsp.buf))
-(local dap       (import :dap))
-(local dapui     (import :dapui))
+  (vim.keymap.set :v key cmd {:remap false :silent true}))
 
 ;; Generic keymaps
 (nmap :<leader>cn "<cmd>cnext<cr>")

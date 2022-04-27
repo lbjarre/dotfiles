@@ -103,18 +103,22 @@ R('skr.fnlsnip').setup()
 -- TODO: I have tried to add all this to packer options like config, but does
 --       not work? Need to understand what packer is doing I guess.
 --R('luasnip').config.setup()
-R('cmp').setup {
+local cmp = R('cmp')
+cmp.setup {
   snippet = {
     expand = function(args)
       R('luasnip').lsp_expand(args.body)
     end,
   },
-  sources = {
+  mapping = cmp.mapping.preset.insert({
+    ['<C-Space>'] = cmp.mapping.complete(),
+  }),
+  sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'buffer' },
     { name = 'path' },
     { name = 'luasnip' },
-  },
+  }),
 }
 R('skr.lsp').setup()
 R('skr.telescope').setup()
