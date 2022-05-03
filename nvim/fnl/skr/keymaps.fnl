@@ -1,4 +1,4 @@
-(local skr-tlscp (require :skr.telescope))
+(local skr-tlscp (require :skr.telescope-fnl))
 (local tlscp     (require :telescope.builtin))
 (local lsp-diag  (require :vim.lsp.diagnostic))
 (local lsp-buf   (require :vim.lsp.buf))
@@ -23,21 +23,21 @@
 ;; Telescope
 (nmap :<leader>ff skr-tlscp.files)
 (nmap :<leader>fg tlscp.live_grep)
-(nmap "<leader>/" skr-tlscp.search_buf)
-(nmap :<leader>fs skr-tlscp.grep_string)
-(nmap :<leader>fl skr-tlscp.lsp_workspace_symbols)
+(nmap :<leader>/  skr-tlscp.search-buf)
+(nmap :<leader>fs skr-tlscp.grep-string)
+(nmap :<leader>fl skr-tlscp.lsp-workspace-symbols)
 
 ;; LSP
 (nmap :dn         lsp-diag.goto_next)
 (nmap :dp         lsp-diag.goto_prev)
 (nmap :K          lsp-buf.hover)
-(nmap :<leader>la skr-tlscp.lsp_code_actions)
-(nmap :gd         skr-tlscp.lsp_def)
+(nmap :<leader>la lsp-buf.code_action)
+(nmap :gd         skr-tlscp.lsp-def)
 (nmap :gt         lsp-buf.type_definition)
-(nmap :gr         skr-tlscp.lsp_ref)
-(nmap :gi         skr-tlscp.lsp_impl)
-(nmap :<leader>ld skr-tlscp.lsp_ws_diagnostics)
-(nmap :<leader>ls skr-tlscp.lsp_doc_symbols)
+(nmap :gr         skr-tlscp.lsp-ref)
+(nmap :gi         skr-tlscp.lsp-impl)
+(nmap :<leader>ld skr-tlscp.diagnostics)
+(nmap :<leader>ls skr-tlscp.lsp-doc-symbols)
 (nmap :<leader>lr lsp-buf.rename)
 
 ;; DAP

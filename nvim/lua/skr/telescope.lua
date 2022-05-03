@@ -29,12 +29,9 @@ M.setup = function()
 end
 
 M.files = function()
-  opts = {
-    hidden = true,
-  }
-  local ok = pcall(builtin.git_files, opts)
+  local ok = pcall(builtin.git_files, { hidden = true })
   if not ok then
-    builtin.find_files(opts)
+    builtin.find_files({ hidden = true })
   end
 end
 
@@ -55,11 +52,6 @@ M.lsp_workspace_symbols = function()
   local opt = merge({ query = vim.fn.input('search: ') }, opt_timeout)
   builtin.lsp_workspace_symbols(opt)
 end
-
-M.lsp_code_actions = function()
-  builtin.lsp_code_actions(themes.get_dropdown(opt_timeout))
-end
-
 
 M.lsp_def = function()
   builtin.lsp_definitions(opt_timeout)
