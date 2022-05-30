@@ -13,15 +13,15 @@
 (local snippet-test-table
   (let [snippet
 "func Test<>(t *testing.T) {
-	testcases := []struct{
+	tests := []struct{
 		name string
 	}{
 		{
 			name: \"<>\",
 		},
 	}
-	for _, tc := range testcases {
-		t.Run(tc.name, func(t *testing.T) {
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
 			<>
 		})
 	}

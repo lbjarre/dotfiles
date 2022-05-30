@@ -59,7 +59,7 @@
 
 (fn lsp-impl []
   "Fuzzy find LSP implementations on current symbol."
-  (builtin.lsp_references opt-timeout))
+  (builtin.lsp_implementations opt-timeout))
 
 (fn lsp-doc-symbols []
   "Fuzzy find LSP symbols in current document."

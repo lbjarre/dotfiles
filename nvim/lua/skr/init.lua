@@ -121,12 +121,30 @@ cmp.setup {
   }),
 }
 R('skr.lsp').setup()
-R('skr.telescope').setup()
 R('skr.dap')
 -- R('skr.snippets').setup()
 -- R('indent_guides').setup()
 R('which-key').setup()
 -- R('skr.color')
+
+require('nvim-ts-autotag').setup()
+
+require('nvim-treesitter.configs').setup {
+  highlight   = { enable = true },
+  autotag     = { enable = true },
+  playground  = { enable = true },
+  indent      = { enable = true },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+      },
+    },
+  },
+}
 
 -- R('nvim-ts-autotag').setup()
 -- R('nvim-treesitter.configs').setup {

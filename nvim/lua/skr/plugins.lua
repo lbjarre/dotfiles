@@ -64,16 +64,8 @@ return require('packer').startup(function(use)
     requires = {
       'windwp/nvim-ts-autotag',
       'nvim-treesitter/playground',
+      'nvim-treesitter/nvim-treesitter-textobjects',
     },
-    config = function()
-      require('nvim-ts-autotag').setup()
-      require('nvim-treesitter.configs').setup {
-        highlight  = { enable = true },
-        autotag    = { enable = true },
-        playground = { enable = true },
-        indent     = { enable = true },
-      }
-    end,
   }
 
   -- Debugging
@@ -147,4 +139,5 @@ return require('packer').startup(function(use)
   -- Lang specific plugins
   use { 'cespare/vim-toml', branch = "main" }
   use 'b4b4r07/vim-hcl'
+  use 'towolf/vim-helm'
 end)

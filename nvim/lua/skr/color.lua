@@ -5,20 +5,20 @@ local bw = {
   dark = hsl(210, 0, 15),
   grey = hsl(210, 0, 30),
   lightgrey = hsl(210, 0, 45),
-  light = hsl(210, 0, 70),
-  bright = hsl(210, 0, 85),
+  light = hsl(210, 0, 65),
+  bright = hsl(210, 0, 75),
 }
 
 local blue = {
-  light = hsl(210, 50, 60),
-  mid = hsl(210, 50, 35),
-  dark = hsl(210, 50, 20),
+  light = hsl(210, 25, 50),
+  mid = hsl(210, 25, 35),
+  dark = hsl(210, 25, 20),
 }
 
 local green = {
-  light = hsl(150, 50, 50),
-  mid = hsl(150, 50, 35),
-  dark = hsl(150, 50, 15),
+  light = hsl(150, 40, 50),
+  mid = hsl(150, 40, 30),
+  dark = hsl(150, 40, 20),
 }
 
 local red = {
@@ -28,9 +28,9 @@ local red = {
 }
 
 local yellow = {
-  light = hsl(40, 50, 50),
-  mid = hsl(40, 50, 45),
-  dark = hsl(40, 50, 35),
+  light = hsl(40, 45, 50),
+  mid = hsl(40, 45, 40),
+  dark = hsl(40, 45, 30),
 }
 
 local main = blue
@@ -74,9 +74,9 @@ return lush(function()
     VertSplit   { bg = bw.dark, fg = bw.grey },
 
     -- Diffs
-    DiffAdd    { bg = green.mid,  fg = bw.bright },
-    DiffChange { bg = yellow.mid, fg = bw.bright },
-    DiffDelete { bg = red.mid,    fg = bw.bright },
+    DiffAdd    { bg = green.dark,  fg = bw.bright },
+    DiffChange { bg = yellow.dark, fg = bw.bright },
+    DiffDelete { bg = red.dark,    fg = bw.bright },
     DiffText   { bg = bw.grey,    fg = bw.bright },
 
     -- Others
@@ -84,8 +84,8 @@ return lush(function()
     CursorLineNr { fg = bw.grey.lighten(20) },
     Search       { bg = bw.grey.saturate(10) },
     WildMenu     { Search },
-    NonText      { LineNr, fg = LineNr.fg.darken(30) },
-    Whitespace   { LineNr, fg = LineNr.fg.darken(30) },
+    NonText      { LineNr, fg = LineNr.fg.darken(20) },
+    Whitespace   { LineNr, fg = LineNr.fg.darken(20) },
     Error        { bg = red.dark },
     ErrorMsg     { Error },
     WarningMsg   { Error },
