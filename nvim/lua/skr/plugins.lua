@@ -80,6 +80,11 @@ return require('packer').startup(function(use)
   }
   use 'nvim-telescope/telescope-fzy-native.nvim'
 
+  use {
+    'akinsho/toggleterm.nvim',
+    config = function() require('toggleterm').setup() end,
+  }
+
   -- Look & feel
   use 'rktjmp/lush.nvim'
   use 'simrat39/symbols-outline.nvim' -- TODO: configure
@@ -103,38 +108,85 @@ return require('packer').startup(function(use)
       -- vim.notify = require('notify')
     end
   }
+
+  -- ZenMode, nice for decluttering or showing specific codeblocks
   use {
-    'folke/zen-mode.nvim',
-    config = function() require('zen-mode').setup {
-      options = {
-        signcolumn = "no",
-        number = false,
-        relativenumber = false,
-      },
-    } end
+    'Pocco81/true-zen.nvim',
+    config = function() require('true-zen').setup() end,
   }
 
-  -- Integrations with external services
+  -- A Treesitter aware widget for the statusline, showing which class/func/etc
+  -- the cursor is currently on.
+  use {
+    "SmiteshP/nvim-gps",
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    config = function() require('nvim-gps').setup() end,
+  }
+
+  -- Commenting lines.
+  use {
+    'numToStr/Comment.nvim',
+    config = function() require('Comment').setup() end,
+  }
+
+  -- Lots of good integrations with git, like showing diffs in the numberline
+  -- and being able to see blames inline etc
   use {
     'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
     config = function() require('gitsigns').setup() end
   }
+
+  -- UI for viewing various git diffs.
+  use {
+    'sindrets/diffview.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function() require('diffview').setup() end,
+  }
+
+  -- Github integrations
   use {
     'pwntester/octo.nvim',
     config = function() require('octo').setup() end,
   }
 
+  -- Plugin for displaying tree structures, including a file browser.
+  use {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v2.x',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'kyazdani42/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+    }
+  }
+
+  -- Hydra, easy submodes
+  use 'anuvyklack/hydra.nvim'
+
+  -- Orgmode (trying it out a bit!)
+  use 'nvim-orgmode/orgmode'
+
+  -- Actually, orgmode might not be for me...
+  use 'renerocksai/telekasten.nvim'
+
   -- Other stuff
-  use 'folke/which-key.nvim'
-  use 'rhysd/git-messenger.vim'
-  use 'mhinz/vim-startify'
-  use 'justinmk/vim-dirvish'
-  use 'jbyuki/venn.nvim'
+  use 'folke/which-key.nvim' -- UI for showing keybinds
+  use 'rhysd/git-messenger.vim' -- Git integrations
+  use 'mhinz/vim-startify' -- Start screen
+  use 'justinmk/vim-dirvish' -- Directory explorer
+  use 'jbyuki/venn.nvim' -- ASCII box diagram drawing
+  use({
+    'iamcco/markdown-preview.nvim',
+    run = 'cd app && npm install',
+    setup = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+    end,
+    ft = { 'markdown' },
+  })
 
   -- Church of Tpope
   use 'tpope/vim-surround'
-  use 'tpope/vim-commentary'
 
   -- Lang specific plugins
   use { 'cespare/vim-toml', branch = "main" }

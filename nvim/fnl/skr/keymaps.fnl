@@ -13,6 +13,7 @@
 
 ;; Generic keymaps
 (nmap :<leader>cn "<cmd>cnext<cr>")
+(nmap :<leader>r  R)
 
 ;; Clipboard yank/pasting
 (nmap :<leader>y "\"*y")
@@ -26,6 +27,7 @@
 (nmap :<leader>/  skr-tlscp.search-buf)
 (nmap :<leader>fs skr-tlscp.grep-string)
 (nmap :<leader>fl skr-tlscp.lsp-workspace-symbols)
+(nmap :<leader>fn skr-tlscp.files-nv)
 
 ;; LSP
 (nmap :dn         lsp-diag.goto_next)

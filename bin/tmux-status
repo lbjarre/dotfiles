@@ -1,0 +1,29 @@
+#!/bin/sh
+# tmux-status: helper scripts for printing tmux status bar elements.
+
+usage() {
+    echo "Usage: tmux-status [category]"
+}
+
+_status_k8s() {
+    kubectl config get-contexts $(kubectl config current-context) | \
+        tail -n1 | \
+        awk '{ printf("k8s: %s/%s", $3, $5) }'
+}
+
+_status_session() {
+    tmux display-message -p "#S"
+}
+
+case "${1}" in
+    session)
+        _status_session
+        ;;
+    k8s)
+        _status_k8s
+        ;;
+    *)
+        usage
+        exit 2
+        ;;
+esac

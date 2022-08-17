@@ -22,10 +22,12 @@ alias vi=nvim
 [ $(command -v go) ] && export PATH="${PATH}:$(go env GOPATH)/bin"
 
 ## Debian ls aliases (with some modifications) that just got stuck in my head
-alias ls="exa --group-directories-first"
-alias ll="exa --group-directories-first -l"
-alias la="exa --group-directories-first -la"
-alias lt="exa --group-directories-first -lT"
+if [ $(command -v exa) ]; then
+    alias ls="exa --group-directories-first"
+    alias ll="exa --group-directories-first -l"
+    alias la="exa --group-directories-first -la"
+    alias lt="exa --group-directories-first -lT"
+fi
 
 ## Zoxide
 [ $(command -v zoxide) ] && eval "$(zoxide init zsh)"

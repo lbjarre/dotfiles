@@ -67,11 +67,12 @@ return lush(function()
     DiagnosticWarn  { fg = yellow.mid },
 
     -- Backgrounds
-    ColorColumn { Normal, bg = bw.dark },
-    Pmenu       { Normal, bg = bw.grey.darken(20) },
-    PmenuSel    { Pmenu,  bg = bw.light, fg = bw.dark },
-    Visual      { gui = reverse },
-    VertSplit   { bg = bw.dark, fg = bw.grey },
+    ColorColumn  { Normal, bg = bw.dark },
+    Pmenu        { Normal, bg = bw.grey.darken(20) },
+    PmenuSel     { Pmenu,  bg = bw.light, fg = bw.dark },
+    Visual       { gui = reverse },
+    VertSplit    { bg = bw.dark, fg = bw.grey },
+    WinSeparator { bg = bw.dark, fg = bw.grey },
 
     -- Diffs
     DiffAdd    { bg = green.dark,  fg = bw.bright },

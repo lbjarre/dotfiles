@@ -88,10 +88,6 @@ opt.completeopt = 'menu,menuone,noinsert'
 -- custom statusline
 opt.statusline = [[%!luaeval("R('skr.statuslime').statusline()")]]
 
--- augroups
-vim.cmd [[
-  au TextYankPost * silent! lua vim.highlight.on_yank()
-]]
 
 -- keymaps
 R('skr.keymaps')
@@ -118,6 +114,7 @@ cmp.setup {
     { name = 'buffer' },
     { name = 'path' },
     { name = 'luasnip' },
+    { name = 'orgmode' },
   }),
 }
 R('skr.lsp').setup()
@@ -130,10 +127,13 @@ R('which-key').setup()
 require('nvim-ts-autotag').setup()
 
 require('nvim-treesitter.configs').setup {
-  highlight   = { enable = true },
   autotag     = { enable = true },
   playground  = { enable = true },
   indent      = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = {'org'},
+  },
   textobjects = {
     select = {
       enable = true,
@@ -146,10 +146,47 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- R('nvim-ts-autotag').setup()
--- R('nvim-treesitter.configs').setup {
---   highlight = { enable = true },
---   autotag = { enable = true },
---   playground = { enable = true },
--- }
+local org = require('orgmode')
+org.setup_ts_grammar()
+org.setup({
+  org_agenda_files       = '~/org/**/*',
+  org_default_notes_file = '~/org/notes.org',
+})
+
+local zkhome = vim.fn.expand("~/zk")
+require('telekasten').setup({
+  home      = zkhome,
+  dailies   = zkhome .. '/' .. 'daily',
+  weeklies  = zkhome .. '/' .. 'weekly',
+  templates = zkhome .. '/' .. 'templates',
+})
+
+-- augroups
+-- Autocmd for hightlight yanked text.
+local au_yank = vim.api.nvim_create_augroup("Yank", {})
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group    = au_yank,
+  callback = function() vim.highlight.on_yank() end,
+})
+
+-- Autocmds for terminal mode: want to turn off left column in terminals.
+local function set_win_lcol(on_off)
+  vim.wo.number = on_off
+  vim.wo.relativenumber = on_off
+  if on_off then
+    vim.wo.signcolumn = 'yes'
+  else
+    vim.wo.signcolumn = 'no'
+  end
+end
+
+local au_term = vim.api.nvim_create_augroup("terminal", {})
+vim.api.nvim_create_autocmd("TermOpen", {
+  group    = au_term,
+  callback = function() set_win_lcol(false) end,
+})
+vim.api.nvim_create_autocmd("TermClose", {
+  group    = au_term,
+  callback = function() set_win_lcol(true) end,
+})
 

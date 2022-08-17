@@ -1,3 +1,7 @@
+(local {:get_location gps-location
+        :is_available gps-available?}
+    (require :nvim-gps))
+
 ;; highlight group names
 (local hl
   {;; StatusLineMode$X for highlighting different modes
@@ -92,20 +96,26 @@
 
 (fn statusline []
   "string for current statusline"
-  (local segments (fmt-segments
-    [[;; left side
-      {:s (get-mode)}
-      {:s " %f" :hl hl.main}]
-      ;; separator
-     [{:s "%="}]
-      ;; right side
-     [{:s "" :hl hl.alt}
-      (let [lsp (get-lsp)]
-        {:s (when (not= lsp "")
-              (.. "lsp:" lsp))})
-      {:s (.. "pos:" "[%l:%c:%p%%]")}
-      {:s (.. "ft:" vim.bo.filetype)}
-      {:s ""}]]))
-  (table.concat segments " "))
+  (let [;; Left side: vim mode, filepath, and LSP outline.
+        left (let [mode {:s (get-mode)}
+                   path {:s " %f" :hl hl.main}
+                   gps (when (gps-available?)
+                         {:s (.. " " (gps-location))
+                          :hl hl.alt})]
+               [mode path gps])
+
+        ;; Separator in the middle, pushing left and rigth side to each end.
+        sep [{:s "%=" :hl hl.main}]
+
+        ;; Right side: LSP clients and file specifics.
+        right (let [hl-set {:s "" :hl hl.alt}
+                    lsp (get-lsp)
+                    lsp-clients {:s (when (not= lsp "")
+                                      (.. "lsp:" lsp))}
+                    pos {:s "pos:[%l:%c:%p%%]"}
+                    ft {:s (.. "ft:" vim.bo.filetype)}]
+                [hl-set lsp-clients pos ft])]
+
+    (table.concat (fmt-segments [left sep right]) " ")))
 
 {: statusline}

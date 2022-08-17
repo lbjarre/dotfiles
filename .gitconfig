@@ -36,6 +36,8 @@
 	rebase = true
 [fetch]
 	prune = true
+[diff]
+	external = difft
 [delta]
 	syntax-theme = base16
 	side-by-side = true

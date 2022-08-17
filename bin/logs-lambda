@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+usage() {
+    echo 'Streams logs from a Lambda function via Cloudwatch to stdout.'
+    echo
+    echo 'Usage: logs-lambda LOG_GROUP [SINCE]'
+    echo
+    echo 'Arguments'
+    echo '  LOG_GROUP:  Cloudwatch log group. Usually something like "/aws/lambda/go-service-${name}-api-prod-server".'
+    echo '  SINCE:      Time duration for how long back to grab logs, e.g. 10m, 10s. Default: 10m.'
+    echo
+    echo 'Remember to have the correct AWS_PROFILE set!'
+}
+
+case $# in
+    1|2)
+        LOG_GROUP="${1}"
+        SINCE="${2:-10m}"
+        ;;
+    *)
+        usage
+        exit 2
+esac
+
+aws logs tail "${LOG_GROUP}" --format=short --since="${SINCE}" | \
+    sed 's/^[0-9-]*T[0-9:]* \(.*\)$/\1/' | \
+    rg -v '^(START|END|REPORT|XRAY)'
