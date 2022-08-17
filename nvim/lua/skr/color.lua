@@ -87,6 +87,11 @@ return lush(function()
     Folded     { bg = bw.dark, fg = bw.lightgrey },
     FoldColumn { bg = bw.dark, fg = bw.lightgrey },
 
+    -- Tabline
+    Tabline     { bg = bw.grey.darken(30) },
+    TabLineSel  { bg = bw.grey },
+    TablineFill { bg = bw.grey.darken(30) },
+
     -- Others
     LineNr       { fg = bw.grey },
     CursorLineNr { fg = bw.grey.lighten(20) },
