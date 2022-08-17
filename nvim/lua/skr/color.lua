@@ -10,21 +10,21 @@ local bw = {
 }
 
 local blue = {
-  light = hsl(210, 25, 50),
-  mid = hsl(210, 25, 35),
-  dark = hsl(210, 25, 20),
+  light = hsl(210, 20, 50),
+  mid = hsl(210, 20, 35),
+  dark = hsl(210, 20, 20),
 }
 
 local green = {
-  light = hsl(150, 40, 50),
-  mid = hsl(150, 40, 30),
-  dark = hsl(150, 40, 20),
+  light = hsl(150, 35, 40),
+  mid = hsl(150, 35, 30),
+  dark = hsl(150, 35, 20),
 }
 
 local red = {
-  light = hsl(360, 55, 60),
-  mid = hsl(360, 55, 35),
-  dark = hsl(360, 55, 20),
+  light = hsl(360, 45, 60),
+  mid = hsl(360, 45, 35),
+  dark = hsl(360, 45, 20),
 }
 
 local yellow = {
@@ -78,7 +78,10 @@ return lush(function()
     DiffAdd    { bg = green.dark,  fg = bw.bright },
     DiffChange { bg = yellow.dark, fg = bw.bright },
     DiffDelete { bg = red.dark,    fg = bw.bright },
-    DiffText   { bg = bw.grey,    fg = bw.bright },
+    DiffText   { bg = bw.grey,     fg = bw.bright },
+    GitSignsAdd    { SignColumn, fg = DiffAdd.bg },
+    GitSignsChange { SignColumn, fg = DiffChange.bg },
+    GitSignsDelete { SignColumn, fg = DiffDelete.bg },
 
     -- Others
     LineNr       { fg = bw.grey },
