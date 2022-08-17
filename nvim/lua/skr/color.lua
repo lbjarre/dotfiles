@@ -83,6 +83,10 @@ return lush(function()
     GitSignsChange { SignColumn, fg = DiffChange.bg },
     GitSignsDelete { SignColumn, fg = DiffDelete.bg },
 
+    -- Folds
+    Folded     { bg = bw.dark, fg = bw.lightgrey },
+    FoldColumn { bg = bw.dark, fg = bw.lightgrey },
+
     -- Others
     LineNr       { fg = bw.grey },
     CursorLineNr { fg = bw.grey.lighten(20) },
