@@ -16,9 +16,9 @@ local blue = {
 }
 
 local green = {
-  light = hsl(150, 35, 40),
-  mid = hsl(150, 35, 30),
-  dark = hsl(150, 35, 20),
+  light = hsl(150, 30, 40),
+  mid = hsl(150, 30, 30),
+  dark = hsl(150, 30, 15),
 }
 
 local red = {
@@ -28,9 +28,9 @@ local red = {
 }
 
 local yellow = {
-  light = hsl(40, 45, 50),
-  mid = hsl(40, 45, 40),
-  dark = hsl(40, 45, 30),
+  light = hsl(40, 40, 50),
+  mid = hsl(40, 40, 35),
+  dark = hsl(40, 40, 25),
 }
 
 local main = blue
@@ -48,7 +48,7 @@ return lush(function()
     Statement  { fg = main.light, gui = italic },
     Operator   { fg = bw.bright, gui = bold },
     Constant   { fg = accent.mid },
-    String     { Constant },
+    String     { fg = accent.mid },
     Special    { fg = bw.lightgrey },
     Identifier { fg = bw.light },
     SignColumn { Normal, bg = bw.dark },
@@ -79,9 +79,9 @@ return lush(function()
     DiffChange { bg = yellow.dark, fg = bw.bright },
     DiffDelete { bg = red.dark,    fg = bw.bright },
     DiffText   { bg = bw.grey,     fg = bw.bright },
-    GitSignsAdd    { SignColumn, fg = DiffAdd.bg },
-    GitSignsChange { SignColumn, fg = DiffChange.bg },
-    GitSignsDelete { SignColumn, fg = DiffDelete.bg },
+    GitSignsAdd    { SignColumn, fg = green.mid },
+    GitSignsChange { SignColumn, fg = yellow.mid },
+    GitSignsDelete { SignColumn, fg = red.mid },
 
     -- Folds
     Folded     { bg = bw.dark, fg = bw.lightgrey },
