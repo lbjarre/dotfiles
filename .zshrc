@@ -7,6 +7,12 @@ export PATH="${HOME}/bin:${PATH}"
 autoload -Uz compinit
 compinit
 
+# If we are on macOS: I want to have some homebrew binaries earlier in PATH so
+# we prefer them from native binaries from the OS.
+if [ $(uname -s) = "Darwin" ]; then
+    export PATH="$(brew --prefix)/opt/sqlite/bin:${PATH}"
+fi
+
 ## Export TTY for GPG, needed for the password prompt
 export GPG_TTY=$(tty)
 

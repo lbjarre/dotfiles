@@ -33,10 +33,9 @@
 
 (fn files-nv []
   "Fuzzy find files in northvolt source"
-  (builtin.find_files
-    {:cwd "~/src/github.com/northvolt"
-     :hidden true
-     :file_ignore_patterns [".*/.git/"]}))
+  (builtin.find_files {:cwd "~/src/github.com/northvolt"
+                       :hidden true
+                       :file_ignore_patterns [".*/.git/"]}))
 
 (fn search-buf []
   "Fuzzy find content in the buffer."

@@ -80,14 +80,10 @@ return require('packer').startup(function(use)
   }
   use 'nvim-telescope/telescope-fzy-native.nvim'
 
-  use {
-    'akinsho/toggleterm.nvim',
-    config = function() require('toggleterm').setup() end,
-  }
+  use 'akinsho/toggleterm.nvim'
 
   -- Look & feel
   use 'rktjmp/lush.nvim'
-  use 'simrat39/symbols-outline.nvim' -- TODO: configure
   use {
     'kyazdani42/nvim-web-devicons',
     config = function() require('nvim-web-devicons').setup {} end,
@@ -100,14 +96,6 @@ return require('packer').startup(function(use)
       dressing.patch()
     end,
   }
-  use {
-    'rcarriga/nvim-notify',
-    config = function()
-      -- TODO: getting a lot of notifications around highlight groups on this
-      -- that makes nvim basically useless, need to figure it out.
-      -- vim.notify = require('notify')
-    end
-  }
 
   -- ZenMode, nice for decluttering or showing specific codeblocks
   use {
@@ -115,12 +103,12 @@ return require('packer').startup(function(use)
     config = function() require('true-zen').setup() end,
   }
 
-  -- A Treesitter aware widget for the statusline, showing which class/func/etc
-  -- the cursor is currently on.
+  -- An LSP aware widget for the statusline, showing which class/func/etc the
+  -- cursor is currently on.
   use {
-    "SmiteshP/nvim-gps",
-    requires = { "nvim-treesitter/nvim-treesitter" },
-    config = function() require('nvim-gps').setup() end,
+    "SmiteshP/nvim-navic",
+    requires = { "neovim/nvim-lspconfig" },
+    --config = function() require('nvim-navic').setup() end,
   }
 
   -- Commenting lines.
@@ -174,7 +162,6 @@ return require('packer').startup(function(use)
   use 'folke/which-key.nvim' -- UI for showing keybinds
   use 'rhysd/git-messenger.vim' -- Git integrations
   use 'mhinz/vim-startify' -- Start screen
-  use 'justinmk/vim-dirvish' -- Directory explorer
   use 'jbyuki/venn.nvim' -- ASCII box diagram drawing
   use({
     'iamcco/markdown-preview.nvim',

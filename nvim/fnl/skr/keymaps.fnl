@@ -1,6 +1,6 @@
 (local skr-tlscp (require :skr.telescope-fnl))
 (local tlscp     (require :telescope.builtin))
-(local lsp-diag  (require :vim.lsp.diagnostic))
+(local diag      (require :vim.diagnostic))
 (local lsp-buf   (require :vim.lsp.buf))
 (local dap       (require :dap))
 (local dapui     (require :dapui))
@@ -30,8 +30,8 @@
 (nmap :<leader>fn skr-tlscp.files-nv)
 
 ;; LSP
-(nmap :dn         lsp-diag.goto_next)
-(nmap :dp         lsp-diag.goto_prev)
+(nmap :dn         diag.goto_next)
+(nmap :dp         diag.goto_prev)
 (nmap :K          lsp-buf.hover)
 (nmap :<leader>la lsp-buf.code_action)
 (nmap :gd         skr-tlscp.lsp-def)

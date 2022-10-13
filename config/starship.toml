@@ -6,6 +6,7 @@ $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
+$aws\
 $jobs\
 $cmd_duration\
 $line_break\
@@ -18,3 +19,7 @@ fish_style_pwd_dir_length = 1
 
 [jobs]
 symbol = "+ "
+
+[aws]
+format = "[$symbol$profile]($style) "
+style = "bold yellow"

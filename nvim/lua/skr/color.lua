@@ -16,15 +16,15 @@ local blue = {
 }
 
 local green = {
-  light = hsl(150, 30, 40),
-  mid = hsl(150, 30, 30),
-  dark = hsl(150, 30, 15),
+  light = hsl(170, 20, 40),
+  mid = hsl(170, 20, 30),
+  dark = hsl(170, 20, 15),
 }
 
 local red = {
-  light = hsl(360, 45, 60),
-  mid = hsl(360, 45, 35),
-  dark = hsl(360, 45, 20),
+  light = hsl(360, 40, 60),
+  mid = hsl(360, 40, 35),
+  dark = hsl(360, 40, 20),
 }
 
 local yellow = {

@@ -1,6 +1,7 @@
 local lspconfig = require('lspconfig')
-local ext_diagnostic = require('lsp_extensions.workspace.diagnostic')
+--local ext_diagnostic = require('lsp_extensions.workspace.diagnostic')
 local ext_inlay_hints = require('lsp_extensions.inlay_hints')
+local navic = require('nvim-navic')
 
 local servers = {
   'rust_analyzer',
@@ -25,7 +26,7 @@ local ft_autofmt = {
 }
 
 -- Custom on_attach function
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
 
   -- Enable inlay hints for rust, thanks TJ!
@@ -37,6 +38,8 @@ local on_attach = function(client)
   if vim.tbl_contains(ft_autofmt, filetype) then
       vim.cmd [[autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
   end
+
+  navic.attach(client, bufnr)
 end
 
 local M = {}
@@ -46,9 +49,9 @@ M.setup = function()
   for _, server in ipairs(servers) do
     lspconfig[server].setup { 
       on_attach = on_attach,
-      handlers = {
-        ['textDocument/publishDiagnostics'] = vim.lsp.with(ext_diagnostic.handler, { signs = { severity_limit = 'Error' } }),
-      },
+      -- handlers = {
+      --   ['textDocument/publishDiagnostics'] = vim.lsp.with(ext_diagnostic.handler, { signs = { severity_limit = 'Error' } }),
+      -- },
     }
   end
 end

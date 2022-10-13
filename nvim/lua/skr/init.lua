@@ -85,8 +85,11 @@ opt.showmode = false
 -- autocomplete options, don't allow for willy nilly inserts without me telling it to
 opt.completeopt = 'menu,menuone,noinsert'
 
--- custom statusline
+-- Status lines 
+-- Statusline eval from separate module (fnl/skr/statuslime.fnl)
 opt.statusline = [[%!luaeval("R('skr.statuslime').statusline()")]]
+opt.winbar     = "%f"
+opt.laststatus = 3  -- Set global statusline for the entire screen
 
 
 -- keymaps
@@ -119,10 +122,12 @@ cmp.setup {
 }
 R('skr.lsp').setup()
 R('skr.dap')
+R('skr.toggleterm').setup()
 -- R('skr.snippets').setup()
 -- R('indent_guides').setup()
 R('which-key').setup()
 -- R('skr.color')
+require('skr.hydra').setup()
 
 require('nvim-ts-autotag').setup()
 
@@ -146,13 +151,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
-local org = require('orgmode')
-org.setup_ts_grammar()
-org.setup({
-  org_agenda_files       = '~/org/**/*',
-  org_default_notes_file = '~/org/notes.org',
-})
-
 local zkhome = vim.fn.expand("~/zk")
 require('telekasten').setup({
   home      = zkhome,
@@ -167,26 +165,5 @@ local au_yank = vim.api.nvim_create_augroup("Yank", {})
 vim.api.nvim_create_autocmd("TextYankPost", {
   group    = au_yank,
   callback = function() vim.highlight.on_yank() end,
-})
-
--- Autocmds for terminal mode: want to turn off left column in terminals.
-local function set_win_lcol(on_off)
-  vim.wo.number = on_off
-  vim.wo.relativenumber = on_off
-  if on_off then
-    vim.wo.signcolumn = 'yes'
-  else
-    vim.wo.signcolumn = 'no'
-  end
-end
-
-local au_term = vim.api.nvim_create_augroup("terminal", {})
-vim.api.nvim_create_autocmd("TermOpen", {
-  group    = au_term,
-  callback = function() set_win_lcol(false) end,
-})
-vim.api.nvim_create_autocmd("TermClose", {
-  group    = au_term,
-  callback = function() set_win_lcol(true) end,
 })
 
