@@ -1,5 +1,5 @@
 (local hydra (require :hydra))
-(local tlscp (require :skr.telescope-fnl))
+(local tlscp (require :skr.telescope))
 (local gitsigns (require :gitsigns))
 
 (fn hydra-git []

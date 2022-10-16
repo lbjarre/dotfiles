@@ -112,7 +112,7 @@
                                 (fmt-mode))}
                    navic (when (navic-available?)
                            {:s (.. " " (navic-location))
-                            :hl hl-alt})]
+                            :hl hl-main})]
                [mode navic])
 
         ;; Separator in the middle, pushing left and right side to each end.

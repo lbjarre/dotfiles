@@ -1,10 +1,10 @@
-(local ls (require :luasnip))
-(local extras-fmt (require :luasnip.extras.fmt))
-(local t ls.text_node)
-(local i ls.insert_node)
-(local c ls.choice_node)
-(local d ls.dynamic_node)
-(local f ls.function_node)
+(local {:text_node t
+        :insert_node i
+        :choice_node c
+        :dynamic_node d
+        :func_literal f
+        :snippet mk-snippet} (require :luasnip))
+(local {:fmt extras/fmt} (require :luasnip.extras.fmt))
 
 (fn nil? [x] (= x nil))
 (fn not-nil? [x] (not (nil? x)))
@@ -12,8 +12,7 @@
 (fn fmt [snippet args]
   "Creates a fmt node, but defaults to the delimiters `<>` since `{}` are
   already pretty well used in go."
-  (let [fmt-orig extras-fmt.fmt]
-    (fmt-orig snippet args {:delimiters "<>"})))
+  (extras/fmt snippet args {:delimiters "<>"}))
 
 (local snippet-test-table
   (let [snippet
@@ -35,7 +34,7 @@
               (i 2 "case 1")
               (i 3 "t.Skip(\"not implemented yet\")")]
         root (fmt snippet args)]
-    (ls.snippet "testtable" root)))
+    (mk-snippet "testtable" root)))
 
 (local snippet-iferr
   (let [snippet
@@ -44,7 +43,7 @@
 }"
         args [(i 1 "")]
         root (fmt snippet args)]
-      (ls.snippet "iferr" root)))
+      (mk-snippet "iferr" root)))
 
 (fn setup-treesitter-query []
   (vim.treesitter.set_query
@@ -115,7 +114,7 @@
 }")
   (local args [(f 1 get-return-values)])
   (local root (fmt snippet args))
-  (ls.snippet "iferrv2" root))
+  (mk-snippet "iferrv2" root))
 
 (fn setup []
   (setup-treesitter-query))

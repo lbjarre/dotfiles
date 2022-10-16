@@ -1,4 +1,4 @@
-(local skr-tlscp (require :skr.telescope-fnl))
+(local skr-tlscp (require :skr.telescope))
 (local tlscp     (require :telescope.builtin))
 (local diag      (require :vim.diagnostic))
 (local lsp-buf   (require :vim.lsp.buf))
