@@ -1,19 +1,13 @@
 (local {:get_location navic-location
         :is_available navic-available?} (require :nvim-navic))
 
-(local {:api {:nvim_get_mode api/get-mode}
+(local {:api {:nvim_get_mode api/get-mode
+              :nvim_buf_get_option api/buf-get-opt}
         :lsp {:get_active_clients lsp/get-active-clients}} vim)
-
-(fn nil? [x]
-  (= x nil))
 
 (fn map [xs func]
   (icollect [_ x (ipairs xs)]
     (func x)))
-
-(fn -># [x func]
-  "Define function and apply the argument to it. Useful in (->) forms."
-  (func x))
 
 ;; highlight group names
 ;; Main and Alt hightlight groups
@@ -58,78 +52,76 @@
    :!   {:name "shell"}
    :t   {:name "terminal"}})
 
-(fn fmt-mode [mode-short]
-  "format mode for status line"
-  (local hl-default hl-normal)
-  (-> mode-printname
-      (. mode-short)
-      (match
-        ;; name and hl group -> use all
-        {: name : hl} {: name : hl}
-        ;; just name -> default hl group
-        {: name}      {: name :hl hl-default}
-        ;; otherwise -> default hl group and raw mode name
-        _             {:name mode-short :hl hl-default})
-      (-># #(.. (hl-esc $1.hl)
-                " "
-                $1.name))))
+(fn fmt-mode [{: mode}]
+  "Format vim mode for status line.
+
+  Takes input as received from the `nvim_get_mode` API."
+  (let [{: name :hl ?hl} (-> mode-printname
+                             (. mode))
+        hl (or hl hl-normal)]
+    {: name : hl}))
 
 (fn fmt-lsp [clients]
   "format attached lsp clients for status line"
-  (-> (if (nil? clients) 0  ;; grab number of clients in a nil-safe way.
-          (length clients))
-      (match
-        ;; no clients -> empty string
-        0 ""
-        ;; less or equal than three clients -> comma separated names
-        (where n (<= n 3)) (-> clients
-                               (map #$1.name)
-                               (table.concat ","))
-        ;; more than three clients -> just print the number of clients
-        _ (tostring n))))
+  (-?> clients
+       (length)
+       (match
+         ;; no clients -> nil
+         0 nil
+         ;; less or equal than three clients -> comma separated names
+         (where n (<= n 3)) (-> clients
+                                (map #$1.name)
+                                (table.concat ","))
+         ;; more than three clients -> just print the number of clients
+         _ (tostring n))))
 
-(fn fmt-segments [segments]
-  "format segments in the status line"
-
-  (fn fmt [{: s : hl}]
-    "fmt a single segment of {:s text :hl opt-hl?}"
-    (if (nil? hl) s          ;; no hl specifier, just the text
-        (.. (hl-esc hl) s))) ;; or include the hl specifier too, escaped
-
-  (fn reduce [xs func]
-    "reduce by table.concat"
-    (-> xs
-        (map func)
-        (table.concat " ")))
-
-  (reduce segments #(reduce $1 fmt)))
+(fn with-prefix [x prefix]
+  "Returns '${prefix}${x}' if x is not nil or empty, else ''."
+  (if (= nil x) ""
+      (= "" x) ""
+      (.. prefix x)))
 
 (fn statusline []
-  "string for current statusline"
-  (let [;; Left side: vim mode and LSP outline (if available).
-        left (let [mode {:s (-> (api/get-mode)
-                                (. :mode)
-                                (fmt-mode))}
-                   navic (when (navic-available?)
-                           {:s (.. " " (navic-location))
-                            :hl hl-main})]
-               [mode navic])
+  "Format statusline string.
+
+  Can be used with the `vim.opt.statusline` option with `!luaeval`:
+    !luaeval(\"require('skr.statuslime').statusline()\")"
+  (let [;; Vim mode.
+        {:name mode-name :hl mode-hl} (-> (api/get-mode)
+                                          (fmt-mode))
+
+        ;; LSP outline, when availabe.
+        navic (-> (navic-available?)
+                  (if (navic-location) ""))
 
         ;; Separator in the middle, pushing left and right side to each end.
-        sep [{:s "%=" :hl hl-main}]
+        sep "%="
 
-        ;; Right side: LSP clients and file specifics.
-        right (let [hl-set {:s ""
-                            :hl hl-alt}
-                    lsp (-> (lsp/get-active-clients)
-                            (fmt-lsp)
-                            (-># #(when (not= $1 "")
-                                        (.. "lsp:" $1)))
-                            (-># #{:s $1}))
-                    pos {:s "pos:[%l:%c:%p%%]"}
-                    ft {:s (.. "ft:" vim.bo.filetype)}]
-                [hl-set lsp pos ft])]
+        ;; Active LSP clients, if any.
+        lsp (-> (lsp/get-active-clients)
+                (fmt-lsp)
+                (with-prefix "lsp:"))
 
-    (fmt-segments [left sep right])))
+        ;; File position.
+        pos "pos:[%l:%c:%p%%]"
+
+        ;; File type.
+        ft (-> (api/buf-get-opt 0 :filetype)
+               (with-prefix "ft:"))
+
+        ;; All together now!
+        segments [(hl-esc mode-hl)
+                  mode-name
+                  (hl-esc hl-main)
+                  navic
+                  sep
+                  (hl-esc hl-alt)
+                  lsp
+                  pos
+                  ft
+                  ""]] ;; empty segment in the end to add padding.
+
+    (-> segments
+        (table.concat " "))))
 
 {: statusline}
