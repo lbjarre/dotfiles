@@ -8,8 +8,8 @@
 (fn cut [elems sep]
   "Cut the list elems at the first element that equals sep.
 
-  Returns either a two-element list with the elements before and after the sep,
-  or a table with a single :error key.
+  Returns a two-element list with the elements before and after the sep, or
+  errors if there are no sep element in the list.
 
   Examples:
 
@@ -25,7 +25,7 @@
                       (table.insert before head)
                       (cut-recursive before tail))
       ;; Else we are at the end: error.
-      _ {:error "no match"}))
+      _ (error (.. "missing element " sep))))
 
   (cut-recursive [] elems))
 

@@ -52,14 +52,18 @@
    :!   {:name "shell"}
    :t   {:name "terminal"}})
 
-(fn fmt-mode [{: mode}]
+(fn fmt-mode [mode-output]
   "Format vim mode for status line.
 
   Takes input as received from the `nvim_get_mode` API."
-  (let [{: name :hl ?hl} (-> mode-printname
-                             (. mode))
-        hl (or hl hl-normal)]
-    {: name : hl}))
+  (let [{: mode} mode-output
+        hl-default hl-normal]
+    (-> mode-printname
+        (. mode)
+        (match
+          {: name : hl} {: name : hl}
+          {: name}      {: name :hl hl-default}
+          _             {:name mode :hl hl-default}))))
 
 (fn fmt-lsp [clients]
   "format attached lsp clients for status line"

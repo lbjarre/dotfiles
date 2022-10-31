@@ -5,7 +5,7 @@
 (local {:api {:nvim_buf_get_option buf-get-opt
               :nvim_create_augroup create-augroup
               :nvim_create_autocmd create-autocmd}
-        :lsp {:buf {:formatting_sync fmt-sync}}
+        :lsp {:buf {:format fmt}}
         :tbl_contains contains?} vim)
 
 (local servers [:rust_analyzer
@@ -27,6 +27,10 @@
                    :hcl])
 
 (fn set-inlay-hints []
+  "Enable inlay-hints for the current buffer.
+
+  TODO: the repo for this is archived, probably should inline this in my repo
+  instead of using the upstream."
   (inlay-hints.request {:aligned true
                         :prefix  " » "}))
 
@@ -45,16 +49,17 @@
       (create-autocmd [:BufEnter
                        :BufWritePost] {:group :LspInlayHints
                                        :buffer buf
-                                       :callback set-inlay-hints}))
+                                       :callback #(set-inlay-hints)}))
     ;; Set autoformatting.
     (when (contains? ft-autofmt ft)
       (create-autocmd :BufWritePre {:group :LspAutofmt
                                     :buffer buf
-                                    :callback fmt-sync})))
+                                    :callback #(fmt)})))
 
   ;; Run the setup for each of the servers.
+  (local opts {:on_attach on-attach})
   (each [_ server (ipairs servers)]
-    (let [setup (. lsp-config server :setup)]
-      (setup {:on_attach on-attach}))))
+    (let [{: setup} (. lsp-config server)]
+      (setup opts))))
 
 {: setup}
