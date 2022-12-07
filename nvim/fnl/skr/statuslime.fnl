@@ -77,7 +77,7 @@
                                 (map #$1.name)
                                 (table.concat ","))
          ;; more than three clients -> just print the number of clients
-         _ (tostring n))))
+         n (tostring n))))
 
 (fn with-prefix [x prefix]
   "Returns '${prefix}${x}' if x is not nil or empty, else ''."

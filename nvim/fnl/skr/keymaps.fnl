@@ -1,9 +1,10 @@
-(local skr-tlscp (require :skr.telescope))
-(local tlscp     (require :telescope.builtin))
-(local diag      (require :vim.diagnostic))
-(local lsp-buf   (require :vim.lsp.buf))
-(local dap       (require :dap))
-(local dapui     (require :dapui))
+(local skr-tlscp   (require :skr.telescope))
+(local tlscp       (require :telescope.builtin))
+(local diag        (require :vim.diagnostic))
+(local lsp-buf     (require :vim.lsp.buf))
+(local dap         (require :dap))
+(local dapui       (require :dapui))
+(local neotree/cmd (require :neo-tree.command))
 
 (fn setup []
   (fn map [mode key cmd]
@@ -17,6 +18,8 @@
   (map [:n :v] :<leader>y "\"*y")
   (map :n      :<leader>p "\"*p")
   (map :n      :<leader>P "\"*P")
+
+  (map :n :<leader>t #(neotree/cmd.execute {:toggle true}))
 
   ;; Telescope
   (map :n :<leader>ff skr-tlscp.files)
@@ -44,5 +47,7 @@
   (map :n :<leader>dc dap.continue)
   (map :n :<leader>ds dap.step_over)
   (map :n :<leader>du dapui.toggle))
+
+(setup)
 
 {: setup}

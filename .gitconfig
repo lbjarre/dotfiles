@@ -18,6 +18,7 @@
 	chb = checkout -b
 	pfwl = push --force-with-lease
 	amend = commit --amend --no-edit
+	diffr = diff --no-ext-diff
 [init]
 	defaultBranch = main
 [push]

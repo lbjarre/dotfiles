@@ -17,8 +17,15 @@ function R(name)
   return require(name)
 end
 
+require "tangerine".setup {
+  target = vim.fn.stdpath("data") .. "/tangerine",
+  compiler = {
+    verbose = false,
+    hooks = {"onsave", "oninit"},
+  }
+}
+
 -- plugins
-R('hotpot')
 R('skr.options').setup()
 
 -- other required setup

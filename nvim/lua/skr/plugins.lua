@@ -6,12 +6,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup(function(use)
-  -- hotpot, for fennel goodness
-  use {
-    'rktjmp/hotpot.nvim',
-    config = function() require("hotpot") end
-  }
-
+	use 'udayvir-singh/tangerine.nvim'
   -- LSP
   use {
     'neovim/nvim-lspconfig',
@@ -179,4 +174,9 @@ return require('packer').startup(function(use)
   use { 'cespare/vim-toml', branch = "main" }
   use 'b4b4r07/vim-hcl'
   use 'towolf/vim-helm'
+
+  -- Just for fun stuff
+
+  -- Plugin for running cellular automata based on buffer content
+  use 'eandrju/cellular-automaton.nvim'
 end)

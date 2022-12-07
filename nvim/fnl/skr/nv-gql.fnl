@@ -27,26 +27,31 @@
         (error (.. "jq exited with code " code)))))
 
 (fn parse [lines]
-  (fn pcut [str delim]
-    (pcall cut str delim))
+  "Parse lines from a nv-gql buffer into a state object."
+
+  (fn pcut [str delim err]
+    "Small helper to call cut and add a custom error message if it fails."
+    (-> (pcall cut str delim)
+        (match
+          (true res) res
+          (false _) (error err))))
 
   (-> lines
       ;; Cut at the delim-query line, which should be the first line
-      (pcut delim-query)
-      ;; Check if it was successful
-      (match
-        (true [_ after]) after
-        (false _) (error "missing query delimiter"))
+      (pcut delim-query "missing query delimiter")
+      ;; Unpack the result: we only want the lines after the delim-query line.
+      (. 2)
       ;; Cut again at the delim-resp line, which should now separate the query
       ;; from the response
-      (pcut delim-resp)
-      ;; Check again if it was successful
+      (pcut delim-resp "missing resp delimiter")
+      ;; Unpack the result and concat the lines with newlines so we get single
+      ;; strings instead of lists of strings.
       (match
-        (true [query resp]) {:query (table.concat query "\n")
-                             :resp  (table.concat resp "\n")}
-        (false _) (error "missing resp delimiter"))))
+        [query resp] {:query (table.concat query "\n")
+                      :resp  (table.concat resp "\n")})))
 
 (fn write [buf {: query : resp}]
+  "Write the state into the given buffer."
   (let [query-lines (split query "\n")
         resp-lines (json-pretty-print resp)
         lines (flatten [delim-query
@@ -85,6 +90,9 @@
                 : min
                 : sec})))
 
+  (fn is-valid? [expires-at]
+    (< (os.time) expires-at))
+
   (let [;; Expand the home directory for the locally cached file.
         file (vim.fn.expand "~/.nclogin/prod-creds.json")
 
@@ -93,17 +101,17 @@
          :expires_at expiry} (read file)
 
         ;; Parse the expiry date and compare to now.
-        expires-at (parse-time expiry)
-        now (os.time)
-        is-valid? (< now expires_at)]
+        expires-at (parse-time expiry)]
 
     ;; Either return the token if it still is valid, or refresh it and retry.
-    (if is-valid? token
+    (if (is-valid? expires-at)
+        token
         (do
           (refresh)
           (read-token)))))
 
 (fn send-query [query]
+  "Post the query to the API server, returning the raw HTTP response."
   (let [;; Read token from local cache.
         token (read-token)
 
@@ -112,7 +120,7 @@
         body (json.encode {: query})
         raw ["--header" (.. "Authorization: Bearer " token)
              "--header" "Content-Type: application/json; charset=utf-8"
-             "--header" "Accept: application/json; charset=urf-8"]]
+             "--header" "Accept: application/json; charset=utf-8"]]
 
       ;; Post the query.
       (curl.post {: url
@@ -120,6 +128,7 @@
                   : raw})))
 
 (fn start []
+  "Start a new instance of nv-gql in the current window."
   (let [;; Create new buffer for the querying
         buf (create-buf true true)
         ;; We want to set the buffer to the current window, so get that
@@ -137,6 +146,10 @@
       (write buf state))))
 
 (fn post []
+  "Post a query from the current buffer.
+
+  This will try to parse the state from the current buffer, send the request,
+  and update the response part of the buffer with the response."
   (let [buf (get-current-buf)
         ;; Parse the query from the buffer
         query (-> buf
