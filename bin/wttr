@@ -6,55 +6,71 @@ CACHE_FILE=${WTTR_CACHE:-"${HOME}/.cache/wttr/cached"}
 # cache ttl in seconds
 CACHE_TTL=${WTTR_CACHE_TTL:-300}
 
+# Emit a debug line to stderr, if WTTR_DEBUG is set.
 debug() {
     # set the WTTR_DEBUG env var to print debug logs
-    [ ${WTTR_DEBUG} ] && echo "$@" >&2
+    [ "${WTTR_DEBUG}" ] && echo "$@" >&2
 }
 
-debug "cache: file=${CACHE_FILE}, ttl=${CACHE_TTL}"
 
-# curl required
-if [ ! $(command -v curl) ]; then
-    echo "error: missing curl"
-    exit 1
-fi
-# create cache dir if not present
-if [ ! -d $(dirname ${CACHE_FILE}) ]; then
-    debug "creating dir for cache"
-    mkdir -p $(dirname ${CACHE_FILE})
-fi
+# Runs setup.
+setup() {
+    # curl required, check that it's installed.
+    if ! command -v curl; then
+        echo "error: missing curl"
+        exit 1
+    fi
 
-read_cache() {
-    read FETCHED_AT
-    NOW=$(date +%s)
-    DIFF=$((NOW - FETCHED_AT))
-    if [ ${DIFF} -lt ${CACHE_TTL} ]; then
-        debug "cache hit: fetched at=${FETCHED_AT}, now=${NOW}, diff=${DIFF}"
-        read CACHED_RESULT
-        echo ${CACHED_RESULT}
+    # Create cache dir if not present.
+    cache_dir=$(dirname "${CACHE_FILE}")
+    if [ ! -d "${cache_dir}" ]; then
+        debug "creating dir for cache"
+        mkdir -p "${cache_dir}"
     fi
 }
 
+# Reads value from cache from stdin. Prints the result to stdout if its a cache hit.
+read_cache() {
+    read -r FETCHED_AT
+    NOW=$(date +%s)
+    DIFF=$((NOW - FETCHED_AT))
+    if [ ${DIFF} -lt "${CACHE_TTL}" ]; then
+        debug "cache hit: fetched at=${FETCHED_AT}, now=${NOW}, diff=${DIFF}"
+        read -r CACHED_RESULT
+        echo "${CACHED_RESULT}"
+    fi
+}
+
+# Writes the value $1 in the cache format to stdout.
 write_cache() {
     NOW=$(date +%s)
     printf "%s\n%s\n" "${NOW}" "${1}"
 }
 
-# check first in cache
-if [ -f ${CACHE_FILE} ]; then
-    CACHED=$(read_cache < ${CACHE_FILE})
-    if [ "${CACHED}" ]; then
-        echo ${CACHED}
-        exit 0
+main() {
+    # Run setup.
+    if ! setup; then exit 1; fi
+
+    debug "cache: file=${CACHE_FILE}, ttl=${CACHE_TTL}"
+
+    # Check first if cached value is still live.
+    if [ -f "${CACHE_FILE}" ]; then
+        CACHED=$(read_cache < "${CACHE_FILE}")
+        if [ "${CACHED}" ]; then
+            echo "${CACHED}"
+            exit 0
+        fi
     fi
-fi
 
-# else fetch from wttr.in
-debug "cache miss, fetching from wttr.in"
-WEATHER=$(curl wttr.in/?format="%c+%t+(%f)+%p\n" 2>/dev/null)
+    # Else, fetch from wttr.in.
+    debug "cache miss, fetching from wttr.in"
+    WEATHER=$(curl wttr.in/?format="%c+%t+(%f)+%p\n" 2>/dev/null)
 
-# write to cache
-write_cache "${WEATHER}" > ${CACHE_FILE}
+    # Write result to cache.
+    write_cache "${WEATHER}" > "${CACHE_FILE}"
 
-# echo to stdout
-echo $WEATHER
+    # Echo result to stdout.
+    echo "${WEATHER}"
+}
+
+main < /dev/null

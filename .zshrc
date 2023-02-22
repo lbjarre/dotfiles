@@ -27,6 +27,9 @@ alias vi=nvim
 ## go binaries
 [ $(command -v go) ] && export PATH="${PATH}:$(go env GOPATH)/bin"
 
+## ocaml toolchain
+[ $(command -v opam) ] && eval $(opam env --switch=default --shell=zsh)
+
 ## Debian ls aliases (with some modifications) that just got stuck in my head
 if [ $(command -v exa) ]; then
     alias ls="exa --group-directories-first"

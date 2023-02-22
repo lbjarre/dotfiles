@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 fzf_list() {
     git branch --list --format='%(refname:short)#{#%(refname:short){%(upstream:remotename) %(upstream:track)' \

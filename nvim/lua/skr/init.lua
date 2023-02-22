@@ -1,5 +1,5 @@
--- plugins
-require('skr.plugins')
+-- Plugins
+require('skr.packages')
 
 -- P is a print-inspect helper, prints the expanded table and returns the
 -- argument back to the caller.
@@ -17,13 +17,6 @@ function R(name)
   return require(name)
 end
 
-require "tangerine".setup {
-  target = vim.fn.stdpath("data") .. "/tangerine",
-  compiler = {
-    verbose = false,
-    hooks = {"onsave", "oninit"},
-  }
-}
 
 -- plugins
 R('skr.options').setup()

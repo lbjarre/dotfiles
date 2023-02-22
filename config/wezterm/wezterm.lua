@@ -2,8 +2,9 @@ local wezterm = require('wezterm')
 
 return {
   -- Setup font
-  font = wezterm.font('Iosevka Nerd Font Mono'),
+  font = wezterm.font('CaskaydiaCove Nerd Font Mono'),
   font_size = 14.0,
+  line_height = 1.1,
   -- Disable ligatures
   harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
   -- Color scheme: there are a whole bunch of these available which you can

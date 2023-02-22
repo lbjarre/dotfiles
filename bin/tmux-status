@@ -6,9 +6,9 @@ usage() {
 }
 
 _status_k8s() {
-    kubectl config get-contexts $(kubectl config current-context) | \
-        tail -n1 | \
-        awk '{ printf("k8s: %s/%s", $3, $5) }'
+    kubectl config get-contexts "$(kubectl config current-context)" \
+        | tail -n 1 \
+        | awk '{ printf("ctx:%s ns:%s", $3, $5) }'
 }
 
 _status_session() {

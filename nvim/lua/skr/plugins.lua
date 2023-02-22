@@ -13,6 +13,7 @@ return require('packer').startup(function(use)
     config = function() require('skr.lsp').setup() end,
   }
   use 'nvim-lua/lsp_extensions.nvim'
+  use 'jose-elias-alvarez/null-ls.nvim'
   -- use 'nvim-lua/lsp-status.nvim'
   use 'folke/trouble.nvim'
   use {
@@ -74,8 +75,6 @@ return require('packer').startup(function(use)
       config = function() require('skr.telescope').setup() end,
   }
   use 'nvim-telescope/telescope-fzy-native.nvim'
-
-  use 'akinsho/toggleterm.nvim'
 
   -- Look & feel
   use 'rktjmp/lush.nvim'
