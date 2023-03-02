@@ -1,7 +1,6 @@
 (local luasnip (require :luasnip))
 
-(local filetypes [:all
-                  :go])
+(local filetypes [:all :go])
 
 (fn require-snip [ft]
   "require the snippets module and gets the `.snippets` key"
@@ -14,9 +13,9 @@
   (when setup
     (setup)))
 
-(local snippets
-  (collect [_ ft (ipairs filetypes)]
-    ft (require-snip ft)))
+(local snippets (collect [_ ft (ipairs filetypes)]
+                  ft
+                  (require-snip ft)))
 
 (fn setup []
   (each [_ ft (ipairs filetypes)]

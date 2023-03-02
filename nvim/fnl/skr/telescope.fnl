@@ -1,8 +1,8 @@
 ;; skr.telescope-fnl
 ;; Exported functions for telescope related fuzzy search prompts.
-(local tlscp      (require :telescope))
-(local builtin    (require :telescope.builtin))
-(local themes     (require :telescope.themes))
+(local tlscp (require :telescope))
+(local builtin (require :telescope.builtin))
+(local themes (require :telescope.themes))
 (local previewers (require :telescope.previewers))
 
 (local opt-timeout {:timeout 3000})
@@ -11,13 +11,18 @@
   "Helper for merging tables."
   (vim.tbl_extend :force ...))
 
-(local vimgrep-arg ["rg" "--no-heading" "--with-filename"
-                    "--line-number" "--column" "--smart-case" "--hidden"])
+(local vimgrep-arg [:rg
+                    :--no-heading
+                    :--with-filename
+                    :--line-number
+                    :--column
+                    :--smart-case
+                    :--hidden])
 
 (fn setup []
   "Setup telescope with defaults."
   (tlscp.setup {:defaults {:vimgrep_arguments vimgrep-arg
-                           :set_env {[:COLORTERM] "truecolor"}
+                           :set_env {[:COLORTERM] :truecolor}
                            :file_previewer previewers.vim_buffer_cat.new
                            :grep_previewer previewers.vim_buffer_vimgrep.new
                            :qflist_previewer previewers.vim_buffer_qflist.new}}))
@@ -35,13 +40,12 @@
   "Fuzzy find files in northvolt source"
   (builtin.find_files {:cwd "~/src/github.com/northvolt"
                        :hidden true
-                       :file_ignore_patterns [".*/.git/"]}))
+                       :file_ignore_patterns [:.*/.git/]}))
 
 (fn search-buf []
   "Fuzzy find content in the buffer."
-  (builtin.current_buffer_fuzzy_find
-    (themes.get_ivy {:layout_config {:prompt_position :top}
-                     :sorting_strategy :ascending})))
+  (builtin.current_buffer_fuzzy_find (themes.get_ivy {:layout_config {:prompt_position :top}
+                                                      :sorting_strategy :ascending})))
 
 (fn grep-string []
   "Fuzzy find for arbitrary text."
@@ -53,7 +57,8 @@
 
 (fn lsp-workspace-symbols []
   "Fuzzy find LSP workspace symbols."
-  (builtin.lsp_workspace_symbols (merge opt-timeout {:query (vim.fn.input "search: ")})))
+  (builtin.lsp_workspace_symbols (merge opt-timeout
+                                        {:query (vim.fn.input "search: ")})))
 
 (fn lsp-def []
   "Fuzzy find LSP definitions on current symbol."
