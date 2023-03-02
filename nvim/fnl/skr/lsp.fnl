@@ -30,6 +30,7 @@
                :haskell [:autofmt]
                :typescript [:autofmt]
                :typescriptreact [:autofmt]
+               :css [:autofmt]
                :ocaml [:autofmt]
                :terraform [:autofmt]
                :hcl [:autofmt]})
@@ -46,20 +47,6 @@
   TODO: the repo for this is archived, probably should inline this in my repo
   instead of using the upstream."
   (inlay-hints.request {:aligned true :prefix " » "}))
-
-(fn setup-null-ls []
-  "Sets up the null-ls sources."
-  (local {:builtins {:formatting fmt :diagnostics dgn :code_actions act}}
-         null-ls)
-  (local sources [fmt.prettierd
-                  fmt.eslint_d
-                  dgn.eslint_d
-                  act.eslint_d
-                  dgn.shellcheck
-                  act.shellcheck
-                  fmt.stylua
-                  fmt.fnlfmt])
-  (null-ls.setup {: sources}))
 
 (fn setup []
   ;; Create augroups
