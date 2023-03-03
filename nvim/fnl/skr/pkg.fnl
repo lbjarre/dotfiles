@@ -22,44 +22,6 @@
          (require)
          (. (or ?setup-fn :setup))))))
 
-(fn config-cmp []
-  (fn snippet/expand [{: body}]
-    (let [luasnip (require :luasnip)]
-      (luasnip.lsp_expand body)))
-
-  (let [cmp (require :cmp)
-        snippet {:expand snippet/expand}
-        mapping (cmp.mapping.preset.insert {:<C-Space> (cmp.mapping.complete)})
-        sources [{:name :nvim_lsp}
-                 {:name :buffer}
-                 {:name :path}
-                 {:name :luasnip}]
-        config {: snippet : mapping : sources}]
-    (cmp.setup config)))
-
-(fn config-treesitter []
-  (let [ts-configs (require :nvim-treesitter.configs)
-        enabled {:enable true}]
-    (ts-configs.setup {:autotag enabled
-                       :playground enabled
-                       :indent enabled
-                       :highlight enabled
-                       :textobjects {:select {:enable true
-                                              :lookahead true
-                                              :keymaps {:af "@function.outer"
-                                                        :if "@function.inner"}}}})))
-
-(fn config-neorg []
-  (let [neorg (require :neorg)
-        ws :notes
-        load {:core.defaults {}
-              :core.norg.concealer {}
-              :core.norg.dirman {:config {:default_workspace ws
-                                          :workspaces {ws "~/notes/neorg"}}}
-              :core.norg.completion {:config {:engine :nvim-cmp}}
-              :core.norg.journal {:config {:workspace ws}}}]
-    (neorg.setup {: load})))
-
 [;; Fennel transpilation.
  ;; This is already bootstrapped, but keeping it here will also update it with
  ;; the rest of these packages.
@@ -83,7 +45,7 @@
                                         :hrsh7th/cmp-path
                                         :hrsh7th/cmp-nvim-lsp
                                         :saadparwaiz1/cmp_luasnip]
-                         :config config-cmp})
+                         :config (setup :skr.cmp)})
  ;; Snippet engine.
  (pkg :L3MON4D3/LuaSnip)
  ;; Treesitter.
@@ -93,7 +55,7 @@
                       :nvim-treesitter/playground
                       :nvim-treesitter/nvim-treesitter-textobjects
                       :JoosepAlviste/nvim-ts-context-commentstring]
-       :config config-treesitter})
+       :config (setup :skr.treesitter)})
  ;; SSR: Structural search & replace. Pretty cool thing to search/replace with
  ;; treesitter queries, not entirely sure how useful it is yet though.
  (pkg :cshuaimin/ssr.nvim {:config (setup :ssr)})
@@ -146,7 +108,7 @@
  ;; Revamped orgmode for nvim. Testing it out!
  (pkg :nvim-neorg/neorg
       {:build ":Neorg sync-parsers"
-       :config config-neorg
+       :config (setup :skr.neorg)
        :dependencies [:nvim-lua/plenary.nvim]})
  ;; UI for showing keybinds
  (pkg :folke/which-key.nvim)
