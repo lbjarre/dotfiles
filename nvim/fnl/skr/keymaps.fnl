@@ -6,6 +6,7 @@
 (local dapui (require :dapui))
 (local neotree/cmd (require :neo-tree.command))
 (local ssr (require :ssr))
+(local noice-lsp (require :noice.lsp))
 
 (fn hard-reload []
   (local {: reload_module} (require :plenary.reload))
@@ -35,7 +36,7 @@
   ;; LSP
   (map :n :dn diag.goto_next)
   (map :n :dp diag.goto_prev)
-  (map :n :K lsp-buf.hover)
+  (map :n :K noice-lsp.hover)
   (map :n :<leader>la lsp-buf.code_action)
   (map :n :gd skr-tlscp.lsp-def)
   (map :n :gt lsp-buf.type_definition)
@@ -50,7 +51,9 @@
   (map :n :<leader>ds dap.step_over)
   (map :n :<leader>du dapui.toggle)
   ;; SSR
-  (map [:n :x] :<leader>sr #(ssr.open)))
+  (map [:n :x] :<leader>sr #(ssr.open))
+  ;; Octo
+  (map :n :<leader>gh "<cmd>Octo actions<cr>"))
 
 (setup)
 

@@ -17,13 +17,12 @@
                 :pylsp
                 :lua_ls
                 :tsserver
-                :graphql
                 :terraformls
                 :cssls])
 
 ;; Lookup from filetype to which LSP features to enable in the on-attach hook.
-(local ft-cfg {:go [:autofmt :inlay-hints]
-               ;; todo: inlay-hints, deprecated lsp_extensions does not work for gopls
+(local ft-cfg {;; TODO: inlay-hints is using the deprecated lsp_extensions
+               :go [:autofmt :inlay-hints]
                :rust [:autofmt :inlay-hints]
                :lua [:autofmt]
                :fennel [:autofmt]
@@ -38,8 +37,7 @@
 ;; Lookup if a filetype has an attr set in the table above.
 (fn has-cfg? [ft attr]
   (let [cfg (. ft-cfg ft)]
-    (if cfg
-        (contains? cfg attr) false)))
+    (if cfg (contains? cfg attr) false)))
 
 (fn set-inlay-hints []
   "Enable inlay-hints for the current buffer.
@@ -53,10 +51,7 @@
   (create-augroup :LspInlayHints {:clear true})
   (create-augroup :LspAutofmt {:clear true})
 
-  (fn on-attach [client buf]
-    "Defines the on_attach hook for the LSP client."
-    ;; Attach exensions
-    (navic.attach client buf)
+  (fn attach-autocmd [client buf]
     ;; Filetype dependent setup.
     (local ft (buf-get-opt buf :filetype))
     ;; Set inlay hints.
@@ -70,6 +65,12 @@
       (create-autocmd :BufWritePre
                       {:group :LspAutofmt :buffer buf :callback #(fmt)})))
 
+  (fn on-attach [client buf]
+    "Defines the on_attach hook for the LSP client."
+    (do
+      (navic.attach client buf)
+      (attach-autocmd client buf)))
+
   ;; Setup null-ls.
   (let [{:builtins {:formatting fmt :diagnostics dgn :code_actions act}} null-ls
         sources [fmt.prettierd
@@ -80,7 +81,7 @@
                  act.shellcheck
                  fmt.stylua
                  fmt.fnlfmt]
-        opts {: sources :on_attach on-attach}]
+        opts {: sources :on_attach attach-autocmd}]
     (null-ls.setup opts))
   ;; Run the setup for each of the servers.
   (local opts {:on_attach on-attach})

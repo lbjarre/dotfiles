@@ -6,9 +6,7 @@
         :snippet mk-snippet} (require :luasnip))
 
 (local {:fmt extras/fmt} (require :luasnip.extras.fmt))
-
-(fn nil? [x] (= x nil))
-(fn not-nil? [x] (not (nil? x)))
+(local {: nil? : not-nil?} (require :skr.std))
 
 (fn fmt [snippet args]
   "Creates a fmt node, but defaults to the delimiters `<>` since `{}` are
@@ -85,7 +83,7 @@
     (let [t (v:type)
           correct-type (or (= t :function_declaration)
                            (= t :method_declaration) (= t :func_literal))
-          not-set (= func-node nil)]
+          not-set (nil? func-node)]
       (when (and correct-type not-set)
         (set func-node v))))
   ;; Do query and get the zero values of the return types.

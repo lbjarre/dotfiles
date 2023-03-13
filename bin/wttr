@@ -12,13 +12,12 @@ debug() {
     [ "${WTTR_DEBUG}" ] && echo "$@" >&2
 }
 
-
 # Runs setup.
 setup() {
     # curl required, check that it's installed.
-    if ! command -v curl; then
+    if ! command -v curl > /dev/null; then
         echo "error: missing curl"
-        exit 1
+        return 1
     fi
 
     # Create cache dir if not present.
@@ -30,7 +29,7 @@ setup() {
 }
 
 # Reads value from cache from stdin. Prints the result to stdout if its a cache hit.
-read_cache() {
+read_weather() {
     read -r FETCHED_AT
     NOW=$(date +%s)
     DIFF=$((NOW - FETCHED_AT))
@@ -42,7 +41,7 @@ read_cache() {
 }
 
 # Writes the value $1 in the cache format to stdout.
-write_cache() {
+write_weather() {
     NOW=$(date +%s)
     printf "%s\n%s\n" "${NOW}" "${1}"
 }
@@ -55,7 +54,7 @@ main() {
 
     # Check first if cached value is still live.
     if [ -f "${CACHE_FILE}" ]; then
-        CACHED=$(read_cache < "${CACHE_FILE}")
+        CACHED=$(read_weather < "${CACHE_FILE}")
         if [ "${CACHED}" ]; then
             echo "${CACHED}"
             exit 0
@@ -67,7 +66,7 @@ main() {
     WEATHER=$(curl wttr.in/?format="%c+%t+(%f)+%p\n" 2>/dev/null)
 
     # Write result to cache.
-    write_cache "${WEATHER}" > "${CACHE_FILE}"
+    write_weather "${WEATHER}" > "${CACHE_FILE}"
 
     # Echo result to stdout.
     echo "${WEATHER}"

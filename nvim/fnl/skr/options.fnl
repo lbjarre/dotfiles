@@ -8,8 +8,6 @@
   ;; Looks.
   (set opt.background :dark)
   (set opt.termguicolors true)
-  ;; Still needs to be set via vim.cmd afaict...
-  (vim.cmd "colorscheme skr")
   ;; Add colored indications on col 80 and 100.
   (set opt.colorcolumn [80 100])
   ;; Whitespace characters.
@@ -60,27 +58,6 @@
   (set vim.g.startify_lists
        [{:type :dir :header [(.. "  MRU " (vim.fn.getcwd))]}])
   (set vim.g.startify_change_to_dir 0)
-  ;; Setup other modules.
-
-  (fn rsetup [mod opts]
-    (let [{: setup} (require mod)]
-      (setup opts)))
-
-  (rsetup :skr.keymaps)
-  (rsetup :skr.fnlsnip)
-  (rsetup :skr.lsp)
-  (rsetup :skr.toggleterm)
-  (rsetup :skr.hydra)
-  (rsetup :which-key)
-  (rsetup :nvim-ts-autotag)
-  (let [zk-home (vim.fn.expand "~/zk")
-        join (fn [...] table.concat ...
-               "/")]
-    (rsetup :telekasten
-            {:home zk-home
-             :dailies (join zk-home :daily)
-             :weeklies (join zk-home :weekly)
-             :templates (join zk-home :templates)}))
   ;; Create an autocommand for highlighting what you yank.
   (create-augroup :Yank {:clear true})
   (create-autocmd :TextYankPost {:group :Yank :callback #(hl-on-yank)}))

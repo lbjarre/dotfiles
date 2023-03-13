@@ -21,6 +21,7 @@
 
 (fn setup []
   "Setup telescope with defaults."
+  (tlscp.load_extension :noice)
   (tlscp.setup {:defaults {:vimgrep_arguments vimgrep-arg
                            :set_env {[:COLORTERM] :truecolor}
                            :file_previewer previewers.vim_buffer_cat.new

@@ -28,8 +28,12 @@ require('tangerine').setup({
 	},
 })
 
+-- Options
+require('skr.options').setup()
 -- Plugins
 local pkgs = require('skr.pkg')
 require('lazy').setup(pkgs)
--- Options
-require('skr.options').setup()
+-- Keymaps
+-- TODO(lb): probably should just set these in their appropriate package setup
+require('skr.keymaps')
+vim.cmd [[ colorscheme skr ]]

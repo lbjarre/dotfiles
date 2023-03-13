@@ -2,28 +2,49 @@
 # tmux-status: helper scripts for printing tmux status bar elements.
 
 usage() {
+    echo "tmux-status: helper script for printing tmux status bar elements."
     echo "Usage: tmux-status [category]"
+    echo
+    echo "Categories: session | k8s"
 }
 
 _status_k8s() {
-    kubectl config get-contexts "$(kubectl config current-context)" \
-        | tail -n 1 \
-        | awk '{ printf("ctx:%s ns:%s", $3, $5) }'
+    # Columns from `kubectl config get-contexts` are:
+    # 1: CURRENT (just a * on the currently selected one)
+    # 2: NAME
+    # 3: CLUSTER
+    # 4: AUTHINTO
+    # 5: NAMESPACE
+    ctx="$(kubectl config current-context)"
+    kubectl config get-contexts --no-headers "${ctx}" \
+        | awk '{ printf("ctx:%s ns:%s", $2, $5) }'
 }
 
 _status_session() {
     tmux display-message -p "#S"
 }
 
-case "${1}" in
-    session)
-        _status_session
-        ;;
-    k8s)
-        _status_k8s
-        ;;
-    *)
-        usage
-        exit 2
-        ;;
-esac
+_status_wttr() {
+    wttr
+}
+
+main() {
+    case "${1}" in
+        session)
+            _status_session
+            ;;
+        k8s)
+            _status_k8s
+            ;;
+        wttr)
+            _status_wttr
+            ;;
+        *)
+            usage
+            exit 2
+            ;;
+    esac
+}
+
+main "$@" < /dev/null 2>/dev/null
+

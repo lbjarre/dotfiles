@@ -4,6 +4,8 @@
 (local {:api {:nvim_get_mode api/get-mode :nvim_buf_get_option api/buf-get-opt}
         :lsp {:get_active_clients lsp/get-active-clients}} vim)
 
+(local {: nil?} (require :skr.std))
+
 (fn map [xs func]
   (icollect [_ x (ipairs xs)]
     (func x)))
@@ -81,7 +83,7 @@
 
 (fn with-prefix [x prefix]
   "Returns '${prefix}${x}' if x is not nil or empty, else ''."
-  (if (= nil x) ""
+  (if (nil? x) ""
       (= "" x) ""
       (.. prefix x)))
 

@@ -38,16 +38,22 @@
  ;; Statusline widget showing code location (class/func/module etc).
  (pkg :SmiteshP/nvim-navic {:dependencies [:neovim/nvim-lspconfig]})
  ;; Wrapper around builtin terminal with easy toggling.
- (pkg :akinsho/toggleterm.nvim)
+ (pkg :akinsho/toggleterm.nvim {:config (setup :skr.toggleterm)})
+ ;; Automatic buffer resizing when new buffers are added/removed in a window,
+ ;; e.g. toggling the terminal.
+ (pkg :kwkarlwang/bufresize.nvim {:config (setup :bufresize)})
+ (pkg :mrjones2014/smart-splits.nvim {:config (setup :skr.smart-splits)})
  ;; Completions.
- (pkg :hrsh7th/nvim-cmp {:dependencies [:hrsh7th/vim-vsnip
-                                        :hrsh7th/cmp-buffer
+ (pkg :hrsh7th/nvim-cmp {:dependencies [:hrsh7th/cmp-buffer
                                         :hrsh7th/cmp-path
                                         :hrsh7th/cmp-nvim-lsp
                                         :saadparwaiz1/cmp_luasnip]
                          :config (setup :skr.cmp)})
  ;; Snippet engine.
- (pkg :L3MON4D3/LuaSnip)
+ (pkg :L3MON4D3/LuaSnip {;; We use some treesitter queries in the init scripts,
+                         ;; so need to declare it as a dependency.
+                         :dependencies [:nvim-treesitter/nvim-treesitter]
+                         :config (setup :skr.fnlsnip)})
  ;; Treesitter.
  (pkg :nvim-treesitter/nvim-treesitter
       {:build ":TSUpdate"
@@ -73,15 +79,16 @@
  (pkg :rktjmp/lush.nvim)
  ;; Icons via nerdfonts.
  (pkg :kyazdani42/nvim-web-devicons {:config (setup :nvim-web-devicons)})
- ;; Fancier UI elements, like select and input boxes.
- (pkg :stevearc/dressing.nvim
-      {:config (fn []
-                 (local dressing (require :dressing))
-                 (do
-                   (dressing.setup)
-                   (dressing.patch)))})
- ;; Progress indicator for async tasks.
- (pkg :j-hui/fidget.nvim {:config (setup :fidget)})
+ ;; Noice, substantial nvim UI plugin
+ (pkg :rcarriga/nvim-notify
+      {:config #(let [notify (require :notify)]
+                  (notify.setup {:background_color "#000000"}))})
+ (pkg :folke/noice.nvim
+      {:dependencies [:MunifTanjim/nui.nvim :rcarriga/nvim-notify]
+       :config #(let [noice (require :noice)]
+                  (noice.setup {:lsp {:override {:vim.lsp.util.convert_input_to_markdown_lines true
+                                                 :vim.lsp.util.stylize_markdown true
+                                                 :cmp.entry.get_documentation true}}}))})
  ;; ZenMode, declutter and focus on window / selection.
  (pkg :Pocco81/true-zen.nvim {:config (setup :true-zen)})
  ;; Language-aware comment plugin
@@ -102,7 +109,7 @@
                       :kyazdani42/nvim-web-devicons
                       :MunifTanjim/nui.nvim]})
  ;; Hydra, plugin for submodes with UI for keybinds.
- (pkg :anuvyklack/hydra.nvim)
+ (pkg :anuvyklack/hydra.nvim {:config (setup :skr.hydra)})
  ;; Telekasten notetaking. Not really using it atm...
  (pkg :renerocksai/telekasten.nvim)
  ;; Revamped orgmode for nvim. Testing it out!
@@ -111,9 +118,17 @@
        :config (setup :skr.neorg)
        :dependencies [:nvim-lua/plenary.nvim]})
  ;; UI for showing keybinds
- (pkg :folke/which-key.nvim)
- ;; Start screen
- (pkg :mhinz/vim-startify)
+ (pkg :folke/which-key.nvim {:config (setup :which-key)})
+ ;; Dashboard start screen
+ (pkg :goolord/alpha-nvim
+      {:config #(let [alpha (require :alpha)
+                      dashboard (require :alpha.themes.dashboard)]
+                  (do
+                    (set dashboard.section.buttons.val
+                         [(dashboard.button :e "  New file" ":enew<CR>")
+                          (dashboard.button "SPC f f" "  Find file")
+                          (dashboard.button :q "  Quit NVIM" ":qa<CR>")])
+                    (alpha.setup dashboard.config)))})
  ;; ASCII box diagram drawing
  (pkg :jbyuki/venn.nvim)
  ;; Render markdown with hot code reloading
@@ -124,6 +139,9 @@
        :ft [:markdown]})
  ;; Church of Tpope.
  (pkg :tpope/vim-surround)
+ ;; Parinfer, make lisp life easier.
+ (pkg :eraserhd/parinfer-rust
+      {:build "cargo build --release" :ft [:fennel :clojure :racket :janet]})
  ;; Lang specific plugins.
  (pkg :cespare/vim-toml {:branch :main})
  (pkg :b4b4r07/vim-hcl)
