@@ -1,16 +1,13 @@
-(fn setup []
-  (fn snippet/expand [{: body}]
-    (let [luasnip (require :luasnip)]
-      (luasnip.lsp_expand body)))
+(local cmp (require :cmp))
+(local luasnip (require :luasnip))
 
-  (let [cmp (require :cmp)
-        snippet {:expand snippet/expand}
+(fn setup []
+  (let [snippet {:expand #(luasnip.lsp_expand $.body)}
         mapping (cmp.mapping.preset.insert {:<C-Space> (cmp.mapping.complete)})
         sources [{:name :nvim_lsp}
                  {:name :buffer}
                  {:name :path}
-                 {:name :luasnip}]
-        config {: snippet : mapping : sources}]
-    (cmp.setup config)))
+                 {:name :luasnip}]]
+    (cmp.setup {: snippet : mapping : sources})))
 
 {: setup}

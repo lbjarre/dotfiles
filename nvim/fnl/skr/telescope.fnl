@@ -19,14 +19,8 @@
                     :--smart-case
                     :--hidden])
 
-(fn setup []
-  "Setup telescope with defaults."
-  (tlscp.load_extension :noice)
-  (tlscp.setup {:defaults {:vimgrep_arguments vimgrep-arg
-                           :set_env {[:COLORTERM] :truecolor}
-                           :file_previewer previewers.vim_buffer_cat.new
-                           :grep_previewer previewers.vim_buffer_vimgrep.new
-                           :qflist_previewer previewers.vim_buffer_qflist.new}}))
+(fn map [mode key cmd]
+  (vim.keymap.set mode key cmd {:remap false :silent true}))
 
 (fn files []
   "Fuzzy find files by file name.
@@ -52,6 +46,9 @@
   "Fuzzy find for arbitrary text."
   (builtin.grep_string (merge opt-timeout {:search (vim.fn.input "search: ")})))
 
+(fn emojis []
+  (builtin.symbols (merge opt-timeout {:sources [:emoji]})))
+
 (fn diagnostics []
   "Fuzzy find over diagnostics."
   (builtin.diagnostics opt-timeout))
@@ -76,6 +73,29 @@
 (fn lsp-doc-symbols []
   "Fuzzy find LSP symbols in current document."
   (builtin.lsp_document_symbols opt-timeout))
+
+(fn setup []
+  "Setup telescope with defaults."
+  (tlscp.setup {:defaults {:vimgrep_arguments vimgrep-arg
+                           :set_env {[:COLORTERM] :truecolor}
+                           :file_previewer previewers.vim_buffer_cat.new
+                           :grep_previewer previewers.vim_buffer_vimgrep.new
+                           :qflist_previewer previewers.vim_buffer_qflist.new}
+                :extensions {:ui-select {1 (themes.get_dropdown)}}})
+  (tlscp.load_extension :noice)
+  (tlscp.load_extension :ui-select)
+  (map :n :<leader>ff files)
+  (map :n :<leader>fg builtin.live_grep)
+  (map :n :<leader>/ search-buf)
+  (map :n :<leader>fs grep-string)
+  (map :n :<leader>fl lsp-workspace-symbols)
+  (map :n :<leader>fn files-nv)
+  (map :n :<leader>fe emojis)
+  (map :n :gd lsp-def)
+  (map :n :gr lsp-ref)
+  (map :n :gi lsp-impl)
+  (map :n :<leader>ld diagnostics)
+  (map :n :<leader>ls lsp-doc-symbols))
 
 {: setup
  : files

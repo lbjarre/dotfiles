@@ -74,7 +74,13 @@
        :config (setup :skr.telescope)})
  ;; Native extension written in C that should be faster. Don't even know if I'm
  ;; using this though?
- (pkg :nvim-telescope/telescope-fzy-native.nvim)
+ (pkg :nvim-telescope/telescope-fzy-native.nvim
+      {:dependencies [:nvim-telescope/telescope.nvim]})
+ ;; Extra db of symbols (like emojis).
+ (pkg :nvim-telescope/telescope-symbols.nvim
+      {:dependencies [:nvim-telescope/telescope.nvim]})
+ (pkg :nvim-telescope/telescope-ui-select.nvim
+      {:dependencies [:nvim-telescope/telescope.nvim]})
  ;; Lush, nice colorscheme package with an interactive mode.
  (pkg :rktjmp/lush.nvim)
  ;; Icons via nerdfonts.
@@ -120,15 +126,7 @@
  ;; UI for showing keybinds
  (pkg :folke/which-key.nvim {:config (setup :which-key)})
  ;; Dashboard start screen
- (pkg :goolord/alpha-nvim
-      {:config #(let [alpha (require :alpha)
-                      dashboard (require :alpha.themes.dashboard)]
-                  (do
-                    (set dashboard.section.buttons.val
-                         [(dashboard.button :e "  New file" ":enew<CR>")
-                          (dashboard.button "SPC f f" "  Find file")
-                          (dashboard.button :q "  Quit NVIM" ":qa<CR>")])
-                    (alpha.setup dashboard.config)))})
+ (pkg :goolord/alpha-nvim {:config (setup :skr.alpha)})
  ;; ASCII box diagram drawing
  (pkg :jbyuki/venn.nvim)
  ;; Render markdown with hot code reloading
