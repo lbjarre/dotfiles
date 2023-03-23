@@ -5,7 +5,7 @@ usage() {
     echo "tmux-status: helper script for printing tmux status bar elements."
     echo "Usage: tmux-status [category]"
     echo
-    echo "Categories: session | k8s"
+    echo "Categories: session | k8s | wttr"
 }
 
 _status_k8s() {
@@ -22,10 +22,6 @@ _status_k8s() {
 
 _status_session() {
     tmux display-message -p "#S"
-}
-
-_status_wttr() {
-    wttr
 }
 
 main() {
