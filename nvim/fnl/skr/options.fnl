@@ -52,12 +52,6 @@
   (set opt.statusline "%!luaeval(\"require('skr.statuslime').statusline()\")")
   (set opt.winbar "%f")
   (set opt.laststatus 3)
-  ;; Set global statusline for the entire screen.
-  ;; Startify.
-  ;; TODO: should be able to rewrite this myself?
-  (set vim.g.startify_lists
-       [{:type :dir :header [(.. "  MRU " (vim.fn.getcwd))]}])
-  (set vim.g.startify_change_to_dir 0)
   ;; Create an autocommand for highlighting what you yank.
   (create-augroup :Yank {:clear true})
   (create-autocmd :TextYankPost {:group :Yank :callback #(hl-on-yank)}))

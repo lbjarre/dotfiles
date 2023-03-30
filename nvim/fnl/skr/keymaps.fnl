@@ -24,7 +24,6 @@
   (map :n :<leader>p "\"*p")
   (map :n :<leader>P "\"*P")
   (map :n :<leader>t #(neotree/cmd.execute {:toggle true}))
-  ;; Telescope
   ;; LSP
   (map :n :dn diag.goto_next)
   (map :n :dp diag.goto_prev)

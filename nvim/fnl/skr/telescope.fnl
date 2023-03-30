@@ -1,5 +1,5 @@
-;; skr.telescope-fnl
-;; Exported functions for telescope related fuzzy search prompts.
+;; skr.telescope
+;; Setup for telescope related fuzzy search prompts.
 (local tlscp (require :telescope))
 (local builtin (require :telescope.builtin))
 (local themes (require :telescope.themes))
@@ -11,72 +11,64 @@
   "Helper for merging tables."
   (vim.tbl_extend :force ...))
 
-(local vimgrep-arg [:rg
-                    :--no-heading
-                    :--with-filename
-                    :--line-number
-                    :--column
-                    :--smart-case
-                    :--hidden])
+(lambda opts [?opt]
+  (vim.tbl_extend :force {:timeout 3000} (or ?opt {})))
+
+(lambda with-input [?prompt]
+  {:search (vim.fn.input (or ?prompt "search: "))})
 
 (fn map [mode key cmd]
   (vim.keymap.set mode key cmd {:remap false :silent true}))
 
-(fn files []
-  "Fuzzy find files by file name.
-   Tries first to check for git files if we are in a git repo, else will just
-   do files as given by rg."
-  (local args {:hidden true})
-  (local git-ok (pcall builtin.git_files args))
-  (when (not git-ok)
-    (builtin.find_files args)))
-
-(fn files-nv []
-  "Fuzzy find files in northvolt source"
-  (builtin.find_files {:cwd "~/src/github.com/northvolt"
-                       :hidden true
-                       :file_ignore_patterns [:.*/.git/]}))
-
-(fn search-buf []
-  "Fuzzy find content in the buffer."
-  (builtin.current_buffer_fuzzy_find (themes.get_ivy {:layout_config {:prompt_position :top}
-                                                      :sorting_strategy :ascending})))
-
-(fn grep-string []
-  "Fuzzy find for arbitrary text."
-  (builtin.grep_string (merge opt-timeout {:search (vim.fn.input "search: ")})))
-
-(fn emojis []
-  (builtin.symbols (merge opt-timeout {:sources [:emoji]})))
-
-(fn diagnostics []
-  "Fuzzy find over diagnostics."
-  (builtin.diagnostics opt-timeout))
-
-(fn lsp-workspace-symbols []
-  "Fuzzy find LSP workspace symbols."
-  (builtin.lsp_workspace_symbols (merge opt-timeout
-                                        {:query (vim.fn.input "search: ")})))
-
-(fn lsp-def []
-  "Fuzzy find LSP definitions on current symbol."
-  (builtin.lsp_definitions opt-timeout))
-
-(fn lsp-ref []
-  "Fuzzy find LSP references on current symbol."
-  (builtin.lsp_references opt-timeout))
-
-(fn lsp-impl []
-  "Fuzzy find LSP implementations on current symbol."
-  (builtin.lsp_implementations opt-timeout))
-
-(fn lsp-doc-symbols []
-  "Fuzzy find LSP symbols in current document."
-  (builtin.lsp_document_symbols opt-timeout))
+(fn setup-keymaps []
+  ;; Search files. Uses git-files first, with just all files if it isn't a git repo.
+  ;; (<f>ind-<f>iles)
+  (map :n :<leader>ff
+       #(let [git-ok (pcall builtin.git_files {:hidden true})]
+          (when (not git-ok)
+            (builtin.find_files {:hidden true}))))
+  ;; Search by grep.
+  ;; (<f>ind-<g>rep)
+  (map :n :<leader>fg #(builtin.live_grep (opts)))
+  ;; Search in current buffer.
+  ;; (<f>ind-/)
+  (map :n :<leader>/
+       #(builtin.current_buffer_fuzzy_find (themes.get_ivy {:layout_config {:prompt_position :top}
+                                                            :sorting_strategy :ascending})))
+  ;; Find by string. Lets you fuzzy search over the results.
+  ;; (<f>ind-<s>tring
+  (map :n :<leader>fs #(builtin.grep_string (opts (with-input))))
+  ;; Find LSP symbols in workspace.
+  ;; (<f>ind-<l>sp)
+  (map :n :<leader>fl #(builtin.lsp_workspace_symbols (opts (with-input))))
+  ;; Fuzzy search files in northvolt repos
+  ;; (<f>ind-<n>orthvolt)
+  (map :n :<leader>fn
+       #(builtin.find_files (opts {:cwd "~/src/github.com/northvolt"
+                                   :hidden true
+                                   :file_ignore_patterns [:.*/.git/]})))
+  ;; Find emojis
+  ;; (<f>ind-<e>moji)
+  (map :n :<leader>fe #(builtin.symbols (opts {:sources [:emoji]})))
+  ;; Standard LSP hooks
+  (map :n :gd #(builtin.lsp_definitions (opts)))
+  (map :n :gr #(builtin.lsp_references (opts)))
+  (map :n :gi #(builtin.lsp_implementations (opts)))
+  ;; LSP namespaced finders
+  ;; Diagnostics
+  (map :n :<leader>ld #(builtin.diagnostics (opts)))
+  ;; Symbols, but in the document.
+  (map :n :<leader>ls #(builtin.lsp_document_symbols (opts))))
 
 (fn setup []
   "Setup telescope with defaults."
-  (tlscp.setup {:defaults {:vimgrep_arguments vimgrep-arg
+  (tlscp.setup {:defaults {:vimgrep_arguments [:rg
+                                               :--no-heading
+                                               :--with-filename
+                                               :--line-number
+                                               :--column
+                                               :--smart-case
+                                               :--hidden]
                            :set_env {[:COLORTERM] :truecolor}
                            :file_previewer previewers.vim_buffer_cat.new
                            :grep_previewer previewers.vim_buffer_vimgrep.new
@@ -84,27 +76,6 @@
                 :extensions {:ui-select {1 (themes.get_dropdown)}}})
   (tlscp.load_extension :noice)
   (tlscp.load_extension :ui-select)
-  (map :n :<leader>ff files)
-  (map :n :<leader>fg builtin.live_grep)
-  (map :n :<leader>/ search-buf)
-  (map :n :<leader>fs grep-string)
-  (map :n :<leader>fl lsp-workspace-symbols)
-  (map :n :<leader>fn files-nv)
-  (map :n :<leader>fe emojis)
-  (map :n :gd lsp-def)
-  (map :n :gr lsp-ref)
-  (map :n :gi lsp-impl)
-  (map :n :<leader>ld diagnostics)
-  (map :n :<leader>ls lsp-doc-symbols))
+  (setup-keymaps))
 
-{: setup
- : files
- : files-nv
- : search-buf
- : grep-string
- : diagnostics
- : lsp-workspace-symbols
- : lsp-def
- : lsp-ref
- : lsp-impl
- : lsp-doc-symbols}
+{: setup}
