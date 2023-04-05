@@ -1,9 +1,13 @@
+#!/usr/bin/env zsh
 # ZSHRC
 
 export PATH="${HOME}/bin:${PATH}"
 
+# Checks if a command exists (either executable file or zsh function.)
+cmd-exists() { command -v "${1}" 1>/dev/null 2>&1; }
+
 # Autocomplete stuff
-[ $(command -v brew) ] && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+cmd-exists brew && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -Uz compinit
 compinit
 
@@ -16,7 +20,7 @@ fi
 ## Export TTY for GPG, needed for the password prompt
 export GPG_TTY=$(tty)
 
-## I did not choose the vim life -- it chose me
+## I did not choose the vim life---it chose me
 export EDITOR=nvim
 alias vim=nvim
 alias vi=nvim
@@ -25,21 +29,25 @@ alias vi=nvim
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 
 ## go binaries
-[ $(command -v go) ] && export PATH="${PATH}:$(go env GOPATH)/bin"
+cmd-exists go && export PATH="${PATH}:$(go env GOPATH)/bin"
 
 ## ocaml toolchain
-[ $(command -v opam) ] && eval $(opam env --switch=default --shell=zsh)
+cmd-exists opam && eval $(opam env --switch=default --shell=zsh)
 
 ## Debian ls aliases (with some modifications) that just got stuck in my head
-if [ $(command -v exa) ]; then
+if cmd-exists exa; then
+    # list
     alias ls="exa --group-directories-first"
+    # list, but with some more info
     alias ll="exa --group-directories-first -l"
+    # list all, i.e. include hidden files
     alias la="exa --group-directories-first -la"
+    # list tree, i.e. recursive tree
     alias lt="exa --group-directories-first -lT"
 fi
 
 ## Zoxide
-[ $(command -v zoxide) ] && eval "$(zoxide init zsh)"
+cmd-exists zoxide && eval "$(zoxide init zsh)"
 
 ## fzf
 fzf_files=(
@@ -52,19 +60,25 @@ for file in ${fzf_files}; do
 done
 
 ## Starship
-[ $(command -v starship) ] && eval "$(starship init zsh)"
+cmd-exists starship && eval "$(starship init zsh)"
 
-## k8s
-if [ $(command -v kubectl) ]; then
+## Kubectl
+if cmd-exists kubectl; then
     source <(kubectl completion zsh)
     alias k=kubectl
     compdef __start_kubectl k
+
+    if cmd-exists kubectl-krew; then
+        export PATH="${PATH}:${HOME}/.krew/bin"
+        source <(kubectl-krew completion zsh)
+    fi
 fi
 
-[ $(command -v kubectx) ] && alias kc=kubectx
-
-if [ $(command -v kubectl-krew) ]; then
-    export PATH="${PATH}:${HOME}/.krew/bin"
-    source <(kubectl-krew completion zsh)
-fi
-
+# AWS profile picker. On invocation starts a fzf picker for all available AWS
+# profiles, and sets the AWS_PROFILE env variable to the selected profile.
+aws-profile-select() {
+    cmd-exists aws || exit 1
+    local selected=$(aws configure list-profiles --no-cli-auto-prompt | fzf)
+    printf "AWS profile set to %s\n" "${selected}"
+    export AWS_PROFILE="${selected}"
+}

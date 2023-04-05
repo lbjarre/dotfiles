@@ -21,11 +21,12 @@ fzf_select() {
     fzf-tmux -p --delimiter=: --with-nth=4 --header="switch tmux window" --header-first
 }
 
+
 fzf_use() {
-    # Split the selected line on `:`.
-    args=(${1//:/ })
+    client="$(echo "${1}" | awk -F ':' '{ print $1 }')"
+    window="$(echo "${1}" | awk -F ':' '{ print $2 }')"
     # Switch to the window in tmux.
-    tmux select-window -t ${args[1]} && tmux switch-client -t ${args[0]}
+    tmux select-window -t "${window}" && tmux switch-client -t "${client}"
 }
 
 main() {
@@ -33,4 +34,4 @@ main() {
     fzf_use "${selection}"
 }
 
-main
+main < /dev/null

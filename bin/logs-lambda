@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 usage() {
     echo 'Streams logs from a Lambda function via Cloudwatch to stdout.'
@@ -6,22 +6,48 @@ usage() {
     echo 'Usage: logs-lambda LOG_GROUP [SINCE]'
     echo
     echo 'Arguments'
-    echo '  LOG_GROUP:  Cloudwatch log group. Usually something like "/aws/lambda/go-service-${name}-api-prod-server".'
+    echo '  LOG_GROUP:  Cloudwatch log group. Usually something like "/aws/lambda/go-service-%name-api-prod-server".'
     echo '  SINCE:      Time duration for how long back to grab logs, e.g. 10m, 10s. Default: 10m.'
     echo
     echo 'Remember to have the correct AWS_PROFILE set!'
 }
 
-case $# in
-    1|2)
-        LOG_GROUP="${1}"
-        SINCE="${2:-10m}"
-        ;;
-    *)
-        usage
-        exit 2
-esac
+stderr() { echo "${1}" >&2; }
 
-aws logs tail "${LOG_GROUP}" --format=short --since="${SINCE}" | \
-    sed 's/^[0-9-]*T[0-9:]* \(.*\)$/\1/' | \
-    rg -v '^(START|END|REPORT|XRAY)'
+list_function_names() {
+    aws lambda list-functions | jq --raw-output '.Functions[] | .FunctionName'
+}
+
+fzf_log_group() {
+    fn_name="$(list_function_names | fzf)"
+    log_group="/aws/lambda/${fn_name}"
+    stderr "selected log_group=${log_group}"
+    echo "${log_group}"
+}
+
+main() {
+    # Parse args
+    case $# in
+        0)
+            # Nothing given: interactive select for function name.
+            LOG_GROUP="$(fzf_log_group)"
+            SINCE=10m
+            ;;
+        1|2)
+            LOG_GROUP="${1}"
+            SINCE="${2:-10m}"
+            ;;
+        *)
+            usage
+            exit 2
+    esac
+
+    aws logs tail "${LOG_GROUP}" --format=short --since="${SINCE}" | \
+        # Remove the leading timestamp.
+        sed 's/^[0-9-]*T[0-9:]* \(.*\)$/\1/' | \
+        # Remove log lines inserted by the lambda runtime.
+        rg -v '^(START|END|REPORT|XRAY)'
+}
+
+# shellcheck disable=2068
+main $@ < /dev/null
