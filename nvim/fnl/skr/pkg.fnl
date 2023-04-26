@@ -114,7 +114,8 @@
       {:branch :v2.x
        :dependencies [:nvim-lua/plenary.nvim
                       :kyazdani42/nvim-web-devicons
-                      :MunifTanjim/nui.nvim]})
+                      :MunifTanjim/nui.nvim]
+       :config (setup :skr.neo-tree)})
  ;; Hydra, plugin for submodes with UI for keybinds.
  (pkg :anuvyklack/hydra.nvim {:config (setup :skr.hydra)})
  ;; Telekasten notetaking. Not really using it atm...
@@ -133,8 +134,7 @@
  ;; Render markdown with hot code reloading
  (pkg :iamcco/markdown-preview.nvim
       {:build "cd app && npm install"
-       :setup (fn []
-                (set vim.g.mkdp_filetypes [:markdown]))
+       :setup #(set vim.g.mkdp_filetypes [:markdown])
        :ft [:markdown]})
  ;; Church of Tpope.
  (pkg :tpope/vim-surround)

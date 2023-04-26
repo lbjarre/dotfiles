@@ -1,0 +1,19 @@
+#!/bin/sh
+
+JQSRC=$(cat <<EOF
+# Grab the first entry from the list, use its keys, and create two lists:
+# one with the key names, and one with a rule separator.
+def header: first | keys_unsorted | ., map(length * "-");
+
+# Splat out a row object: { k1: v1, k2: v2, ... } -> [v1, v2, ...]
+# We default nulls to a non-empty string, otherwise column will not be able
+# to handle nulls.
+def splat: [keys_unsorted[] as \$k | .[\$k] // " "];
+
+header, .[] | splat | @tsv
+
+EOF
+)
+
+jq --raw-output "${JQSRC}" | column -t -x -s "$(printf '\t')"
+

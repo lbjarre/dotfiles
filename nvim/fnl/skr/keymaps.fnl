@@ -23,7 +23,6 @@
   (map [:n :v] :<leader>y "\"*y")
   (map :n :<leader>p "\"*p")
   (map :n :<leader>P "\"*P")
-  (map :n :<leader>t #(neotree/cmd.execute {:toggle true}))
   ;; LSP
   (map :n :dn diag.goto_next)
   (map :n :dp diag.goto_prev)
