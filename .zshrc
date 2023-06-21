@@ -34,6 +34,13 @@ cmd-exists go && export PATH="${PATH}:$(go env GOPATH)/bin"
 ## ocaml toolchain
 cmd-exists opam && eval $(opam env --switch=default --shell=zsh)
 
+## bun
+if [ -f ~/.bun ]; then
+    [ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
+    export BUN_INSTALL="${HOME}/.bun"
+    export PATH="${BUN_INSTALL}/bin:${PATH}"
+fi
+
 ## Debian ls aliases (with some modifications) that just got stuck in my head
 if cmd-exists exa; then
     # list
@@ -61,6 +68,9 @@ done
 
 ## Starship
 cmd-exists starship && eval "$(starship init zsh)"
+
+## Atuin
+cmd-exists atuin && eval "$(atuin init zsh --disable-up-arrow)"
 
 ## Kubectl
 if cmd-exists kubectl; then

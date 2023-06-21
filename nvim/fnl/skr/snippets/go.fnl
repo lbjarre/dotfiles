@@ -42,7 +42,7 @@
                        (mk-snippet :iferr root)))
 
 (fn setup-treesitter-query []
-  (vim.treesitter.set_query :go :return-value "[
+  (vim.treesitter.query.set :go :return-value "[
       (method_declaration result: (_) @ret)
       (function_declaration result: (_) @ret)
       (func_literal result: (_) @ret)

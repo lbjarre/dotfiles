@@ -66,7 +66,7 @@ write_cache() {
 # Run HTTP request to wttr.
 fetch_wttr() {
     debug "fetch: url=${WTTR_URL}"
-    curl "${WTTR_URL}" 2>/dev/null
+    curl --max-time 5 "${WTTR_URL}" 2>/dev/null
 }
 
 main() {

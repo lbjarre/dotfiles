@@ -12,15 +12,15 @@
       (or {})
       (tset! 1 name)))
 
-(lambda setup [pkg-name ?setup-fn]
+(lambda setup [pkg-name ?opts]
   "Create a setup function.
 
   Returns a new function that imports pkg-name and calls the setup function
   from that import."
   (fn []
-    ((-> pkg-name
-         (require)
-         (. (or ?setup-fn :setup))))))
+    (let [pkg (require pkg-name)
+          setup (. pkg :setup)]
+      (setup ?opts))))
 
 [;; Fennel transpilation.
  ;; This is already bootstrapped, but keeping it here will also update it with
@@ -31,6 +31,9 @@
  ;; TODO: this package is deprecated: I just use this for inlay hints now, but
  ;; that is not even working that well so should figure our how to do it better.
  (pkg :nvim-lua/lsp_extensions.nvim)
+ ;; Third-party support for inlay hints.
+ (pkg :lvimuser/lsp-inlayhints.nvim
+      {:config (setup :lsp-inlayhints {:inlay_hints {:max_len_align false}})})
  ;; Wrap lua functions or other commands into LSP client commands.
  (pkg :jose-elias-alvarez/null-ls.nvim)
  ;; Quickfix list ~ish viewer for diagnostics.
@@ -142,6 +145,7 @@
  (pkg :eraserhd/parinfer-rust
       {:build "cargo build --release" :ft [:fennel :clojure :racket :janet]})
  ;; Lang specific plugins.
+ (pkg :jose-elias-alvarez/typescript.nvim)
  (pkg :cespare/vim-toml {:branch :main})
  (pkg :b4b4r07/vim-hcl)
  (pkg :towolf/vim-helm)
