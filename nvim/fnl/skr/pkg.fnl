@@ -28,9 +28,6 @@
  (pkg :udayvir-singh/tangerine.nvim)
  ;; LSP stuff.
  (pkg :neovim/nvim-lspconfig {:config (setup :skr.lsp)})
- ;; TODO: this package is deprecated: I just use this for inlay hints now, but
- ;; that is not even working that well so should figure our how to do it better.
- (pkg :nvim-lua/lsp_extensions.nvim)
  ;; Third-party support for inlay hints.
  (pkg :lvimuser/lsp-inlayhints.nvim
       {:config (setup :lsp-inlayhints {:inlay_hints {:max_len_align false}})})
@@ -149,5 +146,12 @@
  (pkg :cespare/vim-toml {:branch :main})
  (pkg :b4b4r07/vim-hcl)
  (pkg :towolf/vim-helm)
- ;; Plugin for running cellular automata based on buffer content. Very silly.
- (pkg :eandrju/cellular-automaton.nvim)]
+ ;; Now we are getting silly.
+ ;; Plugin for running cellular automata based on buffer content.
+ (pkg :eandrju/cellular-automaton.nvim)
+ ;; Spawn ducks that roam the buffer.
+ (pkg :tamton-aquib/duck.nvim
+      {:config #(let [duck (require :duck)]
+                  (do
+                    (vim.keymap.set :n :<leader>dd #(duck.hatch))
+                    (vim.keymap.set :n :<leader>dk #(duck.cook))))})]

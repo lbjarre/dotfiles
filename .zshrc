@@ -80,7 +80,6 @@ if cmd-exists kubectl; then
 
     if cmd-exists kubectl-krew; then
         export PATH="${PATH}:${HOME}/.krew/bin"
-        source <(kubectl-krew completion zsh)
     fi
 fi
 

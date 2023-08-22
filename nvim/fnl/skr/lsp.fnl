@@ -26,8 +26,7 @@
                 {:name :cssls}])
 
 ;; Lookup from filetype to which LSP features to enable in the on-attach hook.
-(local ft-cfg {;; TODO: inlay-hints is using the deprecated lsp_extensions
-               :go [:autofmt :inlay-hints]
+(local ft-cfg {:go [:autofmt :inlay-hints]
                :rust [:autofmt :inlay-hints]
                :lua [:autofmt]
                :fennel [:autofmt]
@@ -47,6 +46,7 @@
 (fn setup []
   ;; Create augroups
   (create-augroup :LspAutofmt {:clear true})
+  (create-augroup :LspUserCfg {:clear true})
 
   (fn attach-autocmd [client buf]
     ;; Filetype dependent setup.
@@ -58,11 +58,16 @@
 
   (fn on_attach [client buf]
     "Defines the on_attach hook for the LSP client."
-    (do
-      (navic.attach client buf)
-      (inlay-hints.on_attach client buf)
-      (attach-autocmd client buf)))
+    (navic.attach client buf)
+    (inlay-hints.on_attach client buf)
+    (attach-autocmd client buf))
 
+  (create-autocmd :LspAttach
+                  {:group :LspUserCfg
+                   :callback (fn [ev]
+                               (let [bufnr ev.buf
+                                     client (vim.lsp.get_client_by_id ev.data.client_id)]
+                                 (on_attach client bufnr)))})
   ;; Setup language specific things.
   (let [ts (require :typescript)]
     (ts.setup {:go_to_source_definition {:fallback true} :server {: on_attach}}))
@@ -84,6 +89,6 @@
   (each [_ server (ipairs servers)]
     (let [{: name : settings} server
           srv (. lsp-config name)]
-      (srv.setup {: on_attach : settings}))))
+      (srv.setup {: settings}))))
 
 {: setup}

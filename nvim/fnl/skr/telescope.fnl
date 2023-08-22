@@ -4,6 +4,10 @@
 (local builtin (require :telescope.builtin))
 (local themes (require :telescope.themes))
 (local previewers (require :telescope.previewers))
+(local actions (require :telescope.actions))
+(local action-state (require :telescope.actions.state))
+
+(local {: nil?} (require :skr.std))
 
 (local opt-timeout {:timeout 3000})
 
@@ -19,6 +23,22 @@
 
 (fn map [mode key cmd]
   (vim.keymap.set mode key cmd {:remap false :silent true}))
+
+(fn buffer/force-delete [bufnr]
+  "API wrapper for nvim_buf_delete, with {force=true} option."
+  (vim.api.nvim_buf_delete bufnr {:force true}))
+
+(fn delete-buffer-mapping [prompt-bufnr]
+  "Prompt mapping to delete buffers from the selection."
+  (let [multi-selections (-> prompt-bufnr
+                             (action-state.get_current_picker)
+                             (: :get_multi_selection))]
+    (if (nil? (next multi-selections))
+        (let [{: bufnr} (action-state.get_selected_entry)]
+          (buffer/force-delete bufnr))
+        (each [_ {: bufnr} (ipairs multi-selections)]
+          (buffer/force-delete bufnr)))
+    (actions.close prompt-bufnr)))
 
 (fn setup-keymaps []
   ;; Search files. Uses git-files first, with just all files if it isn't a git repo.
@@ -38,6 +58,13 @@
   ;; Find by string. Lets you fuzzy search over the results.
   ;; (<f>ind-<s>tring
   (map :n :<leader>fs #(builtin.grep_string (opts (with-input))))
+  ;; Find buffers, with extra mapping to close buffers from the picker.
+  ;; (<f>ind-<b>uffers)
+  (map :n :<leader>fb
+       #(builtin.buffers (opts {:attach_mappings (fn [prompt-bufnr map]
+                                                   (map :i :<C-d>
+                                                        #(delete-buffer-mapping prompt-bufnr))
+                                                   true)})))
   ;; Find LSP symbols in workspace.
   ;; (<f>ind-<l>sp)
   (map :n :<leader>fl #(builtin.lsp_workspace_symbols (opts (with-input))))
