@@ -89,7 +89,7 @@
  ;; Noice, substantial nvim UI plugin
  (pkg :rcarriga/nvim-notify
       {:config #(let [notify (require :notify)]
-                  (notify.setup {:background_color "#000000"}))})
+                  (notify.setup {:background_colour "#000000"}))})
  (pkg :folke/noice.nvim
       {:dependencies [:MunifTanjim/nui.nvim :rcarriga/nvim-notify]
        :config #(let [noice (require :noice)]

@@ -2,6 +2,7 @@
 (local navic (require :nvim-navic))
 (local null-ls (require :null-ls))
 (local inlay-hints (require :lsp-inlayhints))
+(local ts-code-actions (require :typescript.extensions.null-ls.code-actions))
 
 (local {:api {:nvim_buf_get_option buf-get-opt
               :nvim_create_augroup create-augroup
@@ -73,7 +74,6 @@
     (ts.setup {:go_to_source_definition {:fallback true} :server {: on_attach}}))
   ;; Setup null-ls.
   (let [{:builtins {:formatting fmt :diagnostics dgn :code_actions act}} null-ls
-        ts-code-actions (require :typescript.extensions.null-ls.code-actions)
         sources [fmt.prettierd
                  ; fmt.eslint_d
                  ; dgn.eslint_d
