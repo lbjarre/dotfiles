@@ -27,7 +27,7 @@
               :Operator ""
               :TypeParameter ""})
 
-(local src-menus {:buffer :BUF :nvim_lsp :LSP :luasnip :SNP :path :PTH})
+(local src-menus {:buffer :BUF :nvim_lsp :LSP :luasnip :SNIP :path :PATH})
 
 (fn format [entry vim-item]
   (let [icon (. icons vim-item.kind)
@@ -42,7 +42,8 @@
             :buffer {:name :buffer}
             :luasnip {:name :luasnip}
             :cmdline {:name :cmdline}
-            :lsp {:name :nvim_lsp}})
+            :lsp {:name :nvim_lsp}
+            :lsp-signature-help {:name :nvim_lsp_signature_help}})
 
 (fn setup []
   (cmp.setup {:snippet {:expand #(luasnip.lsp_expand $.body)}
@@ -50,7 +51,8 @@
               :sources (cmp.config.sources [src.lsp
                                             src.buffer
                                             src.path
-                                            src.luasnip])
+                                            src.luasnip
+                                            src.lsp-signature-help])
               :formatting {: format}
               :window {:completion (cmp.config.window.bordered)
                        :documentation (cmp.config.window.bordered)}})

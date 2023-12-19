@@ -57,3 +57,4 @@
   (create-autocmd :TextYankPost {:group :Yank :callback #(hl-on-yank)}))
 
 {: setup}
+

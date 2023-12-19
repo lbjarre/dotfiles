@@ -1,8 +1,6 @@
 (local lsp-config (require :lspconfig))
 (local navic (require :nvim-navic))
-(local null-ls (require :null-ls))
 (local inlay-hints (require :lsp-inlayhints))
-(local ts-code-actions (require :typescript.extensions.null-ls.code-actions))
 
 (local {:api {:nvim_buf_get_option buf-get-opt
               :nvim_create_augroup create-augroup
@@ -23,6 +21,8 @@
                 {:name :ocamllsp}
                 {:name :pylsp}
                 {:name :lua_ls}
+                {:name :erlangls}
+                ; {:name :efm}
                 {:name :terraformls}
                 {:name :cssls}])
 
@@ -32,6 +32,7 @@
                :lua [:autofmt]
                :fennel [:autofmt]
                :haskell [:autofmt]
+               :erlang [:autofmt]
                :typescript [:autofmt]
                :typescriptreact [:autofmt]
                :css [:autofmt]
@@ -72,19 +73,6 @@
   ;; Setup language specific things.
   (let [ts (require :typescript)]
     (ts.setup {:go_to_source_definition {:fallback true} :server {: on_attach}}))
-  ;; Setup null-ls.
-  (let [{:builtins {:formatting fmt :diagnostics dgn :code_actions act}} null-ls
-        sources [fmt.prettierd
-                 ; fmt.eslint_d
-                 ; dgn.eslint_d
-                 ; act.eslint_d
-                 dgn.shellcheck
-                 act.shellcheck
-                 fmt.stylua
-                 fmt.fnlfmt
-                 ts-code-actions]
-        opts {: sources :on_attach attach-autocmd}]
-    (null-ls.setup opts))
   ;; Run the setup for each of the servers.
   (each [_ server (ipairs servers)]
     (let [{: name : settings} server

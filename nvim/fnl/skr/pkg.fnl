@@ -1,26 +1,34 @@
-(fn tset! [table key value]
-  "Set a value in a table.
-
-  Like `tset`, but also returns the table."
-  (do
-    (tset table key value)
-    table))
-
 (lambda pkg [name ?options]
-  "Create a mixed sequence/key-value table for lazy packages."
-  (-> ?options
-      (or {})
-      (tset! 1 name)))
+  "Create a mixed sequence/key-value table for lazy packages.
+
+  Lazy uses luas ambiguous tables for both sequence access and key-values:
+
+  ```lua
+  { 'author/pkg-name', config = config_function, dependencies = { 'author/dep' } }
+  ```
+
+  This will set the package name as the first value using the table as a
+  sequential array (index 1, because of course), and the rest as key-values
+  using it as a map. In lua both of these share the same surrounding brackets,
+  but in fennel they are different (`[]` vs `{}`). This function creates a
+  table with the expected form: the above example can be created using:
+
+  ```fennel
+  (pkg :author/pkg-name {:config config_function
+                         :dependencies [:author/dep]})
+  ```"
+  (let [table (or ?options {})]
+    (do
+      (tset table 1 name)
+      table)))
 
 (lambda setup [pkg-name ?opts]
   "Create a setup function.
 
   Returns a new function that imports pkg-name and calls the setup function
   from that import."
-  (fn []
-    (let [pkg (require pkg-name)
-          setup (. pkg :setup)]
-      (setup ?opts))))
+  #(let [{: setup} (require pkg-name)]
+     (setup ?opts)))
 
 [;; Fennel transpilation.
  ;; This is already bootstrapped, but keeping it here will also update it with
@@ -31,8 +39,6 @@
  ;; Third-party support for inlay hints.
  (pkg :lvimuser/lsp-inlayhints.nvim
       {:config (setup :lsp-inlayhints {:inlay_hints {:max_len_align false}})})
- ;; Wrap lua functions or other commands into LSP client commands.
- (pkg :jose-elias-alvarez/null-ls.nvim)
  ;; Quickfix list ~ish viewer for diagnostics.
  (pkg :folke/trouble.nvim)
  ;; Statusline widget showing code location (class/func/module etc).
@@ -47,11 +53,13 @@
  (pkg :hrsh7th/nvim-cmp {:dependencies [:hrsh7th/cmp-buffer
                                         :hrsh7th/cmp-path
                                         :hrsh7th/cmp-nvim-lsp
+                                        :hrsh7th/cmp-nvim-lsp-signature-help
                                         :hrsh7th/cmp-cmdline
                                         :saadparwaiz1/cmp_luasnip]
                          :config (setup :skr.cmp)})
  ;; Snippet engine.
- (pkg :L3MON4D3/LuaSnip {;; We use some treesitter queries in the init scripts,
+ (pkg :L3MON4D3/LuaSnip {:version "v2.*"
+                         ;; We use some treesitter queries in the init scripts,
                          ;; so need to declare it as a dependency.
                          :dependencies [:nvim-treesitter/nvim-treesitter]
                          :config (setup :skr.fnlsnip)})
