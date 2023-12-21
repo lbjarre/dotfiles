@@ -7,7 +7,11 @@ export PATH="${HOME}/bin:${PATH}"
 cmd-exists() { command -v "${1}" 1>/dev/null 2>&1; }
 
 # Autocomplete stuff
-cmd-exists brew && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+cmd-exists brew && fpath=(
+    $(brew --prefix)/share/zsh/site-functions
+    $(brew --prefix)/share/zsh-completions
+    $fpath
+)
 autoload -Uz compinit
 compinit
 
