@@ -42,15 +42,15 @@ if [ -f ~/.bun ]; then
 fi
 
 ## Debian ls aliases (with some modifications) that just got stuck in my head
-if cmd-exists exa; then
+if cmd-exists eza; then
     # list
-    alias ls="exa --group-directories-first"
+    alias ls="eza --group-directories-first"
     # list, but with some more info
-    alias ll="exa --group-directories-first -l"
+    alias ll="eza --group-directories-first -l"
     # list all, i.e. include hidden files
-    alias la="exa --group-directories-first -la"
+    alias la="eza --group-directories-first -la"
     # list tree, i.e. recursive tree
-    alias lt="exa --group-directories-first -lT"
+    alias lt="eza --group-directories-first -lT"
 fi
 
 ## Zoxide
