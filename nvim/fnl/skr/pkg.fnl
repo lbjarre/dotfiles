@@ -60,7 +60,7 @@
                                         :saadparwaiz1/cmp_luasnip]
                          :config (setup :skr.cmp)})
  ;; Snippet engine.
- (pkg :L3MON4D3/LuaSnip {:version "v2.*"
+ (pkg :L3MON4D3/LuaSnip {:version :v2.*
                          ;; We use some treesitter queries in the init scripts,
                          ;; so need to declare it as a dependency.
                          :dependencies [:nvim-treesitter/nvim-treesitter]
@@ -165,3 +165,4 @@
                   (do
                     (vim.keymap.set :n :<leader>dd #(duck.hatch))
                     (vim.keymap.set :n :<leader>dk #(duck.cook))))})]
+

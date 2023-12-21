@@ -84,3 +84,4 @@
       (error (.. "missing element " sep)))))
 
 {: empty? : nil? : not-nil? : any? : all? : split : cut}
+

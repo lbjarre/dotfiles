@@ -17,3 +17,4 @@
                      (mk-snippet :now root)))
 
 {:snippets [snippet-todo snippet-now]}
+

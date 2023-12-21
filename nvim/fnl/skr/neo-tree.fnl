@@ -15,3 +15,4 @@
   (vim.keymap.set :n :<leader>t toggle))
 
 {: setup}
+

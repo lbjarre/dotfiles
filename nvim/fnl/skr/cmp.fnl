@@ -64,3 +64,4 @@
                       :sources (cmp.config.sources [src.buffer])}))
 
 {: setup}
+
