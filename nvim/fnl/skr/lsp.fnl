@@ -22,47 +22,17 @@
                 {:name :pylsp}
                 {:name :lua_ls}
                 {:name :erlangls}
-                ; {:name :efm}
                 {:name :terraformls}
                 {:name :cssls}])
 
-;; Lookup from filetype to which LSP features to enable in the on-attach hook.
-(local ft-cfg {:go [:autofmt :inlay-hints]
-               :rust [:autofmt :inlay-hints]
-               :lua [:autofmt]
-               :fennel [:autofmt]
-               :haskell [:autofmt]
-               :erlang [:autofmt]
-               :typescript [:autofmt]
-               :typescriptreact [:autofmt]
-               :css [:autofmt]
-               :ocaml [:autofmt]
-               :terraform [:autofmt]
-               :hcl [:autofmt]})
-
-;; Lookup if a filetype has an attr set in the table above.
-(fn has-cfg? [ft attr]
-  (let [cfg (. ft-cfg ft)]
-    (if cfg (contains? cfg attr) false)))
-
 (fn setup []
   ;; Create augroups
-  (create-augroup :LspAutofmt {:clear true})
   (create-augroup :LspUserCfg {:clear true})
-
-  (fn attach-autocmd [client buf]
-    ;; Filetype dependent setup.
-    (local ft (buf-get-opt buf :filetype))
-    ;; Set autoformatting.
-    (when (has-cfg? ft :autofmt)
-      (create-autocmd :BufWritePre
-                      {:group :LspAutofmt :buffer buf :callback #(fmt)})))
 
   (fn on_attach [client buf]
     "Defines the on_attach hook for the LSP client."
     (navic.attach client buf)
-    (inlay-hints.on_attach client buf)
-    (attach-autocmd client buf))
+    (inlay-hints.on_attach client buf))
 
   (create-autocmd :LspAttach
                   {:group :LspUserCfg
@@ -80,3 +50,4 @@
       (srv.setup {: settings}))))
 
 {: setup}
+

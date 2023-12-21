@@ -39,6 +39,8 @@
  ;; Third-party support for inlay hints.
  (pkg :lvimuser/lsp-inlayhints.nvim
       {:config (setup :lsp-inlayhints {:inlay_hints {:max_len_align false}})})
+ ;; Formatter plugin.
+ (pkg :stevearc/conform.nvim {:config (setup :skr.conform)})
  ;; Quickfix list ~ish viewer for diagnostics.
  (pkg :folke/trouble.nvim)
  ;; Statusline widget showing code location (class/func/module etc).
