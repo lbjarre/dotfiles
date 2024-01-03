@@ -76,6 +76,12 @@
  ;; SSR: Structural search & replace. Pretty cool thing to search/replace with
  ;; treesitter queries, not entirely sure how useful it is yet though.
  (pkg :cshuaimin/ssr.nvim {:config (setup :ssr)})
+ ;; leap.nvim: quick jumping to any 2-character pattern in a buffer.
+ ;; Trying it out for now.
+ (pkg :ggandor/leap.nvim
+      {:dependencies [:tpope/vim-repeat]
+       :config #(let [leap (require :leap)]
+                  (leap.create_default_mappings))})
  ;; Debugging with DAP. Still not explored a lot here.
  (pkg :mfussenegger/nvim-dap {:config #(require :skr.dap)})
  (pkg :rcarriga/nvim-dap-ui)
@@ -126,10 +132,15 @@
                       :kyazdani42/nvim-web-devicons
                       :MunifTanjim/nui.nvim]
        :config (setup :skr.neo-tree)})
+ ;; overseer.nvim: task runner.
+ ;; TODO: looks very promising, but lots of things to configure to make it
+ ;; super smooth. Would like to have something where you can run a go-test on
+ ;; file changes and quickly get feedback.
+ (pkg :stevearc/overseer.nvim
+      {:config #(let [overseer (require :overseer)]
+                  (overseer.setup))})
  ;; Hydra, plugin for submodes with UI for keybinds.
  (pkg :anuvyklack/hydra.nvim {:config (setup :skr.hydra)})
- ;; Telekasten notetaking. Not really using it atm...
- (pkg :renerocksai/telekasten.nvim)
  ;; Revamped orgmode for nvim. Testing it out!
  (pkg :nvim-neorg/neorg
       {:build ":Neorg sync-parsers"
