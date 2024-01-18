@@ -77,6 +77,9 @@
   ;; Find emojis
   ;; (<f>ind-<e>moji)
   (map :n :<leader>fe #(builtin.symbols (opts {:sources [:emoji]})))
+  ;; Greek letters
+  ;; (<gr>eek)
+  (map :n :<leader>gr #(builtin.symbols (opts {:sources [:greek]})))
   ;; Standard LSP hooks
   (map :n :gd #(builtin.lsp_definitions (opts)))
   (map :n :gr #(builtin.lsp_references (opts)))
