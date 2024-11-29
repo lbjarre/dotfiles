@@ -90,8 +90,16 @@ fi
 # AWS profile picker. On invocation starts a fzf picker for all available AWS
 # profiles, and sets the AWS_PROFILE env variable to the selected profile.
 aws-profile-select() {
-    cmd-exists aws || exit 1
-    local selected=$(aws configure list-profiles --no-cli-auto-prompt | fzf)
+    # Filter the profile names from the AWS config file.
+    #
+    # There is a command on the aws CLI to do this (`aws configure list-profiles`),
+    # but it's really slow so lets just parse it ourselves.
+    filter-profiles() {
+        grep '^\[profile .*\]$' | sed -r 's/^\[profile (.*)\]$/\1/'
+    }
+
+    local config_file="${AWS_CONFIG_FILE:-"${HOME}/.aws/config"}"
+    local selected=$(filter-profiles < "${config_file}" | fzf)
     printf "AWS profile set to %s\n" "${selected}"
     export AWS_PROFILE="${selected}"
 }
