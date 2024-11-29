@@ -33,8 +33,8 @@ format = '$symbol\($output\) '
 command = '''
 jj log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always --template '
     separate(",",
-        change_id.shortest(),
-        commit_id.shortest(),
+        format_short_id(change_id),
+        format_short_id(commit_id),
         if(conflict, "C"),
     )
 '
