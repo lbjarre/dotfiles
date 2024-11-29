@@ -40,13 +40,17 @@
           (buffer/force-delete bufnr)))
     (actions.close prompt-bufnr)))
 
+(fn search-files []
+  "Picker for files."
+  (let [opts {:hidden true}]
+    (when (not (pcall tlscp.extensions.jj.files opts))
+      (when (not (pcall builtin.git_files opts))
+        (builtin.find_files opts)))))
+
 (fn setup-keymaps []
-  ;; Search files. Uses git-files first, with just all files if it isn't a git repo.
+  ;; Search files. Tries VCS files first (Jujutsu, Git), falling back on just all files if they fail.
   ;; (<f>ind-<f>iles)
-  (map :n :<leader>ff
-       #(let [git-ok (pcall builtin.git_files {:hidden true})]
-          (when (not git-ok)
-            (builtin.find_files {:hidden true}))))
+  (map :n :<leader>ff search-files "Find files")
   ;; Search by grep.
   ;; (<f>ind-<g>rep)
   (map :n :<leader>fg #(builtin.live_grep (opts)) "Find grep")

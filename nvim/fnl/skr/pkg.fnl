@@ -90,6 +90,9 @@
  (pkg :nvim-telescope/telescope.nvim
       {:dependencies [:nvim-lua/popup.nvim :nvim-lua/plenary.nvim]
        :config (setup :skr.telescope)})
+ ;; Extension for reading files from Jujutsu.
+ (pkg :zschreur/telescope-jj.nvim
+      {:dependencies [:nvim-telescope/telescope.nvim]})
  ;; Native extension written in C that should be faster. Don't even know if I'm
  ;; using this though?
  (pkg :nvim-telescope/telescope-fzy-native.nvim
