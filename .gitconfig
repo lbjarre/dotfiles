@@ -1,7 +1,7 @@
 [user]
 	name = Lukas Bjarre
-	email = lukas.bjarre@gmail.com
-	signingkey = <KEY>
+	email = lukas.bjarre@northvolt.com
+	signingkey = BFF27FA85B9CDDC5F640E26399AA3BDF0FD02FE0
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore
@@ -46,3 +46,8 @@
 [branchless "core"]
 	mainBranch = main
 
+[url "git@github.com:northvolt"]
+	insteadOf = https://github.com/northvolt
+
+[includeIf "gitdir:~/src/github.com/northvolt/"]
+    path = ~/src/github.com/northvolt/tools/.gitconfig-nv

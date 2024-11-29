@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 # ZSHRC
+export GOVERSION="go1.23.3"
+source ~/src/github.com/northvolt/tools/etc/nvrc.sh
+source ~/src/github.com/northvolt/tools/bin/git-global-config.sh
 
 export PATH="${HOME}/bin:${PATH}"
 
@@ -36,7 +39,13 @@ alias vi=nvim
 cmd-exists go && export PATH="${PATH}:$(go env GOPATH)/bin"
 
 ## ocaml toolchain
-cmd-exists opam && eval $(opam env --switch=default --shell=zsh)
+cmd-exists opam && eval $(opam env)
+
+## dune developer preview
+[ -f ~/.dune/env/env.zsh ] && source ~/.dune/env/env.zsh
+
+## LLVM toolchain on macs
+[ -d /usr/local/opt/llvm/bin ] && export PATH="/usr/local/opt/llvm/bin:${PATH}"
 
 ## bun
 if [ -f ~/.bun ]; then
@@ -103,3 +112,11 @@ aws-profile-select() {
     printf "AWS profile set to %s\n" "${selected}"
     export AWS_PROFILE="${selected}"
 }
+
+# bun completions
+[ -s "/Users/lubj/.bun/_bun" ] && source "/Users/lubj/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
