@@ -1,6 +1,7 @@
 format = """\
 $username\
 $directory\
+${custom.jj}\
 $git_branch\
 $git_commit\
 $git_state\
@@ -23,3 +24,18 @@ symbol = "+ "
 [aws]
 format = "[$symbol$profile]($style) "
 style = "bold yellow"
+
+[custom.jj]
+description = "Prompt information about the state of a Jujutsu repository."
+when = "jj root"
+symbol = "jj"
+format = '$symbol\($output\) '
+command = '''
+jj log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always --template '
+    separate(",",
+        change_id.shortest(),
+        commit_id.shortest(),
+        if(conflict, "C"),
+    )
+'
+'''
