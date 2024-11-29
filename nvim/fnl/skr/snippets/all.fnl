@@ -12,7 +12,7 @@
                           root (fmt "{}" (c 1 choices))]
                       (mk-snippet :todo root)))
 
-(local snippet-now (let [get-date #(os.date "%Y-%m%-dT%H:%M:%S")
+(local snippet-now (let [get-date #(os.date "%Y-%m-%dT%H:%M:%S")
                          root (f get-date)]
                      (mk-snippet :now root)))
 

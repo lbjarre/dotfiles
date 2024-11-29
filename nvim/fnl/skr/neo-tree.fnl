@@ -9,10 +9,10 @@
                    :filesystem {;; Show hidden items by default
                                 :filtered_items {:visible true}
                                 ;; Update the filetree selection to the currently selected file
-                                :follow_current_file true
+                                :follow_current_file {:enabled true}
                                 ;; Listen on os events to automatically update the filetree
                                 :use_libuv_file_watcher true}})
-  (vim.keymap.set :n :<leader>t toggle))
+  (vim.keymap.set :n :<leader>t toggle {:desc "Toggle filetree"}))
 
 {: setup}
 

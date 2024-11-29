@@ -36,21 +36,18 @@
  (pkg :udayvir-singh/tangerine.nvim)
  ;; LSP stuff.
  (pkg :neovim/nvim-lspconfig {:config (setup :skr.lsp)})
- ;; Third-party support for inlay hints.
- (pkg :lvimuser/lsp-inlayhints.nvim
-      {:config (setup :lsp-inlayhints {:inlay_hints {:max_len_align false}})})
  ;; Formatter plugin.
  (pkg :stevearc/conform.nvim {:config (setup :skr.conform)})
  ;; Quickfix list ~ish viewer for diagnostics.
- (pkg :folke/trouble.nvim)
+ (pkg :folke/trouble.nvim {:cmd :Trouble})
  ;; Statusline widget showing code location (class/func/module etc).
  (pkg :SmiteshP/nvim-navic {:dependencies [:neovim/nvim-lspconfig]})
- ;; Wrapper around builtin terminal with easy toggling.
- (pkg :akinsho/toggleterm.nvim {:config (setup :skr.toggleterm)})
  ;; Automatic buffer resizing when new buffers are added/removed in a window,
  ;; e.g. toggling the terminal.
  (pkg :kwkarlwang/bufresize.nvim {:config (setup :bufresize)})
  (pkg :mrjones2014/smart-splits.nvim {:config (setup :skr.smart-splits)})
+ ;; Wrapper around builtin terminal with easy toggling.
+ (pkg :akinsho/toggleterm.nvim {:config (setup :skr.toggleterm)})
  ;; Completions.
  (pkg :hrsh7th/nvim-cmp {:dependencies [:hrsh7th/cmp-buffer
                                         :hrsh7th/cmp-path
@@ -82,9 +79,13 @@
       {:dependencies [:tpope/vim-repeat]
        :config #(let [leap (require :leap)]
                   (leap.create_default_mappings))})
+ ;; iedit.nvim: multiple cursor edit kind of thing.
+ (pkg :altermo/iedit.nvim)
  ;; Debugging with DAP. Still not explored a lot here.
- (pkg :mfussenegger/nvim-dap {:config #(require :skr.dap)})
- (pkg :rcarriga/nvim-dap-ui)
+ (pkg :mfussenegger/nvim-dap)
+ (pkg :rcarriga/nvim-dap-ui
+      {:dependencies [:nvim-neotest/nvim-nio] :config (setup :dapui)})
+ (pkg :leoluz/nvim-dap-go {:config (setup :dap-go)})
  ;; Telescope, interactive fuzzy-finder.
  (pkg :nvim-telescope/telescope.nvim
       {:dependencies [:nvim-lua/popup.nvim :nvim-lua/plenary.nvim]
@@ -98,6 +99,19 @@
       {:dependencies [:nvim-telescope/telescope.nvim]})
  (pkg :nvim-telescope/telescope-ui-select.nvim
       {:dependencies [:nvim-telescope/telescope.nvim]})
+ ;; LLM integrations
+ (pkg :olimorris/codecompanion.nvim
+      {:dependencies [:nvim-lua/plenary.nvim
+                      :nvim-treesitter/nvim-treesitter
+                      :hrsh7th/nvim-cmp
+                      :nvim-telescope/telescope.nvim]
+       :config #(let [codecompanion (require :codecompanion)
+                      adapters (require :codecompanion.adapters)
+                      strategies {:chat {:adapter :ollama}
+                                  :inline {:adapter :ollama}
+                                  :agent {:adapter :ollama}}]
+                  (codecompanion.setup {: strategies}))})
+ (pkg :zbirenbaum/copilot.lua)
  ;; Lush, nice colorscheme package with an interactive mode.
  (pkg :rktjmp/lush.nvim)
  ;; Icons via nerdfonts.
@@ -105,7 +119,9 @@
  ;; Noice, substantial nvim UI plugin
  (pkg :rcarriga/nvim-notify
       {:config #(let [notify (require :notify)]
-                  (notify.setup {:background_colour "#000000"}))})
+                  (notify.setup {:background_colour "#000000"
+                                 :render :compact
+                                 :timeout 3}))})
  (pkg :folke/noice.nvim
       {:dependencies [:MunifTanjim/nui.nvim :rcarriga/nvim-notify]
        :config #(let [noice (require :noice)]
@@ -114,8 +130,8 @@
                                                  :cmp.entry.get_documentation true}}}))})
  ;; ZenMode, declutter and focus on window / selection.
  (pkg :Pocco81/true-zen.nvim {:config (setup :true-zen)})
- ;; Language-aware comment plugin
- (pkg :numToStr/Comment.nvim {:config (setup :Comment)})
+ ; ;; Language-aware comment plugin
+ ; (pkg :numToStr/Comment.nvim {:config (setup :Comment)})
  ;; Lots of good integrations with git, like showing diffs in the numberline
  ;; and being able to see blames inline etc
  (pkg :lewis6991/gitsigns.nvim
@@ -123,11 +139,9 @@
  ;; UI for viewing git diffs.
  (pkg :sindrets/diffview.nvim
       {:dependencies [:nvim-lua/plenary.nvim] :config (setup :diffview)})
- ;; Integrated Github UI and API, e.g. checkout and review PR in neovim.
- (pkg :pwntester/octo.nvim {:config (setup :octo)})
  ;; Plugin for displaying tree structures, including a file browser.
  (pkg :nvim-neo-tree/neo-tree.nvim
-      {:branch :v2.x
+      {:branch :v3.x
        :dependencies [:nvim-lua/plenary.nvim
                       :kyazdani42/nvim-web-devicons
                       :MunifTanjim/nui.nvim]
@@ -137,15 +151,9 @@
  ;; super smooth. Would like to have something where you can run a go-test on
  ;; file changes and quickly get feedback.
  (pkg :stevearc/overseer.nvim
-      {:config #(let [overseer (require :overseer)]
+      {:enabled false
+       :config #(let [overseer (require :overseer)]
                   (overseer.setup))})
- ;; Hydra, plugin for submodes with UI for keybinds.
- (pkg :anuvyklack/hydra.nvim {:config (setup :skr.hydra)})
- ;; Revamped orgmode for nvim. Testing it out!
- (pkg :nvim-neorg/neorg
-      {:build ":Neorg sync-parsers"
-       :config (setup :skr.neorg)
-       :dependencies [:nvim-lua/plenary.nvim]})
  ;; UI for showing keybinds
  (pkg :folke/which-key.nvim {:config (setup :which-key)})
  ;; Dashboard start screen
@@ -164,16 +172,17 @@
       {:build "cargo build --release" :ft [:fennel :clojure :racket :janet]})
  ;; Lang specific plugins.
  (pkg :jose-elias-alvarez/typescript.nvim)
- (pkg :cespare/vim-toml {:branch :main})
- (pkg :b4b4r07/vim-hcl)
- (pkg :towolf/vim-helm)
+ (pkg :nvim-java/nvim-java)
+ (pkg :cespare/vim-toml {:branch :main :enabled false})
+ (pkg :b4b4r07/vim-hcl {:enabled false})
+ (pkg :towolf/vim-helm {:enabled false})
  ;; Now we are getting silly.
  ;; Plugin for running cellular automata based on buffer content.
- (pkg :eandrju/cellular-automaton.nvim)
+ (pkg :eandrju/cellular-automaton.nvim {:enabled false})
  ;; Spawn ducks that roam the buffer.
  (pkg :tamton-aquib/duck.nvim
-      {:config #(let [duck (require :duck)]
+      {:enabled false
+       :config #(let [duck (require :duck)]
                   (do
                     (vim.keymap.set :n :<leader>dd #(duck.hatch))
                     (vim.keymap.set :n :<leader>dk #(duck.cook))))})]
-

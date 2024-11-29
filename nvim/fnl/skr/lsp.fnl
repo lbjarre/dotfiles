@@ -1,6 +1,5 @@
 (local lsp-config (require :lspconfig))
 (local navic (require :nvim-navic))
-(local inlay-hints (require :lsp-inlayhints))
 
 (local {:api {:nvim_buf_get_option buf-get-opt
               :nvim_create_augroup create-augroup
@@ -11,19 +10,25 @@
 ;; List of servers to enable: these are the server names as given in lspconfig.
 (local servers [{:name :rust_analyzer}
                 {:name :gopls
-                 :settings {:gopls {:hints {:assignVariableTypes true
+                 :settings {:gopls {:usePlaceholders true
+                                    :hints {:assignVariableTypes true
                                             :compositeLiteralFields true
                                             :constantValues true
                                             :functionTypeParameters true
                                             :parameterNames true
                                             :rangeVariableTypes true}}}}
                 {:name :hls}
-                {:name :ocamllsp}
+                {:name :gleam}
+                {:name :ocamllsp
+                 :filetypes [:ocaml :reason :ocaml.mehir :ocaml.ocamllex]}
                 {:name :pylsp}
+                {:name :clangd :filetypes [:c :cpp]}
                 {:name :lua_ls}
                 {:name :erlangls}
                 {:name :terraformls}
-                {:name :cssls}])
+                {:name :jdtls}
+                {:name :cssls}
+                {:name :kotlin_language_server}])
 
 (fn setup []
   ;; Create augroups
@@ -31,8 +36,7 @@
 
   (fn on_attach [client buf]
     "Defines the on_attach hook for the LSP client."
-    (navic.attach client buf)
-    (inlay-hints.on_attach client buf))
+    (navic.attach client buf))
 
   (create-autocmd :LspAttach
                   {:group :LspUserCfg
@@ -43,11 +47,12 @@
   ;; Setup language specific things.
   (let [ts (require :typescript)]
     (ts.setup {:go_to_source_definition {:fallback true} :server {: on_attach}}))
+  (let [java (require :java)]
+    (java.setup))
   ;; Run the setup for each of the servers.
   (each [_ server (ipairs servers)]
-    (let [{: name : settings} server
+    (let [{: name : settings : filetypes} server
           srv (. lsp-config name)]
-      (srv.setup {: settings}))))
+      (srv.setup {: settings : filetypes}))))
 
 {: setup}
-

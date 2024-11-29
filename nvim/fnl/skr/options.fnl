@@ -54,7 +54,10 @@
   (set opt.laststatus 3)
   ;; Create an autocommand for highlighting what you yank.
   (create-augroup :Yank {:clear true})
-  (create-autocmd :TextYankPost {:group :Yank :callback #(hl-on-yank)}))
+  (create-autocmd :TextYankPost {:group :Yank :callback #(hl-on-yank)})
+  (vim.filetype.add {:extension {:mli :ocaml.interface
+                                 :mly :ocaml.menhir
+                                 :mll :ocaml.ocamllex}}))
 
 {: setup}
 

@@ -47,16 +47,20 @@ local italic = 'italic'
 local bold = 'bold'
 local reverse = 'reverse'
 
-return lush(function()
+return lush(function(injected_symbols)
+	local sym = injected_symbols.sym
 	-- stylua: ignore
 	return {
 		-- Main text elements
 		Normal { fg = bw.light },
 		Comment { fg = bw.lightgrey, gui = italic },
-		Statement { fg = primary.light, gui = italic },
+		-- Statement { fg = primary.light, gui = italic },
+		Statement { fg = bw.light.darken(20), gui = bold .. ','.. italic },
 		Operator { fg = bw.bright, gui = bold },
-		Constant { fg = tertiary.mid },
-		String { fg = secondary.mid },
+		-- Constant { fg = tertiary.mid },
+		-- String { fg = secondary.mid },
+		Constant { fg = bw.lightgrey },
+		String { fg = bw.lightgrey },
 		Special { fg = bw.lightgrey },
 		Identifier { fg = bw.light },
 		SignColumn { Normal, bg = bw.dark },
@@ -66,8 +70,12 @@ return lush(function()
 		Directory { Title, gui = '' },
 		SpecialKey { fg = primary.light.lighten(40) },
 		MatchParen { bg = primary.dark },
+		Function { Normal },
+		Variable { Normal },
+		Delimiter { Special },
+		sym"@variable" { Identifier },
 
-		LspInlayHint { Comment, bg = bw.dark.lighten(10) },
+		LspInlayHint { Comment, bg = bw.dark.lighten(5), fg = bw.lightgrey.lighten(10) },
 
 		-- Treesitter elements
 		TSFuncBuiltin { fg = bw.bright, gui = italic },
@@ -101,6 +109,10 @@ return lush(function()
 		Tabline({ bg = bw.grey.darken(30) }),
 		TabLineSel { bg = bw.grey },
 		TablineFill { bg = bw.grey.darken(30) },
+
+		-- Window bar
+		WinBar({ bg = bw.dark.darken(50) }),
+		WinBarNC({ bg = bw.dark.darken(30) }),
 
 		-- Others
 		LineNr({ fg = bw.grey }),
