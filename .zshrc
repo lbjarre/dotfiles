@@ -54,6 +54,11 @@ if [ -f ~/.bun ]; then
     export PATH="${BUN_INSTALL}/bin:${PATH}"
 fi
 
+## Deno
+if [ -d ~/.deno ]; then
+    export PATH="${HOME}/.deno/bin:$PATH"
+fi
+
 ## Debian ls aliases (with some modifications) that just got stuck in my head
 if cmd-exists eza; then
     # list

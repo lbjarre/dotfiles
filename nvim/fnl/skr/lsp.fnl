@@ -24,11 +24,17 @@
                 {:name :pylsp}
                 {:name :clangd :filetypes [:c :cpp]}
                 {:name :lua_ls}
+                {:name :denols
+                 :root_dir (lsp-config.util.root_pattern :deno.json :deno.jsonc)}
+                {:name :ts_ls
+                 :root_dir (lsp-config.util.root_pattern :package.json)
+                 :single_file_support false}
                 {:name :erlangls}
                 {:name :terraformls}
                 {:name :jdtls}
                 {:name :cssls}
-                {:name :kotlin_language_server}])
+                {:name :kotlin_language_server}
+                {:name :yamlls}])
 
 (fn setup []
   ;; Create augroups
@@ -45,14 +51,12 @@
                                      client (vim.lsp.get_client_by_id ev.data.client_id)]
                                  (on_attach client bufnr)))})
   ;; Setup language specific things.
-  (let [ts (require :typescript)]
-    (ts.setup {:go_to_source_definition {:fallback true} :server {: on_attach}}))
   (let [java (require :java)]
     (java.setup))
   ;; Run the setup for each of the servers.
   (each [_ server (ipairs servers)]
-    (let [{: name : settings : filetypes} server
+    (let [{: name &as cfg} server
           srv (. lsp-config name)]
-      (srv.setup {: settings : filetypes}))))
+      (srv.setup cfg))))
 
 {: setup}
