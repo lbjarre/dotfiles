@@ -34,7 +34,8 @@
                 {:name :jdtls}
                 {:name :cssls}
                 {:name :kotlin_language_server}
-                {:name :yamlls}])
+                {:name :yamlls}
+                {:name :zls}])
 
 (fn setup []
   ;; Create augroups
