@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # ZSHRC
-export GOVERSION="go1.23.3"
+export GOVERSION="go1.23.4"
 source ~/src/github.com/northvolt/tools/etc/nvrc.sh
 source ~/src/github.com/northvolt/tools/bin/git-global-config.sh
 
