@@ -110,9 +110,9 @@
                       :hrsh7th/nvim-cmp
                       :nvim-telescope/telescope.nvim]
        :config #(let [codecompanion (require :codecompanion)
-                      strategies {:chat {:adapter :ollama}
-                                  :inline {:adapter :ollama}
-                                  :agent {:adapter :ollama}}]
+                      strategies {:chat {:adapter :anthropic}
+                                  :inline {:adapter :anthropic}
+                                  :agent {:adapter :anthropic}}]
                   (codecompanion.setup {: strategies}))})
  ;; Lush, nice colorscheme package with an interactive mode.
  (pkg :rktjmp/lush.nvim)
@@ -194,6 +194,5 @@
  (pkg :tamton-aquib/duck.nvim
       {:enabled false
        :config #(let [duck (require :duck)]
-                  (do
-                    (vim.keymap.set :n :<leader>dd #(duck.hatch))
-                    (vim.keymap.set :n :<leader>dk #(duck.cook))))})]
+                  (vim.keymap.set :n :<leader>dd #(duck.hatch))
+                  (vim.keymap.set :n :<leader>dk #(duck.cook)))})]

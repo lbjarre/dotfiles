@@ -11,6 +11,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -28,12 +29,26 @@
     {
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
 
+      # Darwin config for mbp.
+      darwinConfigurations."mbp" = nix-darwin.lib.darwinSystem {
+        # Darwin config for mbp
+        modules = [
+          ./nix/darwin/mbp.nix
+          agenix.darwinModules.default
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.users.skr = ./nix/home/mbp.nix;
+          }
+        ];
+
+      };
+
       # Darwin config for work laptop.
       darwinConfigurations."lbjarre-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
           ./nix/darwin/evroc.nix
           agenix.darwinModules.default
-
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -50,8 +65,8 @@
           username = vmUsername;
         };
         modules = [
-          agenix.homeManagerModules.default
           ./nix/home/dev-vm.nix
+          agenix.homeManagerModules.default
         ];
       };
     };

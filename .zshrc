@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # ZSHRC
+
 export PATH="${HOME}/bin:${PATH}"
 
 # Checks if a command exists (either executable file or zsh function.)
