@@ -121,4 +121,3 @@
         (table.concat " "))))
 
 {: statusline}
-

@@ -15,4 +15,3 @@
   (vim.keymap.set :n :<leader>t toggle {:desc "Toggle filetree"}))
 
 {: setup}
-

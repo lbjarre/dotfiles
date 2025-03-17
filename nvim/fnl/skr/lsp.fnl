@@ -8,34 +8,36 @@
         :tbl_contains contains?} vim)
 
 ;; List of servers to enable: these are the server names as given in lspconfig.
-(local servers [{:name :rust_analyzer}
-                {:name :gopls
-                 :settings {:gopls {:usePlaceholders true
-                                    :hints {:assignVariableTypes true
-                                            :compositeLiteralFields true
-                                            :constantValues true
-                                            :functionTypeParameters true
-                                            :parameterNames true
-                                            :rangeVariableTypes true}}}}
-                {:name :hls}
-                {:name :gleam}
-                {:name :ocamllsp
-                 :filetypes [:ocaml :reason :ocaml.mehir :ocaml.ocamllex]}
-                {:name :pylsp}
-                {:name :clangd :filetypes [:c :cpp]}
-                {:name :lua_ls}
-                {:name :denols
-                 :root_dir (lsp-config.util.root_pattern :deno.json :deno.jsonc)}
-                {:name :ts_ls
-                 :root_dir (lsp-config.util.root_pattern :package.json)
-                 :single_file_support false}
-                {:name :erlangls}
-                {:name :terraformls}
-                {:name :jdtls}
-                {:name :cssls}
-                {:name :kotlin_language_server}
-                {:name :yamlls}
-                {:name :zls}])
+(local servers
+       [{:name :rust_analyzer}
+        {:name :gopls
+         :settings {:gopls {:usePlaceholders true
+                            :hints {:assignVariableTypes true
+                                    :compositeLiteralFields true
+                                    :constantValues true
+                                    :functionTypeParameters true
+                                    :parameterNames true
+                                    :rangeVariableTypes true}}}}
+        {:name :hls}
+        {:name :gleam}
+        {:name :ocamllsp
+         :filetypes [:ocaml :reason :ocaml.mehir :ocaml.ocamllex]}
+        {:name :pylsp}
+        {:name :clangd :filetypes [:c :cpp]}
+        {:name :lua_ls}
+        {:name :denols
+         :root_dir (lsp-config.util.root_pattern :deno.json :deno.jsonc)}
+        {:name :ts_ls
+         :root_dir (lsp-config.util.root_pattern :package.json)
+         :single_file_support false}
+        {:name :erlangls}
+        {:name :terraformls}
+        {:name :jdtls}
+        {:name :cssls}
+        {:name :kotlin_language_server}
+        {:name :yamlls}
+        {:name :zls}
+        {:name :nil_ls :settings {:nil {:formatting {:command [:nixfmt]}}}}])
 
 (fn setup []
   ;; Create augroups

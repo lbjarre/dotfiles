@@ -10,4 +10,3 @@
                                                        :if "@function.inner"}}}})))
 
 {: setup}
-

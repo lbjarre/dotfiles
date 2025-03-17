@@ -26,4 +26,3 @@
     (luasnip.add_snippets ft pkg.snippets)))
 
 {: setup}
-

@@ -10,4 +10,3 @@
                   :formatters_by_ft by-ft}))
 
 {: setup}
-

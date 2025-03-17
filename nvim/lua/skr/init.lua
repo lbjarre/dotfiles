@@ -22,6 +22,11 @@ bootstrap('tangerine.nvim', 'https://github.com/udayvir-singh/tangerine.nvim.git
 
 require('tangerine').setup({
 	target = vim.fn.stdpath('data') .. '/tangerine',
+	rtpdirs = {
+		'ftplugin',
+		'plugin',
+		'lsp',
+	},
 	compiler = {
 		verbose = false,
 		hooks = { 'onsave', 'oninit' },

@@ -121,3 +121,5 @@ aws-profile-select() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+cmd-exists direnv && eval "$(direnv hook zsh)"
+
