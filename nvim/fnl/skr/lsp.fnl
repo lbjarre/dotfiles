@@ -51,9 +51,6 @@
                                (let [bufnr ev.buf
                                      client (vim.lsp.get_client_by_id ev.data.client_id)]
                                  (on_attach client bufnr)))})
-  ;; Setup language specific things.
-  (let [java (require :java)]
-    (java.setup))
   ;; Run the setup for each of the servers.
   (each [_ server (ipairs servers)]
     (let [{: name &as cfg} server

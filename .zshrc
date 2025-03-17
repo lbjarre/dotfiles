@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 # ZSHRC
-export GOVERSION="go1.23.4"
-source ~/src/github.com/northvolt/tools/etc/nvrc.sh
-source ~/src/github.com/northvolt/tools/bin/git-global-config.sh
-
 export PATH="${HOME}/bin:${PATH}"
 
 # Checks if a command exists (either executable file or zsh function.)
@@ -20,7 +16,7 @@ compinit
 
 # If we are on macOS: I want to have some homebrew binaries earlier in PATH so
 # we prefer them from native binaries from the OS.
-if [ $(uname -s) = "Darwin" ]; then
+if [ $(uname -s) = "Darwin" ] && cmd-exists brew; then
     export PATH="$(brew --prefix)/opt/sqlite/bin:${PATH}"
 fi
 

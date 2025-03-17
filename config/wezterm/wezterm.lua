@@ -3,8 +3,9 @@ local wezterm = require("wezterm")
 return {
 	-- Setup font, with a Nerd Font fallback.
 	font = wezterm.font_with_fallback({
-		"Caskaydia Cove",
-		{ family = "Symbols Nerd Font Mono", scale = 0.75 },
+		"Fira Code",
+		-- "Caskaydia Cove",
+		-- { family = "Symbols Nerd Font Mono", scale = 0.75 },
 	}),
 	-- Font sizes
 	font_size = 14.0,

@@ -174,7 +174,6 @@
  (pkg :eraserhd/parinfer-rust
       {:build "cargo build --release" :ft [:fennel :clojure :racket :janet]})
  ;; Lang specific plugins.
- (pkg :nvim-java/nvim-java)
  (pkg :cespare/vim-toml {:branch :main :enabled false})
  (pkg :b4b4r07/vim-hcl {:enabled false})
  (pkg :towolf/vim-helm {:enabled false})
