@@ -32,11 +32,7 @@
     ;; For these reasons I use <esc><esc> instead.
     (set-keymap :t :<esc><esc> "<C-\\><C-n>" opts)
     ;; Keymap for toggling line numbering in the buffer.
-    (set-keymap :n :<leader>n toggle-number opts)
-    ;; Set line numbering off by default when entering.
-    (set vim.wo.number false)
-    (set vim.wo.relativenumber false)
-    (set vim.wo.signcolumn :no))
+    (set-keymap :n :<leader>n toggle-number opts))
 
   (create-augroup group {:clear true})
   (create-autocmd :TermOpen

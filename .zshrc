@@ -14,6 +14,9 @@ cmd-exists brew && fpath=(
 autoload -Uz compinit
 compinit
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
 # If we are on macOS: I want to have some homebrew binaries earlier in PATH so
 # we prefer them from native binaries from the OS.
 if [ $(uname -s) = "Darwin" ] && cmd-exists brew; then
@@ -121,5 +124,5 @@ aws-profile-select() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# direnv
 cmd-exists direnv && eval "$(direnv hook zsh)"
-

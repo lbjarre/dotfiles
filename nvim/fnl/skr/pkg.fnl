@@ -168,6 +168,9 @@
       {:build "cd app && npm install"
        :setup #(set vim.g.mkdp_filetypes [:markdown])
        :ft [:markdown]})
+ (pkg :MeanderingProgrammer/render-markdown.nvim
+      {:dependencies [:nvim-treesitter/nvim-treesitter
+                      :nvim-tree/nvim-web-devicons]})
  ;; Church of Tpope.
  (pkg :tpope/vim-surround)
  ;; Parinfer, make lisp life easier.
