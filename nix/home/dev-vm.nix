@@ -39,6 +39,7 @@
       rustup
       fennel
       fnlfmt
+      gcc
 
       awscli2
 
