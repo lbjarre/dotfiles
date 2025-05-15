@@ -1,32 +1,18 @@
-(local diag (require :vim.diagnostic))
-(local lsp-buf (require :vim.lsp.buf))
 (local dap (require :dap))
 (local dap-widgets (require :dap.ui.widgets))
 (local dapui (require :dapui))
-(local neotree/cmd (require :neo-tree.command))
 (local ssr (require :ssr))
-(local noice-lsp (require :noice.lsp))
 
-(fn hard-reload []
-  (local {: reload_module} (require :plenary.reload))
-  (do
-    (reload_module :skr)
-    (require :skr)))
+(lambda map [mode key cmd ?desc]
+  (vim.keymap.set mode key cmd {:remap false :silent true :desc ?desc}))
 
 (fn setup []
-  (lambda map [mode key cmd ?desc]
-    (vim.keymap.set mode key cmd {:remap false :silent true :desc ?desc}))
-  ;; Generic keymaps
-  (map :n :<leader>cn :<cmd>cnext<cr>)
-  (map :n :<leader>r hard-reload)
   ;; Clipboard yank/pasting
   (map [:n :v] :<leader>y "\"*y" "Yank into clipboard")
   (map :n :<leader>p "\"*p" "Paste from clipboard")
   (map :n :<leader>P "\"*P" "Paste from clipboards")
   ;; LSP
-  (map :n :<leader>la lsp-buf.code_action "[LSP] code action")
-  (map :n :gt lsp-buf.type_definition "[LSP] goto type definition")
-  (map :n :<leader>lr lsp-buf.rename "[LSP] rename")
+  (map :n :grt vim.lsp.buf.type_definition :vim.lsp.buf.type_definition)
   ;; Toggle inlay hints
   (map :n :<leader>lh
        (fn []

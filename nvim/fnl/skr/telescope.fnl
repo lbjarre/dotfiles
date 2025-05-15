@@ -76,13 +76,6 @@
   ;; (<f>ind-<l>sp)
   (map :n :<leader>fl #(builtin.lsp_workspace_symbols (opts (with-input)))
        "Find LSP symbol")
-  ;; Fuzzy search files in northvolt repos
-  ;; (<f>ind-<n>orthvolt)
-  (map :n :<leader>fn
-       #(builtin.find_files (opts {:cwd "~/src/github.com/northvolt"
-                                   :hidden true
-                                   :file_ignore_patterns [:.*/.git/]}))
-       "Find Northvolt repo")
   ;; Find emojis
   ;; (<f>ind-<e>moji)
   (map :n :<leader>fe #(builtin.symbols (opts {:sources [:emoji]}))
@@ -92,9 +85,8 @@
   (map :n :<leader>gr #(builtin.symbols (opts {:sources [:greek]}))
        "Find greek letter")
   ;; Standard LSP hooks
-  (map :n :gd #(builtin.lsp_definitions (opts)) "Goto definition")
-  (map :n :gr #(builtin.lsp_references (opts)) "Goto references")
-  (map :n :gi #(builtin.lsp_implementations (opts)) "Goto implementations")
+  (map :n :grr #(builtin.lsp_references (opts)) "Goto references")
+  (map :n :gri #(builtin.lsp_implementations (opts)) "Goto implementations")
   ;; LSP namespaced finders
   ;; Diagnostics
   (map :n :<leader>ld #(builtin.diagnostics (opts)) "Find diagnostic")
