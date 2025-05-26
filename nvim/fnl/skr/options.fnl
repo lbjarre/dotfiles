@@ -55,8 +55,12 @@
   ;; Create an autocommand for highlighting what you yank.
   (create-augroup :Yank {:clear true})
   (create-autocmd :TextYankPost {:group :Yank :callback #(hl-on-yank)})
+  ;; Some config in order to make OCaml parser generators to work more nicely.
+  ;; Not sure if these are needed anymore.
   (vim.filetype.add {:extension {:mli :ocaml.interface
                                  :mly :ocaml.menhir
-                                 :mll :ocaml.ocamllex}}))
+                                 :mll :ocaml.ocamllex}})
+  ;; Configure how diagnostics are displayed in the buffer.
+  (vim.diagnostic.config {:virtual_lines {:current_line true}}))
 
 {: setup}
