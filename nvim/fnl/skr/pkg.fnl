@@ -81,6 +81,8 @@
                   (leap.create_default_mappings))})
  ;; iedit.nvim: multiple cursor edit kind of thing.
  (pkg :altermo/iedit.nvim)
+ ;; undotree: visualize buffer edits.
+ (pkg :mbbill/undotree)
  ;; Debugging with DAP. Still not explored a lot here.
  (pkg :mfussenegger/nvim-dap)
  (pkg :rcarriga/nvim-dap-ui
