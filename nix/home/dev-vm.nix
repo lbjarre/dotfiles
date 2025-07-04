@@ -1,4 +1,10 @@
-{ pkgs, username, ... }:
+{
+  pkgs,
+  agenix,
+  username,
+  config,
+  ...
+}:
 {
   home = {
     inherit username;
@@ -45,12 +51,24 @@
 
       glab
       lxd-lts
-    ];
 
+      agenix.packages.x86_64-linux.default
+    ];
+  };
+
+  age = {
+    identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+
+    secrets.anthropic-key = {
+      file = ../secrets/anthropic-key.age;
+      path = "$HOME/.secrets/anthropic-key";
+    };
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  services.ssh-agent.enable = true;
 
   nixpkgs.config.allowUnfreePredicate = _: true;
 }

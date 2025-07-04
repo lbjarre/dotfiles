@@ -9,6 +9,8 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs =
@@ -17,6 +19,7 @@
       nixpkgs,
       nix-darwin,
       home-manager,
+      agenix,
     }:
     let
       linuxPkgs = import nixpkgs { system = "x86_64-linux"; };
@@ -29,6 +32,7 @@
       darwinConfigurations."lbjarre-mbp" = nix-darwin.lib.darwinSystem {
         modules = [
           ./nix/darwin/evroc.nix
+          agenix.darwinModules.default
 
           home-manager.darwinModules.home-manager
           {
@@ -42,9 +46,13 @@
       homeConfigurations.${vmUsername} = home-manager.lib.homeManagerConfiguration {
         pkgs = linuxPkgs;
         extraSpecialArgs = {
+          inherit agenix;
           username = vmUsername;
         };
-        modules = [ ./nix/home/dev-vm.nix ];
+        modules = [
+          agenix.homeManagerModules.default
+          ./nix/home/dev-vm.nix
+        ];
       };
     };
 }
