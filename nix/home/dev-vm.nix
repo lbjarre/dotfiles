@@ -42,10 +42,10 @@
       gopls
       gofumpt
 
-      rustup
       fennel
       fnlfmt
       gcc
+      rust-analyzer
 
       awscli2
 
