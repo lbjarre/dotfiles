@@ -1,43 +1,7 @@
-(local lsp-config (require :lspconfig))
 (local navic (require :nvim-navic))
 
-(local {:api {:nvim_buf_get_option buf-get-opt
-              :nvim_create_augroup create-augroup
-              :nvim_create_autocmd create-autocmd}
-        :lsp {:buf {:format fmt}}
-        :tbl_contains contains?} vim)
-
-;; List of servers to enable: these are the server names as given in lspconfig.
-(local servers
-       [{:name :rust_analyzer}
-        {:name :gopls
-         :settings {:gopls {:usePlaceholders true
-                            :hints {:assignVariableTypes true
-                                    :compositeLiteralFields true
-                                    :constantValues true
-                                    :functionTypeParameters true
-                                    :parameterNames true
-                                    :rangeVariableTypes true}}}}
-        {:name :hls}
-        {:name :gleam}
-        {:name :ocamllsp
-         :filetypes [:ocaml :reason :ocaml.mehir :ocaml.ocamllex]}
-        {:name :pylsp}
-        {:name :clangd :filetypes [:c :cpp]}
-        {:name :lua_ls}
-        {:name :denols
-         :root_dir (lsp-config.util.root_pattern :deno.json :deno.jsonc)}
-        {:name :ts_ls
-         :root_dir (lsp-config.util.root_pattern :package.json)
-         :single_file_support false}
-        {:name :erlangls}
-        {:name :terraformls}
-        {:name :jdtls}
-        {:name :cssls}
-        {:name :kotlin_language_server}
-        {:name :yamlls}
-        {:name :zls}
-        {:name :nil_ls :settings {:nil {:formatting {:command [:nixfmt]}}}}])
+(local {:api {:nvim_create_augroup create-augroup
+              :nvim_create_autocmd create-autocmd}} vim)
 
 (fn setup []
   ;; Create augroups
@@ -53,10 +17,53 @@
                                (let [bufnr ev.buf
                                      client (vim.lsp.get_client_by_id ev.data.client_id)]
                                  (on_attach client bufnr)))})
-  ;; Run the setup for each of the servers.
-  (each [_ server (ipairs servers)]
-    (let [{: name &as cfg} server
-          srv (. lsp-config name)]
-      (srv.setup cfg))))
+  ;; Rust
+  (vim.lsp.enable :rust_analyzer)
+  ;; Go
+  (vim.lsp.config :gopls
+                  {:settings {:gopls {:usePlaceholders true
+                                      :hints {:assignVariableTypes true
+                                              :compositeLiteralFields true
+                                              :constantValues true
+                                              "functionTypeParameters:" true
+                                              :parameterNames true
+                                              :rangeVariableTypes true}}}})
+  (vim.lsp.enable :gopls)
+  ;; Haskell
+  (vim.lsp.enable :hls)
+  ;; Gleam
+  (vim.lsp.enable :gleam)
+  ;; OCaml
+  (vim.lsp.enable :ocamllsp)
+  ;; Lua
+  (vim.lsp.enable :lua_ls)
+  ;; Fennel
+  (vim.lsp.enable :fennel_ls)
+  ;; C, C++
+  (vim.lsp.config :clangd {:filetypes [:c :cpp]})
+  (vim.lsp.enable :clangd)
+  ;; Erlang
+  (vim.lsp.enable :erlangls)
+  ;; Terraform
+  (vim.lsp.enable :terraformls)
+  ;; CSS
+  (vim.lsp.enable :cssls)
+  ;; Kotlin
+  (vim.lsp.enable :kotlin_language_server)
+  ;; YAML
+  (vim.lsp.enable :yamlls)
+  ;; Zig
+  (vim.lsp.enable :zls)
+  ;; Nix
+  (vim.lsp.config :nil_ls {:settings {:nil {:formatting {:command [:nixfmt]}}}})
+  (vim.lsp.enable :nil_ls)
+  ;; Python
+  (vim.lsp.config :ty {:cmd [:uvx :ty :server]})
+  (vim.lsp.enable :ty)
+  ;; Deno
+  (vim.lsp.enable :denols)
+  ;; Node
+  (vim.lsp.config :ts_ls {:single_file_support false})
+  (vim.lsp.enable :ts_ls))
 
 {: setup}

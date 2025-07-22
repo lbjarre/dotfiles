@@ -44,8 +44,10 @@
 
       fennel
       fnlfmt
+      fennel-ls
       gcc
       rust-analyzer
+      deno
 
       awscli2
 
@@ -55,6 +57,8 @@
       agenix.packages.x86_64-linux.default
     ];
   };
+
+  xdg.enable = true;
 
   age = {
     identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
