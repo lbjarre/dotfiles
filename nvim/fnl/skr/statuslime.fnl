@@ -2,7 +2,7 @@
        (require :nvim-navic))
 
 (local {:api {:nvim_get_mode api/get-mode :nvim_buf_get_option api/buf-get-opt}
-        :lsp {:get_active_clients lsp/get-active-clients}} vim)
+        :lsp {:get_clients lsp/get-clients}} vim)
 
 (local {: nil?} (require :skr.std))
 
@@ -100,7 +100,7 @@
                   (navic-location) "")
         ;; Separator in the middle, pushing left and right side to each end.
         sep "%=" ;; Active LSP clients, if any.
-        lsp (-> (lsp/get-active-clients)
+        lsp (-> (lsp/get-clients)
                 (fmt-lsp)
                 (with-prefix "lsp:")) ;; File position.
         pos "pos:[%l:%c:%p%%]" ;; File type.

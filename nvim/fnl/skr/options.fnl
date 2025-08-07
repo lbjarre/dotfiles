@@ -1,6 +1,6 @@
 (local {:api {:nvim_create_augroup create-augroup
               :nvim_create_autocmd create-autocmd}
-        :highlight {:on_yank hl-on-yank}} vim)
+        :hl {:on_yank hl-on-yank}} vim)
 
 (fn setup []
   "Setup options."

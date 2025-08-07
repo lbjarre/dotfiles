@@ -18,9 +18,8 @@
                          :dependencies [:author/dep]})
   ```"
   (let [table (or ?options {})]
-    (do
-      (tset table 1 name)
-      table)))
+    (tset table 1 name)
+    table))
 
 (lambda setup [pkg-name ?opts]
   "Create a setup function.
@@ -111,12 +110,10 @@
                       :hrsh7th/nvim-cmp
                       :nvim-telescope/telescope.nvim]
        :config #(let [codecompanion (require :codecompanion)
-                      adapters (require :codecompanion.adapters)
                       strategies {:chat {:adapter :ollama}
                                   :inline {:adapter :ollama}
                                   :agent {:adapter :ollama}}]
                   (codecompanion.setup {: strategies}))})
- (pkg :zbirenbaum/copilot.lua)
  ;; Lush, nice colorscheme package with an interactive mode.
  (pkg :rktjmp/lush.nvim)
  ;; Icons via nerdfonts.
