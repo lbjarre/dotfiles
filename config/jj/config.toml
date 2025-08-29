@@ -10,3 +10,10 @@ key = "~/.ssh/id_ed25519.pub"
 [ui]
 default-command = ["log", "--no-pager"]
 
+[aliases]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_nonempty(@)"]
+
+[revset-aliases]
+"closest_bookmark(to)" = "heads(::to & bookmarks())"
+"closest_nonempty(to)" = "heads(::to ~ empty())"
+
