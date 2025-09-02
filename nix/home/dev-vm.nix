@@ -49,12 +49,14 @@
       rust-analyzer
       deno
 
-      awscli2
-
-      glab
-      lxd-lts
-
       agenix.packages.x86_64-linux.default
+
+      # Dev stuff
+      glab
+      jira-cli-go
+      lxd-lts
+      awscli2
+      s3cmd
     ];
   };
 
