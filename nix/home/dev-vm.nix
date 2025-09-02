@@ -63,9 +63,15 @@
   age = {
     identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
 
-    secrets.anthropic-key = {
-      file = ../secrets/anthropic-key.age;
-      path = "$HOME/.secrets/anthropic-key";
+    secrets = {
+      anthropic-key = {
+        file = ../secrets/anthropic-key.age;
+        path = "$HOME/.secrets/ANTHROPIC_API_KEY";
+      };
+      evroc-atlassian-key = {
+        file = ../secrets/evroc-atlassian-key.age;
+        path = "$HOME/.secrets/JIRA_API_KEY";
+      };
     };
   };
 

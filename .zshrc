@@ -31,6 +31,15 @@ export EDITOR=nvim
 alias vim=nvim
 alias vi=nvim
 
+## Load secret tokens
+# These should be set up by home-manager into ~/.secrets, where I store them
+# with the filename as the environment variable key and the file as the value.
+if [ -d ~/.secrets ]; then
+    for f in ~/.secrets/*; do
+        export "$(basename "$f")"="$(cat "$f")"
+    done
+fi
+
 ## rust toolchain
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 
