@@ -70,7 +70,7 @@
       };
       evroc-atlassian-key = {
         file = ../secrets/evroc-atlassian-key.age;
-        path = "$HOME/.secrets/JIRA_API_KEY";
+        path = "$HOME/.secrets/JIRA_API_TOKEN";
       };
     };
   };
