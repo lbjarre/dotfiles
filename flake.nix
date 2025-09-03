@@ -23,7 +23,10 @@
       agenix,
     }:
     let
-      linuxPkgs = import nixpkgs { system = "x86_64-linux"; };
+      linuxPkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ agenix.overlays.default ];
+      };
       vmUsername = "lbjarre";
     in
     {
@@ -60,7 +63,6 @@
       homeConfigurations.${vmUsername} = home-manager.lib.homeManagerConfiguration {
         pkgs = linuxPkgs;
         extraSpecialArgs = {
-          inherit agenix;
           username = vmUsername;
         };
         modules = [

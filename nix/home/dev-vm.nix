@@ -1,6 +1,5 @@
 {
   pkgs,
-  agenix,
   username,
   config,
   ...
@@ -31,6 +30,8 @@
       git-branchless
       util-linux
 
+      agenix
+
       nil
       nixfmt-rfc-style
 
@@ -45,11 +46,15 @@
       fennel
       fnlfmt
       fennel-ls
-      gcc
+
+      cargo
       rust-analyzer
+
+      bash-language-server
+
       deno
 
-      agenix.packages.x86_64-linux.default
+      gcc
 
       # Dev stuff
       glab

@@ -64,6 +64,8 @@
   (vim.lsp.enable :denols)
   ;; Node
   (vim.lsp.config :ts_ls {:single_file_support false})
-  (vim.lsp.enable :ts_ls))
+  (vim.lsp.enable :ts_ls)
+  ;; Shell
+  (vim.lsp.enable :bashls))
 
 {: setup}
