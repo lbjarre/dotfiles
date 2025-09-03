@@ -1,46 +1,55 @@
 { pkgs, ... }:
+let
+  username = "skr";
+in
 {
-  programs.home-manager.enable = true;
+  home = {
+    inherit username;
+    homeDirectory = "/Users/${username}";
+    stateVersion = "24.11";
 
-  home.stateVersion = "24.11";
-  home.username = "skr";
-  home.homeDirectory = "/Users/skr";
+    packages = with pkgs; [
+      # Basic shell programs
+      atuin
+      bat
+      bottom
+      coreutils
+      delta
+      difftastic
+      direnv
+      eza
+      fzf
+      jq
+      jujutsu
+      neovim
+      ripgrep
+      starship
+      tmux
+      zoxide
+
+      lua
+      fennel
+      fennel-ls
+      fnlfmt
+
+      nil
+      nixfmt-rfc-style
+
+      cargo
+      rust-analyzer
+
+      go
+      gopls
+      gofumpt
+
+      kubectl
+
+      ansible
+      vault
+    ];
+  };
 
   xdg.enable = true;
 
-  # programs = {
-  #   neovim.enable = true;
-  # };
-
-  home.packages = with pkgs; [
-    # Basic shell programs
-    atuin
-    ripgrep
-    direnv
-    jujutsu
-    starship
-    bat
-    eza
-    fzf
-    zoxide
-    jq
-    tmux
-    bottom
-
-    lua
-    luajitPackages.fennel
-    fnlfmt
-
-    nil
-    nixfmt-rfc-style
-
-    rustup
-
-    go
-
-    kubectl
-
-    ansible
-    vault
-  ];
+  programs.home-manager.enable = true;
 }

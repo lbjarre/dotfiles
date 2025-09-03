@@ -1,8 +1,11 @@
 { pkgs, ... }:
+let
+  name = "skr";
+in
 {
-  users.users.skr = {
-    name = "skr";
-    home = "/Users/skr";
+  users.users.${name} = {
+    inherit name;
+    home = "/Users/${name}";
     isHidden = false;
     shell = pkgs.zsh;
   };
@@ -32,10 +35,11 @@
   };
 
   fonts.packages = with pkgs; [
+    hack-font
+    nerd-fonts.hack
     fira-code
   ];
 
-  # Necessary for using flakes on this system.
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -45,6 +49,14 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 6;
+  system.primaryUser = name;
+
+  # Enable sudo with TouchID.
+  security.pam.services.sudo_local = {
+    enable = true;
+    reattach = true;
+    touchIdAuth = true;
+  };
 
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";

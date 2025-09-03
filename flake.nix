@@ -31,7 +31,6 @@
 
       # Darwin config for mbp.
       darwinConfigurations."mbp" = nix-darwin.lib.darwinSystem {
-        # Darwin config for mbp
         modules = [
           ./nix/darwin/mbp.nix
           agenix.darwinModules.default
