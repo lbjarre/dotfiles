@@ -1,7 +1,7 @@
 (local luasnip (require :luasnip))
 (local {: not-nil?} (require :skr.std))
 
-(local filetypes [:all :go])
+(local filetypes [:all :go :nix])
 
 (fn require-snip [ft]
   "require the snippets module and gets the `.snippets` key"
