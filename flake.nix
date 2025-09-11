@@ -12,6 +12,7 @@
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.home-manager.follows = "home-manager";
   };
 
   outputs =
@@ -40,7 +41,6 @@
             home-manager.users.skr = ./nix/home/mbp.nix;
           }
         ];
-
       };
 
       # Darwin config for work laptop.
