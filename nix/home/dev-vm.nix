@@ -4,10 +4,18 @@
   config,
   ...
 }:
+let
+  homeDirectory =
+    let
+      rootDir = if pkgs.stdenv.isLinux then "home" else "Users";
+    in
+    "/${rootDir}/${username}";
+  dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
+  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
+    inherit username homeDirectory;
     stateVersion = "24.11";
 
     packages = with pkgs; [
@@ -65,19 +73,26 @@
     ];
   };
 
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+    configFile = {
+      "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
+      "jj".source = mkSymlink "${dotfiles}/config/jj";
+      "nvim".source = mkSymlink "${dotfiles}/nvim";
+    };
+  };
 
   age = {
-    identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
 
     secrets = {
       anthropic-key = {
         file = ../secrets/anthropic-key.age;
-        path = "$HOME/.secrets/ANTHROPIC_API_KEY";
+        path = "${homeDirectory}/.secrets/ANTHROPIC_API_KEY";
       };
       evroc-atlassian-key = {
         file = ../secrets/evroc-atlassian-key.age;
-        path = "$HOME/.secrets/JIRA_API_TOKEN";
+        path = "${homeDirectory}/.secrets/JIRA_API_TOKEN";
       };
     };
   };
