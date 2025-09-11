@@ -1,10 +1,19 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  username = "skr";
+  homeDirectory =
+    let
+      rootDir = if pkgs.stdenv.isLinux then "home" else "Users";
+    in
+    "/${rootDir}/${username}";
+  dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
+  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
+in
 {
   programs.home-manager.enable = true;
 
   home = {
-    username = "skr";
-    homeDirectory = "/Users/skr";
+    inherit username homeDirectory;
     stateVersion = "24.11";
 
     packages = with pkgs; [
@@ -46,5 +55,12 @@
     ];
   };
 
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+    configFile = {
+      "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
+      "wezterm".source = mkSymlink "${dotfiles}/config/wezterm";
+      "nvim".source = mkSymlink "${dotfiles}/nvim";
+    };
+  };
 }

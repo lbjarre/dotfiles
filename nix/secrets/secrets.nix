@@ -12,12 +12,10 @@ let
   toAttr =
     secrets:
     let
-      kvs = map (name: {
-        inherit name;
-        value.publicKeys = keys;
-      }) secrets;
+      value.publicKeys = keys;
+      f = name: { inherit name value; };
     in
-    builtins.listToAttrs kvs;
+    builtins.listToAttrs (map f secrets);
 in
 toAttr [
   "anthropic-key.age"

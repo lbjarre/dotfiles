@@ -1,8 +1,11 @@
 { pkgs, ... }:
+let
+  name = "skr";
+in
 {
-  users.users.skr = {
-    name = "skr";
-    home = "/Users/skr";
+  users.users.${name} = {
+    inherit name;
+    home = "/Users/${name}";
     isHidden = false;
     shell = pkgs.zsh;
   };
@@ -34,7 +37,10 @@
     fira-code
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
