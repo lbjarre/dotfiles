@@ -19,6 +19,7 @@ in
     zoxide
     jq
     tmux
+    wezterm
 
     go
     gopls
@@ -29,9 +30,10 @@ in
   homebrew = {
     enable = true;
     casks = [
-      "wezterm"
       "spotify"
     ];
+    global.brewfile = true;
+    onActivation.cleanup = "zap";
   };
 
   fonts.packages = with pkgs; [
