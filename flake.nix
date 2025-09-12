@@ -28,6 +28,7 @@
         overlays = [ agenix.overlays.default ];
       };
       vmUsername = "lbjarre";
+      addOverlays.nixpkgs.overlays = [ agenix.overlays.default ];
     in
     {
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
@@ -56,6 +57,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.users.skr = ./nix/home;
           }
+          addOverlays
         ];
       };
 

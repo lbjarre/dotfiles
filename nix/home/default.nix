@@ -1,11 +1,17 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   username = "skr";
+  homeDirectory =
+    let
+      rootDir = if pkgs.stdenv.isLinux then "home" else "Users";
+    in
+    "/${rootDir}/${username}";
+  dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
+  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
   home = {
-    inherit username;
-    homeDirectory = "/Users/${username}";
+    inherit username homeDirectory;
     stateVersion = "24.11";
 
     packages = with pkgs; [
@@ -26,6 +32,8 @@ in
       starship
       tmux
       zoxide
+
+      agenix
 
       lua
       fennel
@@ -49,7 +57,15 @@ in
     ];
   };
 
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+    configFile = {
+      "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
+      "jj".source = mkSymlink "${dotfiles}/config/jj";
+      "nvim".source = mkSymlink "${dotfiles}/nvim";
+      "wezterm".source = mkSymlink "${dotfiles}/config/wezterm";
+    };
+  };
 
   programs.home-manager.enable = true;
 }
