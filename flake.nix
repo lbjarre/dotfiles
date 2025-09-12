@@ -23,10 +23,6 @@
       agenix,
     }:
     let
-      linuxPkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ agenix.overlays.default ];
-      };
       vmUsername = "lbjarre";
       addOverlays.nixpkgs.overlays = [ agenix.overlays.default ];
     in
@@ -63,12 +59,13 @@
 
       # Standalone home-manager config for work dev VM.
       homeConfigurations.${vmUsername} = home-manager.lib.homeManagerConfiguration {
-        pkgs = linuxPkgs;
+        pkgs = import nixpkgs { system = "x86_64-linux"; };
         extraSpecialArgs = {
           username = vmUsername;
         };
         modules = [
           ./nix/home/dev-vm.nix
+          addOverlays
           agenix.homeManagerModules.default
         ];
       };

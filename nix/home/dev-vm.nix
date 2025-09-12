@@ -94,6 +94,10 @@ in
         file = ../secrets/evroc-atlassian-key.age;
         path = "${homeDirectory}/.secrets/JIRA_API_TOKEN";
       };
+      github-key = {
+        file = ../secrets/github-key.age;
+        path = "${homeDirectory}/.secrets/GITHUB_API_TOKEN";
+      };
     };
   };
 

@@ -22,4 +22,5 @@ in
 toAttr [
   "anthropic-key.age"
   "evroc-atlassian-key.age"
+  "github-key.age"
 ]
