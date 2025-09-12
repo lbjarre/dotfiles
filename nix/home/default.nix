@@ -36,6 +36,8 @@ in
       agenix
 
       lua
+      lua-language-server
+      stylua
       fennel
       fennel-ls
       fnlfmt
