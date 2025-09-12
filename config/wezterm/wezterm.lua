@@ -30,6 +30,10 @@ config.window_padding = {
 	bottom = 0,
 }
 
+-- Only set RESIZE for window decorations, no TITLE, buying some more screen
+-- real estate. NONE does not work with aerospace.
+config.window_decorations = "RESIZE"
+
 -- Do not need to update the status bar so often.
 config.status_update_interval = 5000 -- milliseconds
 

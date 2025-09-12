@@ -10,15 +10,6 @@ in
     shell = pkgs.zsh;
   };
 
-  homebrew = {
-    enable = true;
-    casks = [
-      "firefox"
-      "wezterm"
-      "spotify"
-    ];
-  };
-
   environment.systemPackages = with pkgs; [
     neovim
     atuin
@@ -29,7 +20,19 @@ in
     tmux
     direnv
     starship
+    wezterm
+    firefox
+    aerospace
   ];
+
+  homebrew = {
+    enable = true;
+    casks = [
+      "spotify"
+    ];
+    global.brewfile = true;
+    onActivation.cleanup = "zap";
+  };
 
   fonts.packages = with pkgs; [
     hack-font
