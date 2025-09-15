@@ -51,7 +51,7 @@
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
-            home-manager.users.skr = ./nix/home;
+            home-manager.users.skr = ./nix/home/evroc.nix;
           }
           addOverlays
         ];

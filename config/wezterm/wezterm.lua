@@ -39,7 +39,7 @@ config.status_update_interval = 5000 -- milliseconds
 
 -- Right status bar info.
 wezterm.on("update-right-status", function(window, _pane)
-	local date = wezterm.strftime("%Y-%m-%d %H:%M")
+	local date <const> = wezterm.strftime("%Y-%m-%d %H:%M")
 
 	local _, weather, _ = wezterm.run_child_process({ "/Users/skr/bin/wttr" })
 	weather = weather:gsub("%s*$", "") -- Trim trailing newline

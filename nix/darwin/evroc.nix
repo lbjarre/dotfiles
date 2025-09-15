@@ -20,6 +20,7 @@ in
     jq
     tmux
     wezterm
+    aerospace
 
     go
     gopls
