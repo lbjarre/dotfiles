@@ -67,7 +67,6 @@ in
       # Dev stuff
       glab
       jira-cli-go
-      lxd-lts
       awscli2
       s3cmd
     ];
