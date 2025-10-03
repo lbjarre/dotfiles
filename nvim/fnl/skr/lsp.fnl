@@ -21,7 +21,8 @@
   (vim.lsp.enable :rust_analyzer)
   ;; Go
   (vim.lsp.config :gopls
-                  {:settings {:gopls {:usePlaceholders true
+                  {:settings {:gopls {:gofumpt true
+                                      :usePlaceholders true
                                       :hints {:assignVariableTypes true
                                               :compositeLiteralFields true
                                               :constantValues true
