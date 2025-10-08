@@ -37,6 +37,7 @@ in
       tmux
       git-branchless
       util-linux
+      entr
 
       agenix
 
@@ -51,24 +52,24 @@ in
       gopls
       gofumpt
 
+      lua-language-server
+      stylua
       fennel
       fnlfmt
       fennel-ls
 
-      cargo
       rust-analyzer
-
       bash-language-server
-
       deno
-
       gcc
+      terraform-ls
 
       # Dev stuff
       glab
       jira-cli-go
       awscli2
       s3cmd
+      s5cmd
     ];
   };
 
