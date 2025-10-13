@@ -2,10 +2,12 @@
 	name = Lukas Bjarre
 	email = lbjarre@evroc.com
 	signingkey = ~/.ssh/id_ed25519.pub
+
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore
 	pager = delta
+
 [alias]
 	graph = log --graph --all --pretty=format:\"%C(auto)%h %C(auto,bold)%<(60)%s (%C(blue)%an%C(reset), %C(green)%ar%C(reset)) %C(auto)%d%C(reset)\"
 	merged-branches = ! git branch --merged | egrep -v '\\* .*|  develop|  master'
@@ -19,31 +21,47 @@
 	pfwl = push --force-with-lease
 	camend = commit --amend --no-edit
 	diffr = diff --no-ext-diff
+
 [init]
 	defaultBranch = main
+
 [push]
 	followTags = true
 	default = current
+
 [commit]
 	gpgsign = true
+
 [gpg]
 	format = ssh
+
 [merge]
-	tool = nvim
 	ff = false
+	conflictStyle = "diff3"
+
 [mergetool]
 	prompt = false
+
 [mergetool "nvim"]
 	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[merge "mergiraf"]
+	name = mergiraf
+	driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+
 [pull]
 	rebase = true
+
 [fetch]
 	prune = true
+
 [diff]
 	external = difft
+
 [delta]
 	syntax-theme = base16
 	side-by-side = true
 	navigate = true
+
 [branchless "core"]
 	mainBranch = main

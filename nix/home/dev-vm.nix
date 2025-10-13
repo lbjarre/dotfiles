@@ -32,6 +32,7 @@ in
       file
       difftastic
       delta
+      mergiraf
       direnv
       bottom
       tmux
@@ -61,7 +62,6 @@ in
       rust-analyzer
       bash-language-server
       deno
-      gcc
       terraform-ls
 
       # Dev stuff
@@ -76,8 +76,9 @@ in
   xdg = {
     enable = true;
     configFile = {
-      "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
+      "git".source = mkSymlink "${dotfiles}/config/git";
       "jj".source = mkSymlink "${dotfiles}/config/jj";
+      "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
       "nvim".source = mkSymlink "${dotfiles}/nvim";
     };
   };
