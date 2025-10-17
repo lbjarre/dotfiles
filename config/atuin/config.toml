@@ -1,0 +1,13 @@
+# Prefer the compact layout
+style = "compact"
+# Show preview of the full command, in case it's longer than the terminal width
+show_preview = true
+# Don't run the command when hitting enter, only populate the command.
+enter_accept = false
+
+[sync]
+# Enable sync v2 by default
+# This ensures that sync v2 is enabled for new installs only
+# In a later release it will become the default across the board
+records = true
+

@@ -47,7 +47,7 @@ in
 
       docker
       docker-compose
-      krew
+      kubectl
 
       go
       gopls
@@ -76,11 +76,16 @@ in
   xdg = {
     enable = true;
     configFile = {
+      "nvim".source = mkSymlink "${dotfiles}/nvim";
       "git".source = mkSymlink "${dotfiles}/config/git";
       "jj".source = mkSymlink "${dotfiles}/config/jj";
       "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
-      "nvim".source = mkSymlink "${dotfiles}/nvim";
+      "atuin".source = mkSymlink "${dotfiles}/config/atuin";
     };
+  };
+  home.file = {
+    ".zshrc".source = mkSymlink "${dotfiles}/.zshrc";
+    ".tmux.conf".source = mkSymlink "${dotfiles}/.tmux.conf";
   };
 
   age = {

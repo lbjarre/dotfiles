@@ -170,14 +170,6 @@
  (pkg :MeanderingProgrammer/render-markdown.nvim
       {:dependencies [:nvim-treesitter/nvim-treesitter
                       :nvim-tree/nvim-web-devicons]})
- ;; Back into the neorg game
- (pkg :nvim-neorg/neorg
-      {:lazy false
-       :version "*"
-       :opts {:load {:core.defaults {}
-                     :core.concealer {}
-                     :core.dirman {:config {:default_workspace :notes
-                                            :workspaces {:notes "~/notes"}}}}}})
  ;; Church of Tpope.
  (pkg :tpope/vim-surround)
  ;; Parinfer, make lisp life easier.
