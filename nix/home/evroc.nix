@@ -68,6 +68,9 @@ in
       "nvim".source = mkSymlink "${dotfiles}/nvim";
       "wezterm".source = mkSymlink "${dotfiles}/config/wezterm";
     };
+    dataFile = {
+      "fennel-ls/docsets/nvim.lua".source = pkgs.callPackage ./nvim-docset.nix { };
+    };
   };
 
   programs.home-manager.enable = true;

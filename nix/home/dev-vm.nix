@@ -82,6 +82,9 @@ in
       "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
       "atuin".source = mkSymlink "${dotfiles}/config/atuin";
     };
+    dataFile = {
+      "fennel-ls/docsets/nvim.lua".source = pkgs.callPackage ./nvim-docset.nix { };
+    };
   };
   home.file = {
     ".zshrc".source = mkSymlink "${dotfiles}/.zshrc";
