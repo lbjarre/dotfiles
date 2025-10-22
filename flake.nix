@@ -17,11 +17,11 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       nix-darwin,
       home-manager,
       agenix,
+      ...
     }:
     let
       vmUsername = "lbjarre";

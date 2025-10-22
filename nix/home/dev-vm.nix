@@ -42,7 +42,7 @@ in
 
       agenix
 
-      nil
+      nixd
       nixfmt-rfc-style
 
       docker

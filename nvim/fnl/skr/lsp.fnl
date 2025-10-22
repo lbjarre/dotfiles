@@ -56,8 +56,7 @@
   ;; Zig
   (vim.lsp.enable :zls)
   ;; Nix
-  (vim.lsp.config :nil_ls {:settings {:nil {:formatting {:command [:nixfmt]}}}})
-  (vim.lsp.enable :nil_ls)
+  (vim.lsp.enable :nixd)
   ;; Python
   (vim.lsp.config :ty {:cmd [:uvx :ty :server]})
   (vim.lsp.enable :ty)

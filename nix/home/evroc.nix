@@ -8,6 +8,7 @@ let
     "/${rootDir}/${username}";
   dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
   mkSymlink = config.lib.file.mkOutOfStoreSymlink;
+
 in
 {
   home = {
@@ -42,7 +43,7 @@ in
       fennel-ls
       fnlfmt
 
-      nil
+      nixd
       nixfmt-rfc-style
 
       cargo

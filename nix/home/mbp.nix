@@ -40,7 +40,7 @@ in
       fennel-ls
       fnlfmt
 
-      nil
+      nixd
       nixfmt-rfc-style
 
       go
