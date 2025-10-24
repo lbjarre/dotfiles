@@ -173,8 +173,7 @@
  ;; Church of Tpope.
  (pkg :tpope/vim-surround)
  ;; Parinfer, make lisp life easier.
- (pkg :eraserhd/parinfer-rust
-      {:build "cargo build --release" :ft [:fennel :clojure :racket :janet]})
+ (pkg :gpanders/nvim-parinfer)
  ;; Lang specific plugins.
  (pkg :cespare/vim-toml {:branch :main :enabled false})
  (pkg :b4b4r07/vim-hcl {:enabled false})
