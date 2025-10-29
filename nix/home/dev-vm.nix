@@ -89,6 +89,11 @@ in
   home.file = {
     ".zshrc".source = mkSymlink "${dotfiles}/.zshrc";
     ".tmux.conf".source = mkSymlink "${dotfiles}/.tmux.conf";
+
+    # TODO: local executables. There is an XDG standard for this,
+    # $HOME/.local/bin, but home-manager doesn't support it. I've had these in
+    # $HOME/bin for now, but would be nice to have them in a standard place.
+    "bin".source = mkSymlink "${dotfiles}/bin";
   };
 
   age = {
