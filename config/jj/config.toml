@@ -12,6 +12,7 @@ default-command = ["log", "--no-pager"]
 
 [aliases]
 tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_nonempty(@)"]
+rebase-all = ["rebase", "--source", "roots(mutable())", "--destination", "trunk()"]
 
 [revset-aliases]
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
