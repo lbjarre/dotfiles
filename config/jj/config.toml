@@ -1,6 +1,11 @@
 [user]
 name = "Lukas Bjarre"
-email = "lbjarre@evroc.com"
+email = "lukas.bjarre@gmail.com"
+
+[[--scope]]
+--when.repositories = ["~/src/gitlab.evroc.dev"]
+[--scope.user]
+email = "lbjarre@evroc.dev"
 
 [signing]
 behavior = "own"
@@ -11,10 +16,17 @@ key = "~/.ssh/id_ed25519.pub"
 default-command = ["log", "--no-pager"]
 
 [aliases]
+# tug: move the closest bookmark to the closest non-empty change. Basically a
+# way of updating bookmarks more like Git branches.
 tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_nonempty(@)"]
+
+# rebase-all: rebase all work-in-progress local changes onto trunk.
 rebase-all = ["rebase", "--source", "roots(mutable())", "--destination", "trunk()"]
 
 [revset-aliases]
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
 "closest_nonempty(to)" = "heads(::to ~ empty())"
 
+[git]
+# Allow pushing new untracked bookmarks without specifying --allow-new.
+push-new-bookmarks = true
