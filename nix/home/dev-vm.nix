@@ -81,6 +81,7 @@ in
       "jj".source = mkSymlink "${dotfiles}/config/jj";
       "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
       "atuin".source = mkSymlink "${dotfiles}/config/atuin";
+      "tmux".source = mkSymlink "${dotfiles}/config/tmux";
     };
     dataFile = {
       "fennel-ls/docsets/nvim.lua".source = pkgs.callPackage ./nvim-docset.nix { };
@@ -88,7 +89,6 @@ in
   };
   home.file = {
     ".zshrc".source = mkSymlink "${dotfiles}/.zshrc";
-    ".tmux.conf".source = mkSymlink "${dotfiles}/.tmux.conf";
 
     # TODO: local executables. There is an XDG standard for this,
     # $HOME/.local/bin, but home-manager doesn't support it. I've had these in
