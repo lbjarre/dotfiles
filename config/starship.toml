@@ -26,13 +26,13 @@ format = "[$symbol$profile]($style) "
 style = "bold yellow"
 
 [custom.jj]
-description = "Prompt information about the state of a Jujutsu repository."
+description = "The current state of a Jujutsu repository."
 when = "jj root"
-symbol = "jj"
+symbol = "🐦"
 format = '$symbol\($output\) '
 command = '''
 jj log --revisions @ --limit 1 --ignore-working-copy --no-graph --color always --template '
-    separate(",",
+    separate(";",
         format_short_id(change_id),
         format_short_id(commit_id),
         if(conflict, "C"),
