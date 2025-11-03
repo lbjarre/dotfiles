@@ -5,7 +5,7 @@ email = "lukas.bjarre@gmail.com"
 [[--scope]]
 --when.repositories = ["~/src/gitlab.evroc.dev"]
 [--scope.user]
-email = "lbjarre@evroc.dev"
+email = "lbjarre@evroc.com"
 
 [signing]
 behavior = "own"
