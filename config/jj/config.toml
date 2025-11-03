@@ -23,6 +23,10 @@ tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_non
 # rebase-all: rebase all work-in-progress local changes onto trunk.
 rebase-all = ["rebase", "--source", "roots(mutable())", "--destination", "trunk()"]
 
+# sync: jj git fetch && jj rebase-all
+# Maybe want to jj git push also? Keeping it off for now.
+sync = ["util", "exec", "bash", "--", "-c", "jj git fetch && jj rebase-all"]
+
 [revset-aliases]
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
 "closest_nonempty(to)" = "heads(::to ~ empty())"
