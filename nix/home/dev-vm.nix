@@ -1,7 +1,7 @@
 {
   pkgs,
-  username,
   config,
+  username,
   ...
 }:
 let
@@ -16,16 +16,19 @@ in
 {
   imports = [
     ./lua-fennel.nix
+    ./neovim.nix
   ];
 
-  skr.home.lua.enable = true;
+  skr.home = {
+    lua.enable = true;
+    neovim.enable = true;
+  };
 
   home = {
     inherit username homeDirectory;
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      neovim
       fzf
       ripgrep
       jujutsu
@@ -76,15 +79,11 @@ in
   xdg = {
     enable = true;
     configFile = {
-      "nvim".source = mkSymlink "${dotfiles}/nvim";
       "git".source = mkSymlink "${dotfiles}/config/git";
       "jj".source = mkSymlink "${dotfiles}/config/jj";
       "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
       "atuin".source = mkSymlink "${dotfiles}/config/atuin";
       "tmux".source = mkSymlink "${dotfiles}/config/tmux";
-    };
-    dataFile = {
-      "fennel-ls/docsets/nvim.lua".source = pkgs.callPackage ./nvim-docset.nix { };
     };
   };
   home.file = {

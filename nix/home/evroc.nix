@@ -12,9 +12,13 @@ in
 {
   imports = [
     ./lua-fennel.nix
+    ./neovim.nix
   ];
 
-  skr.home.lua.enable = true;
+  skr.home = {
+    lua.enable = true;
+    neovim.enable = true;
+  };
 
   home = {
     inherit username homeDirectory;
@@ -33,7 +37,6 @@ in
       fzf
       jq
       jujutsu
-      neovim
       ripgrep
       starship
       tmux
@@ -63,11 +66,7 @@ in
     configFile = {
       "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
       "jj".source = mkSymlink "${dotfiles}/config/jj";
-      "nvim".source = mkSymlink "${dotfiles}/nvim";
       "wezterm".source = mkSymlink "${dotfiles}/config/wezterm";
-    };
-    dataFile = {
-      "fennel-ls/docsets/nvim.lua".source = pkgs.callPackage ./nvim-docset.nix { };
     };
   };
 

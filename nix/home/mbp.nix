@@ -12,9 +12,13 @@ in
 {
   imports = [
     ./lua-fennel.nix
+    ./neovim.nix
   ];
 
-  skr.home.lua.enable = true;
+  skr.home = {
+    lua.enable = true;
+    neovim.enable = true;
+  };
 
   programs.home-manager.enable = true;
 
@@ -23,8 +27,6 @@ in
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      # Basic shell programs
-      neovim
       atuin
       ripgrep
       direnv
@@ -61,10 +63,6 @@ in
     configFile = {
       "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
       "wezterm".source = mkSymlink "${dotfiles}/config/wezterm";
-      "nvim".source = mkSymlink "${dotfiles}/nvim";
-    };
-    dataFile = {
-      "fennel-ls/docsets/nvim.lua".source = pkgs.callPackage ./nvim-docset.nix { };
     };
   };
 }
