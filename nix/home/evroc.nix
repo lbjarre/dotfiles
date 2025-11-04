@@ -8,9 +8,14 @@ let
     "/${rootDir}/${username}";
   dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
   mkSymlink = config.lib.file.mkOutOfStoreSymlink;
-
 in
 {
+  imports = [
+    ./lua-fennel.nix
+  ];
+
+  skr.home.lua.enable = true;
+
   home = {
     inherit username homeDirectory;
     stateVersion = "24.11";
@@ -35,13 +40,6 @@ in
       zoxide
 
       agenix
-
-      lua
-      lua-language-server
-      stylua
-      fennel
-      fennel-ls
-      fnlfmt
 
       nixd
       nixfmt-rfc-style

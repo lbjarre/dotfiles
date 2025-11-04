@@ -14,6 +14,12 @@ let
   mkSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
+  imports = [
+    ./lua-fennel.nix
+  ];
+
+  skr.home.lua.enable = true;
+
   home = {
     inherit username homeDirectory;
     stateVersion = "24.11";
@@ -52,12 +58,6 @@ in
       go
       gopls
       gofumpt
-
-      lua-language-server
-      stylua
-      fennel
-      fnlfmt
-      fennel-ls
 
       rust-analyzer
       bash-language-server

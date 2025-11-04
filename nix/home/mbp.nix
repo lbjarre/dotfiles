@@ -10,6 +10,12 @@ let
   mkSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
+  imports = [
+    ./lua-fennel.nix
+  ];
+
+  skr.home.lua.enable = true;
+
   programs.home-manager.enable = true;
 
   home = {
@@ -34,11 +40,6 @@ in
       jq
       tmux
       bottom
-
-      lua
-      fennel
-      fennel-ls
-      fnlfmt
 
       nixd
       nixfmt-rfc-style
