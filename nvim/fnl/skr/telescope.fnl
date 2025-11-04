@@ -7,10 +7,13 @@
 (local actions (require :telescope.actions))
 (local action-state (require :telescope.actions.state))
 
-(local {: nil?} (require :skr.std))
+(local {: nil? : not-nil?} (require :skr.std))
 
 (lambda opts [?opt]
-  (vim.fn.extend {:timeout 3000} (or ?opt {})))
+  (local v {:timeout 3000})
+  (when (not-nil? ?opt)
+    (vim.fn.extend v ?opt))
+  v)
 
 (lambda with-input [?prompt]
   {:search (vim.fn.input (or ?prompt "search: "))})
