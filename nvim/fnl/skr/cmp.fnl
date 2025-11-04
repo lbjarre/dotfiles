@@ -33,10 +33,9 @@
   (let [icon (. icons vim-item.kind)
         kind (string.format "%s %s" icon vim-item.kind)
         menu (. src-menus entry.source.name)]
-    (do
-      (set vim-item.kind kind)
-      (set vim-item.menu menu)
-      vim-item)))
+    (set vim-item.kind kind)
+    (set vim-item.menu menu)
+    vim-item))
 
 (local src {:path {:name :path}
             :buffer {:name :buffer}

@@ -1,6 +1,6 @@
 ;; skr.telescope
 ;; Setup for telescope related fuzzy search prompts.
-(local tlscp (require :telescope))
+(local telescope (require :telescope))
 (local builtin (require :telescope.builtin))
 (local themes (require :telescope.themes))
 (local previewers (require :telescope.previewers))
@@ -9,14 +9,8 @@
 
 (local {: nil?} (require :skr.std))
 
-(local opt-timeout {:timeout 3000})
-
-(fn merge [...]
-  "Helper for merging tables."
-  (vim.tbl_extend :force ...))
-
 (lambda opts [?opt]
-  (vim.tbl_extend :force {:timeout 3000} (or ?opt {})))
+  (vim.fn.extend {:timeout 3000} (or ?opt {})))
 
 (lambda with-input [?prompt]
   {:search (vim.fn.input (or ?prompt "search: "))})
@@ -43,7 +37,7 @@
 (fn search-files []
   "Picker for files."
   (let [opts {:hidden true}]
-    (when (not (pcall tlscp.extensions.jj.files opts))
+    (when (not (pcall telescope.extensions.jj.files opts))
       (when (not (pcall builtin.git_files opts))
         (builtin.find_files opts)))))
 
@@ -95,22 +89,22 @@
 
 (fn setup []
   "Setup telescope with defaults."
-  (tlscp.setup {:defaults {:vimgrep_arguments [:rg
-                                               :--no-heading
-                                               :--with-filename
-                                               :--line-number
-                                               :--column
-                                               :--smart-case
-                                               :--hidden]
-                           :set_env {[:COLORTERM] :truecolor}
-                           :file_previewer previewers.vim_buffer_cat.new
-                           :grep_previewer previewers.vim_buffer_vimgrep.new
-                           :qflist_previewer previewers.vim_buffer_qflist.new}
-                :extensions {:ui-select {1 (themes.get_dropdown)}}})
+  (telescope.setup {:defaults {:vimgrep_arguments [:rg
+                                                   :--no-heading
+                                                   :--with-filename
+                                                   :--line-number
+                                                   :--column
+                                                   :--smart-case
+                                                   :--hidden]
+                               :set_env {[:COLORTERM] :truecolor}
+                               :file_previewer previewers.vim_buffer_cat.new
+                               :grep_previewer previewers.vim_buffer_vimgrep.new
+                               :qflist_previewer previewers.vim_buffer_qflist.new}
+                    :extensions {:ui-select {1 (themes.get_dropdown)}}})
   ;; Load extensions.
-  (tlscp.load_extension :jj)
-  (tlscp.load_extension :noice)
-  (tlscp.load_extension :ui-select)
+  (telescope.load_extension :jj)
+  (telescope.load_extension :noice)
+  (telescope.load_extension :ui-select)
   ;; Setup keymaps.
   (setup-keymaps))
 

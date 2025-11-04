@@ -1,9 +1,6 @@
 (local {:get_location navic-location :is_available navic-available?}
        (require :nvim-navic))
 
-(local {:api {:nvim_get_mode api/get-mode :nvim_buf_get_option api/buf-get-opt}
-        :lsp {:get_clients lsp/get-clients}} vim)
-
 (local {: nil?} (require :skr.std))
 
 (fn map [xs func]
@@ -57,13 +54,12 @@
 
   Takes input as received from the `nvim_get_mode` API."
   (let [{: mode} mode-output
+        printname (. mode-printname mode)
         hl-default hl-normal]
-    (-> mode-printname
-        (. mode)
-        (match {: name : hl}
-          {: name : hl} {: name}
-          {: name :hl hl-default} _
-          {:name mode :hl hl-default}))))
+    (case printname
+      {: name : hl} {: name : hl}
+      {: name} {: name :hl hl-default}
+      _ {:name mode :hl hl-default})))
 
 (fn fmt-lsp [clients]
   "format attached lsp clients for status line"
@@ -87,37 +83,41 @@
       (= "" x) ""
       (.. prefix x)))
 
+(fn mode []
+  (fmt-mode (vim.api.nvim_get_mode)))
+
+(fn navic []
+  (if (navic-available?)
+      (navic-location) ""))
+
+(fn lsp []
+  (-> (vim.lsp.get_clients)
+      (fmt-lsp)
+      (with-prefix "lsp:")))
+
+(fn pos []
+  "pos:[%l:%c:%p%%]")
+
+(fn ft []
+  (-> (vim.api.nvim_get_option_value :filetype {:buf 0})
+      (with-prefix "ft:")))
+
 (fn statusline []
   "Format statusline string.
 
   Can be used with the `vim.opt.statusline` option with `!luaeval`:
     !luaeval(\"require('skr.statuslime').statusline()\")"
-  (let [;; Vim mode.
-        {:name mode-name :hl mode-hl} (-> (api/get-mode)
-                                          (fmt-mode))
-        ;; LSP outline, when availabe.
-        navic (if (navic-available?)
-                  (navic-location) "")
-        ;; Separator in the middle, pushing left and right side to each end.
-        sep "%=" ;; Active LSP clients, if any.
-        lsp (-> (lsp/get-clients)
-                (fmt-lsp)
-                (with-prefix "lsp:")) ;; File position.
-        pos "pos:[%l:%c:%p%%]" ;; File type.
-        ft (-> (api/buf-get-opt 0 :filetype)
-               (with-prefix "ft:")) ;; All together now!
-        segments [(hl-esc mode-hl)
-                  mode-name
+  (let [mode (mode)
+        segments [(hl-esc mode.hl)
+                  mode.name
                   (hl-esc hl-main)
-                  navic
-                  sep
+                  (navic)
+                  "%="
                   (hl-esc hl-alt)
-                  lsp
-                  pos
-                  ft
+                  (lsp)
+                  (pos)
+                  (ft)
                   ""]]
-    ;; empty segment in the end to add padding.
-    (-> segments
-        (table.concat " "))))
+    (table.concat segments " ")))
 
 {: statusline}
