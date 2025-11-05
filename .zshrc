@@ -99,6 +99,9 @@ cmd-exists starship && eval "$(starship init zsh)"
 ## Atuin
 cmd-exists atuin && eval "$(atuin init zsh --disable-up-arrow)"
 
+# direnv
+cmd-exists direnv && eval "$(direnv hook zsh)"
+
 ## Kubectl
 if cmd-exists kubectl; then
     source <(kubectl completion zsh)
@@ -127,12 +130,3 @@ aws-profile-select() {
     export AWS_PROFILE="${selected}"
 }
 
-# bun completions
-[ -s "/Users/lubj/.bun/_bun" ] && source "/Users/lubj/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# direnv
-cmd-exists direnv && eval "$(direnv hook zsh)"
