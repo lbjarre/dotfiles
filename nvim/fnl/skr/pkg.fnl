@@ -148,6 +148,13 @@
                       :kyazdani42/nvim-web-devicons
                       :MunifTanjim/nui.nvim]
        :config (setup :skr.neo-tree)})
+ ;; File explorer.
+ (pkg :stevearc/oil.nvim
+      {:dependencies [:nvim-tree/nvim-web-devicons]
+       :lazy false
+       :opts {:columns [:icon :permissions :size :mtime]
+              :watch_for_changes true
+              :view_options {:show_hidden true}}})
  ;; overseer.nvim: task runner.
  ;; TODO: looks very promising, but lots of things to configure to make it
  ;; super smooth. Would like to have something where you can run a go-test on
