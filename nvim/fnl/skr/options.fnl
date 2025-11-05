@@ -5,6 +5,8 @@
 (fn setup []
   "Setup options."
   (local opt vim.opt)
+  ;; Leader key.
+  (set vim.g.mapleader " ")
   ;; Looks.
   (set opt.background :dark)
   (set opt.termguicolors true)

@@ -41,4 +41,4 @@ require('lazy').setup(pkgs)
 -- Keymaps
 -- TODO(lb): probably should just set these in their appropriate package setup
 require('skr.keymaps')
-vim.cmd [[ colorscheme skr ]]
+vim.cmd([[ colorscheme skr ]])
