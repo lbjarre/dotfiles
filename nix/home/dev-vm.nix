@@ -17,11 +17,13 @@ in
   imports = [
     ./lua-fennel.nix
     ./neovim.nix
+    ./devtools.nix
   ];
 
   skr.home = {
     lua.enable = true;
     neovim.enable = true;
+    devtools.enable = true;
   };
 
   home = {
@@ -29,25 +31,9 @@ in
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      fzf
-      ripgrep
-      jujutsu
-      atuin
-      bat
-      zoxide
-      eza
-      starship
-      coreutils
       file
-      difftastic
-      delta
-      mergiraf
-      direnv
-      bottom
-      tmux
       git-branchless
       util-linux
-      entr
 
       agenix
 
@@ -67,7 +53,6 @@ in
       deno
       terraform-ls
 
-      # Dev stuff
       glab
       jira-cli-go
       awscli2
@@ -76,16 +61,6 @@ in
     ];
   };
 
-  xdg = {
-    enable = true;
-    configFile = {
-      "git".source = mkSymlink "${dotfiles}/config/git";
-      "jj".source = mkSymlink "${dotfiles}/config/jj";
-      "starship.toml".source = mkSymlink "${dotfiles}/config/starship.toml";
-      "atuin".source = mkSymlink "${dotfiles}/config/atuin";
-      "tmux".source = mkSymlink "${dotfiles}/config/tmux";
-    };
-  };
   home.file = {
     ".zshrc".source = mkSymlink "${dotfiles}/.zshrc";
 
