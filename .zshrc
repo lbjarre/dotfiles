@@ -36,7 +36,7 @@ alias vi=nvim
 # These should be set up by home-manager into ~/.secrets, where I store them
 # with the filename as the environment variable key and the file as the value.
 if [ -d ~/.secrets ]; then
-    for f in ~/.secrets/*(.N); do
+    for f in ~/.secrets/*(N); do
         export "$(basename "$f")"="$(cat "$f")"
     done
 fi

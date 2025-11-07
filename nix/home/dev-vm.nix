@@ -86,6 +86,10 @@ in
         file = ../secrets/github-key.age;
         path = "${homeDirectory}/.secrets/GITHUB_API_TOKEN";
       };
+      evroc-gitlab-token = {
+        file = ../secrets/evroc-gitlab-token.age;
+        path = "${homeDirectory}/.secrets/GITLAB_API_TOKEN";
+      };
     };
   };
 

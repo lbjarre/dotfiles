@@ -21,4 +21,5 @@ toAttr [
   "anthropic-key.age"
   "evroc-atlassian-key.age"
   "github-key.age"
+  "evroc-gitlab-token.age"
 ]
