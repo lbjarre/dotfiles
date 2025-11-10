@@ -26,6 +26,8 @@
   (set opt.backup false)
   (set opt.writebackup false)
   (set opt.hidden true)
+  ;; Enable project local configs (.nvim.lua).
+  (set opt.exrc true)
   (set opt.showcmd true)
   (set opt.autoindent true)
   (set opt.startofline false)
