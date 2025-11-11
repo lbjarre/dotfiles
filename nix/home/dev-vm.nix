@@ -58,6 +58,7 @@ in
       awscli2
       s3cmd
       s5cmd
+      devenv
     ];
   };
 
@@ -91,6 +92,24 @@ in
         path = "${homeDirectory}/.secrets/GITLAB_API_TOKEN";
       };
     };
+  };
+
+  nix = {
+    enable = true;
+    package = pkgs.nix;
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    settings.trusted-users = [
+      username # I trust myself, big mistake.
+      "root"
+    ];
+    # Extra options as suggested by devenv.
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
 
   # Let Home Manager install and manage itself.
