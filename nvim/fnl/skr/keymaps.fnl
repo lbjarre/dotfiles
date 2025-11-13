@@ -2,6 +2,7 @@
 (local dap-widgets (require :dap.ui.widgets))
 (local dapui (require :dapui))
 (local ssr (require :ssr))
+(local oil (require :oil))
 
 (lambda map [mode key cmd ?desc]
   (vim.keymap.set mode key cmd {:remap false :silent true :desc ?desc}))
@@ -30,7 +31,9 @@
   ;; SSR
   (map [:n :x] :<leader>sr #(ssr.open))
   ;; Octo
-  (map :n :<leader>gh "<cmd>Octo actions<cr>"))
+  (map :n :<leader>gh "<cmd>Octo actions<cr>")
+  ;; Oil
+  (map :n :<leader>o #(oil.open) "Open Oil buffer"))
 
 (setup)
 
