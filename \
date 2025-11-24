@@ -195,4 +195,4 @@
                   (vim.keymap.set :n :<leader>dd #(duck.hatch))
                   (vim.keymap.set :n :<leader>dk #(duck.cook)))})
  ;; Sudoku, in nvim!
- (pkg :jim-fx/sudoku.nvim {:opts {}})]
+ (pkg :jim-fx/sudoku.nvim :opts {})]
