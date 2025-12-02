@@ -45,7 +45,7 @@
       };
 
       # Darwin config for work laptop.
-      darwinConfigurations."lbjarre-mbp" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."MBP-YTV-LBJ" = nix-darwin.lib.darwinSystem {
         modules = [
           ./nix/darwin/evroc.nix
           agenix.darwinModules.default
