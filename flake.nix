@@ -25,11 +25,28 @@
     }:
     let
       vmUsername = "lbjarre";
-      addOverlays.nixpkgs.overlays = [ agenix.overlays.default ];
+      overlays = [
+        agenix.overlays.default
+        (final: prev: {
+          buildJanetApp = (prev.callPackage ./nix/lib/janet { }).packages.default;
+          wttr = prev.callPackage ./cmd/wttr { };
+        })
+      ];
+      addOverlays.nixpkgs.overlays = overlays;
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
     in
     {
+      inherit overlays;
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system overlays; };
+        in
+        {
+          inherit (pkgs) wttr;
+        }
+      );
 
       # Darwin config for mbp.
       darwinConfigurations."mbp" = nix-darwin.lib.darwinSystem {
@@ -41,6 +58,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.users.skr = ./nix/home/mbp.nix;
           }
+          addOverlays
         ];
       };
 

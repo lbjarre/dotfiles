@@ -32,9 +32,6 @@ main() {
         k8s)
             _status_k8s
             ;;
-        wttr)
-            wttr
-            ;;
         *)
             usage
             exit 2

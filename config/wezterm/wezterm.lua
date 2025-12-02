@@ -41,7 +41,9 @@ config.status_update_interval = 5000 -- milliseconds
 wezterm.on("update-right-status", function(window, _pane)
 	local date <const> = wezterm.strftime("%Y-%m-%d %H:%M")
 
-	local _, weather, _ = wezterm.run_child_process({ "/Users/skr/bin/wttr" })
+	-- TODO: How do I a nix executable this into the system path? Absolute path
+	-- seems a bit fragile.
+	local _, weather, _ = wezterm.run_child_process({ "/run/current-system/sw/bin/wttr" })
 	weather = weather:gsub("%s*$", "") -- Trim trailing newline
 
 	window:set_right_status(wezterm.format({

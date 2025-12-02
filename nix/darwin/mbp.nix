@@ -23,6 +23,7 @@ in
     wezterm
     firefox
     aerospace
+    wttr
   ];
 
   homebrew = {

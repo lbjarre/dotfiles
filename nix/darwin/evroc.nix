@@ -21,11 +21,7 @@ in
     tmux
     wezterm
     aerospace
-
-    go
-    gopls
-
-    clang-tools
+    wttr
   ];
 
   homebrew = {
