@@ -10,7 +10,7 @@ let
   cfg = config.skr.home.devtools;
 
   dotfiles = "${config.home.homeDirectory}/src/github.com/lbjarre/dotfiles";
-  mkSymlink = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
+  mkSymlink = p: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${p}";
 in
 {
   options.skr.home.devtools = {

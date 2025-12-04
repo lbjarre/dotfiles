@@ -31,6 +31,3 @@ sync = ["util", "exec", "bash", "--", "-c", "jj git fetch && jj rebase-all"]
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
 "closest_nonempty(to)" = "heads(::to ~ empty())"
 
-[git]
-# Allow pushing new untracked bookmarks without specifying --allow-new.
-push-new-bookmarks = true
