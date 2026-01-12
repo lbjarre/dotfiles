@@ -26,9 +26,10 @@
     let
       vmUsername = "lbjarre";
       addOverlays.nixpkgs.overlays = [ agenix.overlays.default ];
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
     in
     {
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
       # Darwin config for mbp.
       darwinConfigurations."mbp" = nix-darwin.lib.darwinSystem {
