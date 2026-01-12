@@ -104,16 +104,18 @@
  (pkg :nvim-telescope/telescope-ui-select.nvim
       {:dependencies [:nvim-telescope/telescope.nvim]})
  ;; LLM integrations
- (pkg :olimorris/codecompanion.nvim
-      {:dependencies [:nvim-lua/plenary.nvim
-                      :nvim-treesitter/nvim-treesitter
-                      :hrsh7th/nvim-cmp
-                      :nvim-telescope/telescope.nvim]
-       :config #(let [codecompanion (require :codecompanion)
-                      strategies {:chat {:adapter :anthropic}
-                                  :inline {:adapter :anthropic}
-                                  :agent {:adapter :anthropic}}]
-                  (codecompanion.setup {: strategies}))})
+ ;; Opencode, interactive CLI tool for software engineering tasks.
+ (pkg :NickvanDyke/opencode.nvim
+      {:config (fn []
+                 (let [opencode (require :opencode)]
+                   ;; Configure opencode to use terminal provider
+                   (set vim.g.opencode_opts {:provider {:enabled :terminal}})
+                   (set vim.o.autoread true)
+                   ;; Keymap to execute opencode action
+                   (vim.keymap.set [:n :x] :<leader>lx #(opencode.select)
+                                   {:desc "Execute opencode action"})
+                   (vim.keymap.set [:n :x] :<leader>ll #(opencode.toggle)
+                                   {:desc "Toggle opencode"})))})
  ;; Lush, nice colorscheme package with an interactive mode.
  (pkg :rktjmp/lush.nvim)
  ;; Icons via nerdfonts.

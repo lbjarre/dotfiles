@@ -18,12 +18,14 @@ in
     ./lua-fennel.nix
     ./neovim.nix
     ./devtools.nix
+    ./opencode.nix
   ];
 
   skr.home = {
     lua.enable = true;
     neovim.enable = true;
     devtools.enable = true;
+    opencode.enable = true;
   };
 
   home = {
