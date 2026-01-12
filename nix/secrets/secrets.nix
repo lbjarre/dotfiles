@@ -13,6 +13,7 @@ let
     secrets:
     let
       value.publicKeys = keys;
+      value.armor = true;
       f = name: { inherit name value; };
     in
     builtins.listToAttrs (map f secrets);
