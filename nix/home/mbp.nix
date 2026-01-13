@@ -28,7 +28,7 @@ in
 
     packages = with pkgs; [
       nixd
-      nixfmt-rfc-style
+      nixfmt
 
       go
       gopls

@@ -40,7 +40,7 @@ in
       agenix
 
       nixd
-      nixfmt-rfc-style
+      nixfmt
 
       docker
       docker-compose
