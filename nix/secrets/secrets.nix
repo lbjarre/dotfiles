@@ -23,5 +23,5 @@ toAttr [
   "evroc-atlassian-key.age"
   "github-key.age"
   "evroc-gitlab-token.age"
-  "evroc-think-devstral.age"
+  "evroc-think-api-key.age"
 ]
