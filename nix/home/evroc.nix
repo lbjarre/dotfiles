@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ agenix, pkgs, ... }:
 let
   username = "skr";
   homeDirectory =
@@ -9,15 +9,18 @@ let
 in
 {
   imports = [
+    agenix.homeManagerModules.default
     ./lua-fennel.nix
     ./neovim.nix
     ./devtools.nix
+    ./opencode.nix
   ];
 
   skr.home = {
     lua.enable = true;
     neovim.enable = true;
     devtools.enable = true;
+    opencode.enable = true;
   };
 
   home = {
@@ -42,6 +45,10 @@ in
       ansible
       vault
     ];
+  };
+
+  age = {
+    identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
   };
 
   programs.home-manager.enable = true;

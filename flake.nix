@@ -57,6 +57,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.users.skr = ./nix/home/mbp.nix;
+            home-manager.extraSpecialArgs = { inherit agenix; };
           }
           addOverlays
         ];
@@ -71,6 +72,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.users.skr = ./nix/home/evroc.nix;
+            home-manager.extraSpecialArgs = { inherit agenix; };
           }
           addOverlays
         ];
