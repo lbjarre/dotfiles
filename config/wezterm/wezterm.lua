@@ -18,9 +18,6 @@ config.color_scheme = "Afterglow"
 
 -- Use the TUI tab bar instead of the native one.
 config.use_fancy_tab_bar = false
--- Disable the top bar if there is only one tab: in case multiplexing is still
--- done in tmux.
-config.hide_tab_bar_if_only_one_tab = true
 
 -- Disable padding in the pane. It's literally free screen real estate.
 config.window_padding = {
@@ -35,20 +32,23 @@ config.window_padding = {
 config.window_decorations = "RESIZE"
 
 -- Do not need to update the status bar so often.
-config.status_update_interval = 5000 -- milliseconds
+config.status_update_interval = 10000 -- milliseconds
 
--- Right status bar info.
-wezterm.on("update-right-status", function(window, _pane)
-	local date <const> = wezterm.strftime("%Y-%m-%d %H:%M")
-
+local function get_weather()
 	-- TODO: How do I a nix executable this into the system path? Absolute path
 	-- seems a bit fragile.
 	local _, weather, _ = wezterm.run_child_process({ "/run/current-system/sw/bin/wttr" })
-	weather = weather:gsub("%s*$", "") -- Trim trailing newline
+	return weather
+end
 
-	window:set_right_status(wezterm.format({
-		{ Text = weather .. " | " .. date },
-	}))
+-- Right status bar info.
+wezterm.on("update-status", function(window, pane)
+	local domain_name = pane:get_domain_name()
+	local date <const> = wezterm.strftime("%Y-%m-%d %H:%M")
+	local _, weather = pcall(get_weather)
+	local status = domain_name .. " | " .. weather .. " | " .. date
+
+	window:set_right_status(wezterm.format({ { Text = status } }))
 end)
 
 return config

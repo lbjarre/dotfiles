@@ -115,12 +115,12 @@
 
   # Try first to read value from cache.
   (match (protect (read-cache))
-    [true cached] (do (print cached)
+    [true cached] (do (prin cached)
                       (os/exit 0))
     [false err] (log "read-cache failed err=%j" err))
 
   # If cache failed, fetch from service.
   (match (protect (fetch-wttr))
     [true resp] (do (write-cache resp)
-                    (print resp))
+                    (prin resp))
     [false err] (log "fetch-wttr failed err=%j" err)))
