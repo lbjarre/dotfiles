@@ -21,17 +21,9 @@ in
     tmux
     wezterm
     aerospace
+    spotify
     wttr
   ];
-
-  homebrew = {
-    enable = true;
-    casks = [
-      "spotify"
-    ];
-    global.brewfile = true;
-    onActivation.cleanup = "zap";
-  };
 
   fonts.packages = with pkgs; [
     hack-font
@@ -60,7 +52,7 @@ in
       { app = "/Applications/Nix Apps/AeroSpace.app"; }
       { app = "/Applications/Mattermost.app"; }
       { app = "/Applications/Webex.app"; }
-      { app = "/Applications/Spotify.app"; }
+      { app = "/Applications/Nix Apps/Spotify.app"; }
       { app = "/System/Applications/Calendar.app"; }
       { app = "/System/Applications/Mail.app"; }
     ];
