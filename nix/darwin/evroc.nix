@@ -23,6 +23,7 @@ in
     aerospace
     spotify
     wttr
+    obsidian
   ];
 
   fonts.packages = with pkgs; [
