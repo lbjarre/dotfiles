@@ -15,6 +15,18 @@ key = "~/.ssh/id_ed25519.pub"
 [ui]
 default-command = ["log", "--no-pager"]
 
+[templates]
+draft_commit_description = '''
+concat(
+  builtin_draft_commit_description,
+  "\nJJ: The rest of this file is ignored after the next line\nJJ: ignore-rest\n",
+  "\nJJ: diff.stat():\n",
+  diff.stat(),
+  "\nJJ: diff.git():\n",
+  diff.git(),
+)
+'''
+
 [aliases]
 # tug: move the closest bookmark to the closest non-empty change. Basically a
 # way of updating bookmarks more like Git branches.
