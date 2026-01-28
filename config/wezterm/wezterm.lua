@@ -37,7 +37,10 @@ config.status_update_interval = 10000 -- milliseconds
 local function get_weather()
 	-- TODO: How do I a nix executable this into the system path? Absolute path
 	-- seems a bit fragile.
-	local _, weather, _ = wezterm.run_child_process({ "/run/current-system/sw/bin/wttr" })
+	local success, weather, _ = wezterm.run_child_process({ "/run/current-system/sw/bin/wttr" })
+	if not success then
+		return "~"
+	end
 	return weather
 end
 

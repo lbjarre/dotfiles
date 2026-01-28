@@ -1,4 +1,5 @@
-(import jurl)
+(import spork/http)
+(import jsec/tls)
 
 (defn id [x] x)
 (defn not-empty? [x] (not= (length x) 0))
@@ -26,11 +27,15 @@
             :default "%c+%t+(%f)+%p"}
            {:name    :url
             :env     "WTTR_URL"
-            :default "http://wttr.in"}
+            :default "https://wttr.in"}
            {:name    :debug?
             :env     "WTTR_DEBUG"
             :default false
-            :parse   not-empty?}])
+            :parse   not-empty?}
+           {:name    :timeout
+            :env     "WTTR_TIMEOUT"
+            :default 10
+            :parse   parse-int}])
 
 (defn parse-opts
   "Parse options from environment."
@@ -103,11 +108,12 @@
 (defn fetch-wttr
   "Do HTTP call towards wttr API."
   []
-  (def base-url (read-cfg :url))
-  (def fmt (read-cfg :fmt))
-  (def url (string base-url "/?format=" fmt))
+  (def url (string (read-cfg :url) "/?format=" (read-cfg :fmt)))
   (log "fetch: url=%j" url)
-  (jurl/slurp url))
+  # TODO: double free when this gets cancelled, presumably from the tls layer.
+  (ev/with-deadline (read-cfg :timeout)
+      (def resp (http/request "GET" url :stream-factory tls/connect))
+      (http/read-body resp)))
 
 (defn main [& args]
   (setdyn :cfg (parse-opts OPTS))

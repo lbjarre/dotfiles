@@ -1,14 +1,18 @@
 {
   lib,
   buildJanetApp,
-  curl,
+  openssl_3,
 }:
 buildJanetApp {
   name = "wttr";
   src = lib.fileset.toSource {
     root = ./.;
-    fileset = lib.fileset.fileFilter (file: file.hasExt "janet" || file.hasExt "jdn") ./.;
+    fileset = lib.fileset.unions [
+      ./main.janet
+      ./project.janet
+      ./lockfile.jdn
+    ];
   };
   bin = "wttr";
-  buildInputs = [ curl ];
+  buildInputs = [ openssl_3 ];
 }
