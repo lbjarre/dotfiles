@@ -27,9 +27,8 @@ in
   ];
 
   fonts.packages = with pkgs; [
-    hack-font
-    nerd-fonts.hack
-    fira-code
+    nerd-fonts.fira-code
+    nerd-fonts.caskaydia-cove
   ];
 
   nix.settings.experimental-features = [
@@ -44,27 +43,35 @@ in
   system.primaryUser = name;
 
   system.defaults = {
-    # Autohide the dock, more screen real estate.
-    dock.autohide = true;
-
-    dock.persistent-apps = [
-      { app = "/Applications/Firefox.app"; }
-      { app = "/Applications/Nix Apps/WezTerm.app"; }
-      { app = "/Applications/Nix Apps/AeroSpace.app"; }
-      { app = "/Applications/Mattermost.app"; }
-      { app = "/Applications/Webex.app"; }
-      { app = "/Applications/Nix Apps/Spotify.app"; }
-      { app = "/System/Applications/Calendar.app"; }
-      { app = "/System/Applications/Mail.app"; }
-    ];
+    dock = {
+      orientation = "bottom";
+      # Autohide the dock, more screen real estate.
+      autohide = true;
+      # Persistent apps in the dock.
+      persistent-apps = [
+        { app = "/Applications/Firefox.app"; }
+        { app = "/Applications/Nix Apps/WezTerm.app"; }
+        { app = "/Applications/Nix Apps/AeroSpace.app"; }
+        { app = "/Applications/Mattermost.app"; }
+        { app = "/Applications/Webex.app"; }
+        { app = "/Applications/Nix Apps/Spotify.app"; }
+        { app = "/System/Applications/Calendar.app"; }
+        { app = "/System/Applications/Mail.app"; }
+      ];
+    };
 
     # Turn off "natural" scroll direction.
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
 
     finder = {
+      # Show hidden files.
+      AppleShowAllFiles = true;
+      # Show file extensions.
       AppleShowAllExtensions = true;
-      ShowPathbar = true;
+      # Don't warn when chaning file extensions.
       FXEnableExtensionChangeWarning = false;
+      # Show path breadcrumb.
+      ShowPathbar = true;
     };
 
     # Show more controls in menu bar by default.
