@@ -60,6 +60,8 @@
   ;; Python
   (vim.lsp.config :ty {:cmd [:uvx :ty :server]})
   (vim.lsp.enable :ty)
+  (vim.lsp.config :ruff {:cmd [:uvx :ruff :server]})
+  (vim.lsp.enable :ruff)
   ;; Deno
   (vim.lsp.enable :denols)
   ;; Node

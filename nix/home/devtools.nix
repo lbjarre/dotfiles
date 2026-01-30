@@ -37,6 +37,7 @@ in
       tmux
       entr
       wezterm
+      uv
     ];
 
     xdg = {
