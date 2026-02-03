@@ -42,6 +42,11 @@ in
                 limit.context = 100000;
                 limit.output = 50000;
               };
+              "moonshotai/Kimi-K2.5" = {
+                name = "moonshotai/Kimi-K2.5";
+                limit.context = 200000;
+                limit.output = 56000;
+              };
               "Qwen/Qwen3-30B-A3B-Instruct-2507-FP8" = {
                 name = "Qwen/Qwen3-30B-A3B-Instruct-2507-FP8";
                 limit.context = 440000;
