@@ -23,22 +23,13 @@ in
     wezterm
     firefox
     aerospace
+    spotify
     wttr
   ];
 
-  homebrew = {
-    enable = true;
-    casks = [
-      "spotify"
-    ];
-    global.brewfile = true;
-    onActivation.cleanup = "zap";
-  };
-
   fonts.packages = with pkgs; [
-    hack-font
-    nerd-fonts.hack
-    fira-code
+    nerd-fonts.fira-code
+    nerd-fonts.caskaydia-cove
   ];
 
   nix.settings.experimental-features = [
@@ -50,20 +41,34 @@ in
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 6;
-
-  system.primaryUser = "skr";
+  system.primaryUser = name;
 
   system.defaults = {
-    # Autohide the dock, more screen real estate.
-    dock.autohide = true;
+    dock = {
+      orientation = "bottom";
+      # Autohide the dock, more screen real estate.
+      autohide = true;
+      # Persistent apps in the dock.
+      persistent-apps = [
+        { app = "/Applications/Nix Apps/Firefox.app"; }
+        { app = "/Applications/Nix Apps/WezTerm.app"; }
+        { app = "/Applications/Nix Apps/AeroSpace.app"; }
+        { app = "/Applications/Nix Apps/Spotify.app"; }
+      ];
+    };
 
     # Turn off "natural" scroll direction.
     NSGlobalDomain."com.apple.swipescrolldirection" = false;
 
     finder = {
+      # Show hidden files.
+      AppleShowAllFiles = true;
+      # Show file extensions.
       AppleShowAllExtensions = true;
-      ShowPathbar = true;
+      # Don't warn when chaning file extensions.
       FXEnableExtensionChangeWarning = false;
+      # Show path breadcrumb.
+      ShowPathbar = true;
     };
 
     # Show more controls in menu bar by default.
