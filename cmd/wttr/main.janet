@@ -136,4 +136,5 @@
   (match (protect (fetch-wttr))
     [true resp] (do (write-cache resp)
                     (prin resp))
-    [false err] (log "fetch-wttr failed err=%j" err)))
+    [false err] (do (log "fetch-wttr failed err=%j" err)
+                    (os/exit 1))))
