@@ -25,6 +25,9 @@
            {:name    :fmt
             :env     "WTTR_FMT"
             :default "%c+%t+(%f)+%p"}
+           {:name    :location
+            :env     "WTTR_LOCATION"
+            :default "Stockholm"}
            {:name    :url
             :env     "WTTR_URL"
             :default "https://wttr.in"}
@@ -108,7 +111,11 @@
 (defn fetch-wttr
   "Do HTTP call towards wttr API."
   []
-  (def url (string (read-cfg :url) "/?format=" (read-cfg :fmt)))
+  (def url (string (read-cfg :url)
+                   "/"
+                   (read-cfg :location)
+                   "?format="
+                   (read-cfg :fmt)))
   (log "fetch: url=%j" url)
   # TODO: double free when this gets cancelled, presumably from the tls layer.
   (ev/with-deadline (read-cfg :timeout)
