@@ -44,7 +44,7 @@ in
       enable = true;
       configFile = {
         "git".source = mkSymlink "config/git";
-        "jj".source = mkSymlink "config/jj";
+        "jj/config.toml".source = mkSymlink "config/jj/config.toml";
         "atuin".source = mkSymlink "config/atuin";
         "starship.toml".source = mkSymlink "config/starship.toml";
         "tmux".source = mkSymlink "config/tmux";
