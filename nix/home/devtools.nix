@@ -38,6 +38,7 @@ in
       entr
       wezterm
       uv
+      buf
     ];
 
     xdg = {

@@ -26,7 +26,7 @@
                                       :hints {:assignVariableTypes true
                                               :compositeLiteralFields true
                                               :constantValues true
-                                              "functionTypeParameters:" true
+                                              :functionTypeParameters true
                                               :parameterNames true
                                               :rangeVariableTypes true}}}})
   (vim.lsp.enable :gopls)
@@ -68,6 +68,8 @@
   (vim.lsp.config :ts_ls {:single_file_support false})
   (vim.lsp.enable :ts_ls)
   ;; Shell
-  (vim.lsp.enable :bashls))
+  (vim.lsp.enable :bashls)
+  ;; Protobuf
+  (vim.lsp.enable :buf_ls))
 
 {: setup}
