@@ -74,10 +74,11 @@
  (pkg :cshuaimin/ssr.nvim {:config (setup :ssr)})
  ;; leap.nvim: quick jumping to any 2-character pattern in a buffer.
  ;; Trying it out for now.
- (pkg :ggandor/leap.nvim
+ (pkg "https://codeberg.org/andyg/leap.nvim"
       {:dependencies [:tpope/vim-repeat]
        :config #(let [leap (require :leap)]
-                  (leap.create_default_mappings))})
+                  (vim.keymap.set [:n :x :o] :s "<Plug>(leap)")
+                  (vim.keymap.set :n :S "<Plug>(leap-from-window"))})
  ;; iedit.nvim: multiple cursor edit kind of thing.
  (pkg :altermo/iedit.nvim)
  ;; undotree: visualize buffer edits.
