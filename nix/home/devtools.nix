@@ -39,6 +39,7 @@ in
       wezterm
       uv
       buf
+      yamlfmt
     ];
 
     xdg = {
