@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -18,6 +20,7 @@
   outputs =
     {
       nixpkgs,
+      nixpkgs-stable,
       nix-darwin,
       home-manager,
       agenix,
@@ -30,6 +33,14 @@
         (final: prev: {
           buildJanetApp = (prev.callPackage ./nix/lib/janet { }).packages.default;
           wttr = prev.callPackage ./cmd/wttr { };
+
+          # Packages to build from stable because of various reasons.
+          #
+          # Keep devenv from stable, have some repos that does not build on v2
+          # which is in unstable.
+          devenv = nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.devenv;
+          # git-branchless fails to build on unstable right now.
+          git-branchless = nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.git-branchless;
         })
       ];
       addOverlays.nixpkgs.overlays = overlays;

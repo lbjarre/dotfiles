@@ -14,6 +14,7 @@ in
     ./neovim.nix
     ./devtools.nix
     ./opencode.nix
+    ./tmux
   ];
 
   skr.home = {
@@ -21,6 +22,7 @@ in
     neovim.enable = true;
     devtools.enable = true;
     opencode.enable = true;
+    tmux.enable = true;
   };
 
   home = {

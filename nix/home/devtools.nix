@@ -34,7 +34,6 @@ in
       mergiraf
       direnv
       bottom
-      tmux
       entr
       wezterm
       uv
@@ -49,7 +48,6 @@ in
         "jj/config.toml".source = mkSymlink "config/jj/config.toml";
         "atuin".source = mkSymlink "config/atuin";
         "starship.toml".source = mkSymlink "config/starship.toml";
-        "tmux".source = mkSymlink "config/tmux";
         "wezterm".source = mkSymlink "config/wezterm";
       };
     };

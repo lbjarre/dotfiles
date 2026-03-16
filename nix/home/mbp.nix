@@ -12,12 +12,14 @@ in
     ./lua-fennel.nix
     ./neovim.nix
     ./devtools.nix
+    ./tmux
   ];
 
   skr.home = {
     lua.enable = true;
     neovim.enable = true;
     devtools.enable = true;
+    tmux.enable = true;
   };
 
   programs.home-manager.enable = true;
