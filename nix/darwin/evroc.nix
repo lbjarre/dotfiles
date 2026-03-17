@@ -24,6 +24,7 @@ in
     spotify
     wttr
     obsidian
+    thunderbird
   ];
 
   fonts.packages = with pkgs; [
@@ -53,10 +54,9 @@ in
         { app = "/Applications/Nix Apps/WezTerm.app"; }
         { app = "/Applications/Nix Apps/AeroSpace.app"; }
         { app = "/Applications/Mattermost.app"; }
+        { app = "/Applications/Nix Apps/Thunderbird.app"; }
         { app = "/Applications/Webex.app"; }
         { app = "/Applications/Nix Apps/Spotify.app"; }
-        { app = "/System/Applications/Calendar.app"; }
-        { app = "/System/Applications/Mail.app"; }
       ];
     };
 
