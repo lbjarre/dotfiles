@@ -97,7 +97,10 @@ done
 cmd-exists starship && eval "$(starship init zsh)"
 
 ## Atuin
-cmd-exists atuin && eval "$(atuin init zsh --disable-up-arrow)"
+if cmd-exists atuin; then
+    eval "$(atuin init zsh --disable-up-arrow)"
+    eval "$(atuin hex init zsh)"
+fi
 
 # direnv
 cmd-exists direnv && eval "$(direnv hook zsh)"

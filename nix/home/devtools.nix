@@ -23,7 +23,9 @@ in
       jujutsu
       ripgrep
       fzf
-      atuin
+      (atuin.overrideAttrs (old: {
+        cargoBuildFeatures = (old.cargoBuildFeatures or [ ]) ++ [ "hex" ];
+      }))
       bat
       zoxide
       eza
