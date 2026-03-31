@@ -15,6 +15,18 @@ in
 {
   options.skr.home.devtools = {
     enable = lib.mkEnableOption "Enable devtools";
+
+    atuin-hex = lib.mkOption {
+      description = ''
+        Whether to enable the hex feature in the atuin crate, which uses a pty
+        proxy to draw the Ctrl-R overlay.
+
+        Currently turned off by default since it does not work well when
+        running in an embedded terminal in a neovim split.
+      '';
+      type = lib.types.bool;
+      default = false;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -23,9 +35,15 @@ in
       jujutsu
       ripgrep
       fzf
-      (atuin.overrideAttrs (old: {
-        cargoBuildFeatures = (old.cargoBuildFeatures or [ ]) ++ [ "hex" ];
-      }))
+      (
+        let
+          patched = atuin.overrideAttrs (old: {
+            cargoBuildFeatures = (old.cargoBuildFeatures or [ ]) ++ [ "hex" ];
+          });
+          pkg = if cfg.atuin-hex then patched else pkgs.atuin;
+        in
+        pkg
+      )
       bat
       zoxide
       eza

@@ -99,7 +99,7 @@ cmd-exists starship && eval "$(starship init zsh)"
 ## Atuin
 if cmd-exists atuin; then
     eval "$(atuin init zsh --disable-up-arrow)"
-    eval "$(atuin hex init zsh)"
+    eval "$(atuin hex init zsh 2>/dev/null || true)"
 fi
 
 # direnv
