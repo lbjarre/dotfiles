@@ -109,9 +109,6 @@
  (pkg :NickvanDyke/opencode.nvim
       {:config (fn []
                  (let [opencode (require :opencode)]
-                   ;; Configure opencode to use terminal provider
-                   (set vim.g.opencode_opts {:provider {:enabled :terminal}})
-                   (set vim.o.autoread true)
                    ;; Keymap to execute opencode action
                    (vim.keymap.set [:n :x] :<leader>lx #(opencode.select)
                                    {:desc "Execute opencode action"})

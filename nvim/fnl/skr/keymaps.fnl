@@ -12,13 +12,10 @@
   (map [:n :v] :<leader>y "\"*y" "Yank into clipboard")
   (map :n :<leader>p "\"*p" "Paste from clipboard")
   (map :n :<leader>P "\"*P" "Paste from clipboards")
-  ;; LSP
-  (map :n :grt vim.lsp.buf.type_definition :vim.lsp.buf.type_definition)
   ;; Toggle inlay hints
   (map :n :<leader>lh
-       (fn []
-         (let [enabled? (vim.lsp.inlay_hint.is_enabled)]
-           (vim.lsp.inlay_hint.enable (not enabled?))))
+       #(let [enabled? (vim.lsp.inlay_hint.is_enabled)]
+          (vim.lsp.inlay_hint.enable (not enabled?)))
        "[LSP] toggle inlay hints")
   ;; DAP
   (map :n :<leader>db dap.toggle_breakpoint "Toggle breakpoint")
