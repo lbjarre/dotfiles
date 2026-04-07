@@ -92,6 +92,11 @@ return lush(function(injected_symbols)
 		VertSplit { bg = bw.dark, fg = bw.grey },
 		WinSeparator { bg = bw.dark, fg = bw.grey },
 
+		-- Floating windows
+		NormalFloat { bg = bw.dark.darken(30), fg = bw.light },
+		FloatBoarder { bg = bw.dark.darken(50) },
+		FloatShadow { bf = bw.dark.darken(50) },
+
 		-- Diffs
 		DiffAdd({ bg = green.dark, fg = bw.bright }),
 		DiffChange { bg = yellow.dark, fg = bw.bright },

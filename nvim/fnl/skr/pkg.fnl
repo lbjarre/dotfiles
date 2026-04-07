@@ -63,12 +63,9 @@
                          :config (setup :skr.fnlsnip)})
  ;; Treesitter.
  (pkg :nvim-treesitter/nvim-treesitter
-      {:build ":TSUpdate"
-       :dependencies [:windwp/nvim-ts-autotag
-                      :nvim-treesitter/playground
-                      :nvim-treesitter/nvim-treesitter-textobjects
-                      :JoosepAlviste/nvim-ts-context-commentstring]
-       :config (setup :skr.treesitter)})
+      {:branch :main :config (setup :skr.treesitter)})
+ (pkg :nvim-treesitter/nvim-treesitter-context
+      {:dependencies [:nvim-treesitter/nvim-treesitter] :opts {:enable true}})
  ;; SSR: Structural search & replace. Pretty cool thing to search/replace with
  ;; treesitter queries, not entirely sure how useful it is yet though.
  (pkg :cshuaimin/ssr.nvim {:config (setup :ssr)})

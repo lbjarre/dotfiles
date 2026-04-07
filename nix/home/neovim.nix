@@ -26,7 +26,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.neovim ];
+    home.packages = [
+      pkgs.neovim
+      # Get tree-sitter to allow for :TSInstall to work.
+      # TODO: manage ts grammars via nix instead.
+      pkgs.tree-sitter
+    ];
 
     xdg = {
       enable = true;
