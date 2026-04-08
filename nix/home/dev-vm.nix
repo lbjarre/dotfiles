@@ -65,6 +65,8 @@ in
       devenv
       # Filesystem monitor, useful for the large repos.
       watchman
+
+      terraform
     ];
   };
 
