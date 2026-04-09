@@ -47,6 +47,7 @@ in
       bat
       zoxide
       eza
+      fd
       starship
       coreutils
       difftastic

@@ -20,6 +20,7 @@ in
     ./devtools.nix
     ./opencode.nix
     ./tmux
+    ./pi
   ];
 
   skr.home = {
@@ -28,6 +29,7 @@ in
     devtools.enable = true;
     opencode.enable = true;
     tmux.enable = true;
+    pi.enable = true;
   };
 
   home = {

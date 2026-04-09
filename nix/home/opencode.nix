@@ -28,7 +28,7 @@ in
             npm = "@ai-sdk/openai-compatible";
             name = "evroc Think";
             options = {
-              baseURL = "https://models.think.cloud.evroc.com/v1";
+              baseURL = "https://models.think.evroc.com/v1";
               apiKey = "{file:${config.age.secrets.evroc-think-devstral.path}}";
             };
             models = {
