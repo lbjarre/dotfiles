@@ -15,8 +15,8 @@ let
   # Docs: https://dev.fennel-lang.org/wiki/LanguageServer
   nvimDocset = pkgs.fetchgit {
     url = "https://git.sr.ht/~micampe/fennel-ls-nvim-docs";
-    rev = "3524319fb47f1da0d1046e2143385650ab37992a";
-    hash = "sha256-GuYa0L9efemro7Q8mMkLqkWzxTqOiQf9rO0F+/89NjM=";
+    rev = "c2a6d73162d0c0d6718980267b416ec16530dcd9";
+    hash = "sha256-NclEX7mbo+LVR+7WCCshAGsYY70HnFz9bRrP4mi/TT0=";
     sparseCheckout = [ "nvim.lua" ];
   };
 in
