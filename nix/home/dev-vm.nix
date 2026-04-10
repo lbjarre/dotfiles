@@ -69,6 +69,8 @@ in
       watchman
 
       terraform
+
+      jj-vine
     ];
   };
 
