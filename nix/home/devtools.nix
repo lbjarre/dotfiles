@@ -60,6 +60,7 @@ in
       uv
       buf
       yamlfmt
+      svelte-language-server
     ];
 
     xdg = {

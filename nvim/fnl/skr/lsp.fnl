@@ -67,6 +67,8 @@
   ;; Node
   (vim.lsp.config :ts_ls {:single_file_support false})
   (vim.lsp.enable :ts_ls)
+  ;; Svelte
+  (vim.lsp.enable :svelte)
   ;; Shell
   (vim.lsp.enable :bashls)
   ;; Protobuf
