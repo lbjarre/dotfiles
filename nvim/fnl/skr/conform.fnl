@@ -2,6 +2,7 @@
 
 (local by-ft {:lua [:stylua]
               :fennel [:fnlfmt]
+              :ocaml [:ocamlformat]
               :go [:goimports :gofmt]
               :javascript [:prettierd :prettier]
               :yaml [:yamlfmt]})
