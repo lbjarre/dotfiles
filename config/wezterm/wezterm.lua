@@ -54,4 +54,62 @@ wezterm.on("update-status", function(window, pane)
 	window:set_right_status(wezterm.format({ { Text = status } }))
 end)
 
+config.keys = {
+	{
+		mods = "SUPER|ALT",
+		key = ",",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter new name for tab: ",
+			initial_value = "",
+			action = wezterm.action_callback(function(window, pane, line)
+				_ = pane
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+	{
+		mods = "SUPER|ALT",
+		key = "p",
+		action = wezterm.action.ActivateCommandPalette,
+	},
+	{
+		mods = "SUPER|ALT",
+		key = "f",
+		action = wezterm.action_callback(function(window, pane)
+			local workspaces = wezterm.mux.get_workspace_names()
+			local choices = {}
+			for _, ws in ipairs(workspaces) do
+				table.insert(choices, { id = ws, label = ws })
+			end
+
+			window:perform_action(
+				wezterm.action.InputSelector({
+					action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+						if not id and not label then
+							wezterm.log_info("cancelled")
+							return
+						end
+						inner_window:perform_action(
+							wezterm.action.SwitchToWorkspace({
+								name = label,
+								spawn = {
+									label = "Workspace: " .. label,
+								},
+							}),
+							inner_pane
+						)
+					end),
+					title = "Choose Workspace",
+					choices = choices,
+					fuzzy = true,
+					fuzzy_description = "Fuzzy find and/or make a workspace: ",
+				}),
+				pane
+			)
+		end),
+	},
+}
+
 return config
