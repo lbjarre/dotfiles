@@ -25,6 +25,16 @@ let
             contextWindow = 200000;
             reasoning = true;
           }
+          {
+            id = "moonshotai/Kimi-K2.6";
+            name = "Kimi K2.6";
+            input = [
+              "text"
+              "image"
+            ];
+            contextWindow = 200000;
+            reasoning = true;
+          }
         ];
       };
     };
@@ -32,7 +42,7 @@ let
 
   settings = {
     defaultProvider = "evroc";
-    defaultModel = "moonshotai/Kimi-K2.5";
+    defaultModel = "moonshotai/Kimi-K2.6";
   };
 
 in
