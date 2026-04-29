@@ -12,6 +12,11 @@ cmd-exists brew && fpath=(
     $(brew --prefix)/share/zsh-completions
     $fpath
 )
+cmd-exists nix && fpath=(
+    "$HOME/.nix-profile/share/zsh/site-functions"
+    "$HOME/.nix-profile/share/zsh/vendor-completions"
+    $fpath
+)
 autoload -Uz compinit
 compinit
 
