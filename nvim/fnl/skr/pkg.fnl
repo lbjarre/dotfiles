@@ -138,6 +138,8 @@
  ;; UI for viewing git diffs.
  (pkg :sindrets/diffview.nvim
       {:dependencies [:nvim-lua/plenary.nvim] :config (setup :diffview)})
+ ;; Another diff viewer/editor.
+ (pkg :julienvincent/hunk.nvim {:cmd [:DiffEditor] :config (setup :hunk)})
  ;; Plugin for displaying tree structures, including a file browser.
  (pkg :nvim-neo-tree/neo-tree.nvim
       {:branch :v3.x

@@ -14,6 +14,7 @@ key = "~/.ssh/id_ed25519.pub"
 
 [ui]
 default-command = ["log", "--no-pager"]
+diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 
 [templates]
 draft_commit_description = '''
