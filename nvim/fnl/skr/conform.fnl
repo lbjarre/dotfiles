@@ -4,8 +4,7 @@
               :fennel [:fnlfmt]
               :ocaml [:ocamlformat]
               :go [:goimports :gofmt]
-              :javascript [:prettierd :prettier]
-              :yaml [:yamlfmt]})
+              :javascript [:prettierd :prettier]})
 
 (fn setup []
   (conform.setup {:format_on_save {:timeout_ms 500 :lsp_fallback true}
