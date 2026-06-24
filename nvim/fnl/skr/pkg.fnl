@@ -176,6 +176,8 @@
  (pkg :MeanderingProgrammer/render-markdown.nvim
       {:dependencies [:nvim-treesitter/nvim-treesitter
                       :nvim-tree/nvim-web-devicons]})
+ ;; zk, note taking.
+ (pkg :zk-org/zk-nvim {:name :zk :opts {:picker :select}})
  ;; Church of Tpope.
  (pkg :tpope/vim-surround)
  ;; Parinfer, make lisp life easier.

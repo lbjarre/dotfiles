@@ -61,6 +61,7 @@ in
       buf
       yamlfmt
       svelte-language-server
+      zk
     ];
 
     xdg = {
