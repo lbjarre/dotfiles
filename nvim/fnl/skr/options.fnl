@@ -7,6 +7,9 @@
   (local opt vim.opt)
   ;; Leader key.
   (set vim.g.mapleader " ")
+  ;; Enable experimental ui2 stuff.
+  (let [ui2 (require :vim._core.ui2)]
+    (ui2.enable))
   ;; Looks.
   (set opt.background :dark)
   (set opt.termguicolors true)
@@ -65,6 +68,8 @@
                                  :mly :ocaml.menhir
                                  :mll :ocaml.ocamllex}})
   ;; Configure how diagnostics are displayed in the buffer.
-  (vim.diagnostic.config {:virtual_lines {:current_line true}}))
+  (vim.diagnostic.config {:virtual_lines {:current_line true}})
+  ;; Enable the undotree package.
+  (vim.cmd.packadd :nvim.undotree))
 
 {: setup}

@@ -73,13 +73,9 @@
  ;; Trying it out for now.
  (pkg "https://codeberg.org/andyg/leap.nvim"
       {:dependencies [:tpope/vim-repeat]
-       :config #(let [leap (require :leap)]
+       :config #(do
                   (vim.keymap.set [:n :x :o] :s "<Plug>(leap)")
                   (vim.keymap.set :n :S "<Plug>(leap-from-window"))})
- ;; iedit.nvim: multiple cursor edit kind of thing.
- (pkg :altermo/iedit.nvim)
- ;; undotree: visualize buffer edits.
- (pkg :mbbill/undotree)
  ;; Debugging with DAP. Still not explored a lot here.
  (pkg :mfussenegger/nvim-dap)
  (pkg :rcarriga/nvim-dap-ui
@@ -101,26 +97,17 @@
       {:dependencies [:nvim-telescope/telescope.nvim]})
  (pkg :nvim-telescope/telescope-ui-select.nvim
       {:dependencies [:nvim-telescope/telescope.nvim]})
- ;; LLM integrations
- ;; Opencode, interactive CLI tool for software engineering tasks.
- (pkg :NickvanDyke/opencode.nvim
-      {:config (fn []
-                 (let [opencode (require :opencode)]
-                   ;; Keymap to execute opencode action
-                   (vim.keymap.set [:n :x] :<leader>lx #(opencode.select)
-                                   {:desc "Execute opencode action"})
-                   (vim.keymap.set [:n :x] :<leader>ll #(opencode.toggle)
-                                   {:desc "Toggle opencode"})))})
  ;; Lush, nice colorscheme package with an interactive mode.
  (pkg :rktjmp/lush.nvim)
  ;; Icons via nerdfonts.
  (pkg :kyazdani42/nvim-web-devicons {:config (setup :nvim-web-devicons)})
- ;; Noice, substantial nvim UI plugin
+ ;; nvim-notify, changes how notificiations looks like.
  (pkg :rcarriga/nvim-notify
       {:config #(let [notify (require :notify)]
                   (notify.setup {:background_colour "#000000"
                                  :render :compact
                                  :timeout 3}))})
+ ;; Noice, substantial nvim UI plugin
  (pkg :folke/noice.nvim
       {:dependencies [:MunifTanjim/nui.nvim :rcarriga/nvim-notify]
        :config #(let [noice (require :noice)]
@@ -129,8 +116,6 @@
                                                  :cmp.entry.get_documentation true}}}))})
  ;; ZenMode, declutter and focus on window / selection.
  (pkg :Pocco81/true-zen.nvim {:config (setup :true-zen)})
- ; ;; Language-aware comment plugin
- ; (pkg :numToStr/Comment.nvim {:config (setup :Comment)})
  ;; Lots of good integrations with git, like showing diffs in the numberline
  ;; and being able to see blames inline etc
  (pkg :lewis6991/gitsigns.nvim
@@ -140,13 +125,6 @@
       {:dependencies [:nvim-lua/plenary.nvim] :config (setup :diffview)})
  ;; Another diff viewer/editor.
  (pkg :julienvincent/hunk.nvim {:cmd [:DiffEditor] :config (setup :hunk)})
- ;; Plugin for displaying tree structures, including a file browser.
- (pkg :nvim-neo-tree/neo-tree.nvim
-      {:branch :v3.x
-       :dependencies [:nvim-lua/plenary.nvim
-                      :kyazdani42/nvim-web-devicons
-                      :MunifTanjim/nui.nvim]
-       :config (setup :skr.neo-tree)})
  ;; File explorer.
  (pkg :stevearc/oil.nvim
       {:dependencies [:nvim-tree/nvim-web-devicons]
@@ -164,8 +142,6 @@
                   (overseer.setup))})
  ;; UI for showing keybinds
  (pkg :folke/which-key.nvim {:config (setup :which-key)})
- ;; Dashboard start screen
- (pkg :goolord/alpha-nvim {:config (setup :skr.alpha)})
  ;; ASCII box diagram drawing
  (pkg :jbyuki/venn.nvim)
  ;; Render markdown with hot code reloading
