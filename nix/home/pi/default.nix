@@ -35,6 +35,16 @@ let
             contextWindow = 200000;
             reasoning = true;
           }
+          {
+            id = "zai-org/GLM-5.2";
+            name = "GLM 5.2";
+            input = [
+              "text"
+              "image"
+            ];
+            contextWindow = 200000;
+            reasoning = true;
+          }
         ];
       };
     };
@@ -42,7 +52,7 @@ let
 
   settings = {
     defaultProvider = "evroc";
-    defaultModel = "moonshotai/Kimi-K2.6";
+    defaultModel = "zai-org/GLM-5.2";
   };
 
 in
