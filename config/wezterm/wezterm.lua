@@ -31,6 +31,17 @@ config.window_padding = {
 -- real estate. NONE does not work with aerospace.
 config.window_decorations = "RESIZE"
 
+-- SSH domains: configure domain for accessing the remote dev machine.
+config.ssh_domains = {
+	{
+		name = "modal-dev",
+		remote_address = "modal-dev-ssm",
+		-- Wezterm is managed by Nix on the remote machine as well, so it's not in
+		-- a standard location.
+		remote_wezterm_path = "/home/ec2-user/.nix-profile/bin/wezterm",
+	},
+}
+
 -- Do not need to update the status bar so often.
 config.status_update_interval = 10000 -- milliseconds
 

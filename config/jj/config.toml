@@ -3,9 +3,9 @@ name = "Lukas Bjarre"
 email = "lukas.bjarre@gmail.com"
 
 [[--scope]]
---when.repositories = ["~/src/gitlab.evroc.dev"]
+--when.repositories = ["~/src/github.com/modal-labs"]
 [--scope.user]
-email = "lbjarre@evroc.com"
+email = "lukas@modal.com"
 
 [signing]
 behavior = "own"

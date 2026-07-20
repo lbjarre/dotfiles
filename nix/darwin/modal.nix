@@ -21,10 +21,14 @@ in
     tmux
     wezterm
     aerospace
+    firefox
     spotify
     wttr
-    obsidian
-    thunderbird
+
+    slack
+    awscli2
+    tailscale-gui
+    tailscale
   ];
 
   fonts.packages = with pkgs; [
@@ -50,12 +54,11 @@ in
       autohide = true;
       # Persistent apps in the dock.
       persistent-apps = [
-        { app = "/Applications/Firefox.app"; }
+        { app = "/Applications/Nix Apps/Firefox.app"; }
         { app = "/Applications/Nix Apps/WezTerm.app"; }
         { app = "/Applications/Nix Apps/AeroSpace.app"; }
-        { app = "/Applications/Mattermost.app"; }
-        { app = "/Applications/Nix Apps/Thunderbird.app"; }
-        { app = "/Applications/Webex.app"; }
+        { app = "/Applications/Nix Apps/Slack.app"; }
+        { app = "/Applications/Nix Apps/Tailscale.app"; }
         { app = "/Applications/Nix Apps/Spotify.app"; }
       ];
     };

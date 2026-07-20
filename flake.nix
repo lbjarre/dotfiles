@@ -75,14 +75,14 @@
       };
 
       # Darwin config for work laptop.
-      darwinConfigurations."MBP-YTV-LBJ" = nix-darwin.lib.darwinSystem {
+      darwinConfigurations."lukas-modal" = nix-darwin.lib.darwinSystem {
         modules = [
-          ./nix/darwin/evroc.nix
+          ./nix/darwin/modal.nix
           agenix.darwinModules.default
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
-            home-manager.users.skr = ./nix/home/evroc.nix;
+            home-manager.users.skr = ./nix/home/modal.nix;
             home-manager.extraSpecialArgs = { inherit agenix; };
           }
           addOverlays

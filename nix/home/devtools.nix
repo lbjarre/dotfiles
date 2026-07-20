@@ -74,5 +74,11 @@ in
         "wezterm".source = mkSymlink "config/wezterm";
       };
     };
+
+    services = {
+      ssh-agent = {
+        enable = true;
+      };
+    };
   };
 }
