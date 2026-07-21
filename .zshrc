@@ -46,6 +46,14 @@ if [ -d ~/.secrets ]; then
     done
 fi
 
+## Setup stable SSH agent socket for tmux
+if [ -n "$SSH_AUTH_SOCK" ] && [ "$SSH_AUTH_SOCK" != "$HOME/.ssh/ssh_auth_sock" ]; then
+    ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/ssh_auth_sock"
+fi
+if [ -n "$TMUX" ] || [ -n "$WEZTERM_UNIX_SOCKET" ]; then
+    export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+fi
+
 ## rust toolchain
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 

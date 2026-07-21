@@ -6,11 +6,19 @@ email = "lukas.bjarre@gmail.com"
 --when.repositories = ["~/src/github.com/modal-labs"]
 [--scope.user]
 email = "lukas@modal.com"
+[--scope.signing]
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAPZT7/jOrDlplzrZ+mvA2ToS50hcPVm897WehsEa9d lukas@modal.com"
 
 [signing]
 behavior = "own"
 backend = "ssh"
 key = "~/.ssh/id_ed25519.pub"
+
+[signing.backends.ssh]
+program = "ssh-keygen"
+
+[git]
+sign-on-push = true
 
 [ui]
 default-command = ["log", "--no-pager"]

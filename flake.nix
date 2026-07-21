@@ -27,7 +27,7 @@
       ...
     }:
     let
-      vmUsername = "lbjarre";
+      vmUsername = "ec2-user";
       overlays = [
         agenix.overlays.default
         (final: prev: {

@@ -31,6 +31,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      zsh
       git
       jujutsu
       ripgrep
@@ -61,6 +62,8 @@ in
       buf
       yamlfmt
       svelte-language-server
+      typescript-go
+      prettier
       zk
     ];
 

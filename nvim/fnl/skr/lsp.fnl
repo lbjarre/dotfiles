@@ -51,8 +51,6 @@
   (vim.lsp.enable :cssls)
   ;; Kotlin
   (vim.lsp.enable :kotlin_language_server)
-  ;; YAML
-  (vim.lsp.enable :yamlls)
   ;; Zig
   (vim.lsp.enable :zls)
   ;; Nix
@@ -64,14 +62,14 @@
   (vim.lsp.enable :ruff)
   ;; Deno
   (vim.lsp.enable :denols)
-  ;; Node
-  (vim.lsp.config :ts_ls {:single_file_support false})
-  (vim.lsp.enable :ts_ls)
+  ;; Node ; (vim.lsp.config :ts_ls {:single_file_support false}) ; (vim.lsp.enable :ts_ls)
+  (vim.lsp.enable :tsgo)
   ;; Svelte
   (vim.lsp.enable :svelte)
   ;; Shell
-  (vim.lsp.enable :bashls)
-  ;; Protobuf
-  (vim.lsp.enable :buf_ls))
+  (vim.lsp.enable :bashls))
+
+;; Protobuf
+; (vim.lsp.enable :buf_ls))
 
 {: setup}
