@@ -30,6 +30,7 @@ in
     firefox
     spotify
     wttr
+    agenix
 
     slack
     awscli2

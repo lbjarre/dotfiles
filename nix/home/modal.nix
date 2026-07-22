@@ -39,7 +39,7 @@ in
 
     packages = with pkgs; [
       zsh
-      agenix
+      pkgs.agenix
       nixd
       nixfmt
       cargo
@@ -61,6 +61,13 @@ in
 
   age = {
     identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
+
+    secrets = {
+      modal-github-key = {
+        file = ../secrets/modal-github-key.age;
+        path = "${homeDirectory}/.secrets/MODAL_GITHUB_API_TOKEN";
+      };
+    };
   };
 
   programs.home-manager.enable = true;

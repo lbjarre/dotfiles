@@ -78,6 +78,7 @@
       darwinConfigurations."lukas-modal" = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit agenix; };
         modules = [
+          addOverlays
           ./nix/darwin/modal.nix
           agenix.darwinModules.default
           home-manager.darwinModules.home-manager
