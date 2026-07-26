@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ agenix, pkgs, ... }:
 let
   name = "skr";
 in
@@ -8,6 +8,12 @@ in
     home = "/Users/${name}";
     isHidden = false;
     shell = pkgs.zsh;
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    users.${name} = ../home/modal.nix;
+    extraSpecialArgs = { inherit agenix; };
   };
 
   environment.systemPackages = with pkgs; [

@@ -76,15 +76,11 @@
 
       # Darwin config for work laptop.
       darwinConfigurations."lukas-modal" = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit agenix; };
         modules = [
           ./nix/darwin/modal.nix
           agenix.darwinModules.default
           home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.users.skr = ./nix/home/modal.nix;
-            home-manager.extraSpecialArgs = { inherit agenix; };
-          }
           addOverlays
         ];
       };

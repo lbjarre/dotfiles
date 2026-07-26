@@ -30,7 +30,7 @@ in
     neovim.enable = true;
     devtools.enable = true;
     tmux.enable = true;
-    pi.enable = true;
+    pi.enable = false; # TODO: rekey agenix secrets
   };
 
   home = {
@@ -44,6 +44,8 @@ in
       nixfmt
       cargo
       rust-analyzer
+      rustfmt
+      rustc
       claude-code
     ];
 
