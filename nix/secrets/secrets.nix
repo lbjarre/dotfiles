@@ -24,6 +24,7 @@ toAttr [
   "evroc-atlassian-key.age"
   "github-key.age"
   "modal-github-key.age"
+  "modal-endpoint.age"
   "evroc-gitlab-token.age"
   "evroc-think-api-key.age"
 ]

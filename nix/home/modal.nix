@@ -30,7 +30,7 @@ in
     neovim.enable = true;
     devtools.enable = true;
     tmux.enable = true;
-    pi.enable = false; # TODO: rekey agenix secrets
+    pi.enable = true;
   };
 
   home = {

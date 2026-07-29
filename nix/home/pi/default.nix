@@ -7,42 +7,22 @@
 let
   cfg = config.skr.home.pi;
 
-  apiKey = "evroc-think";
+  apiKey = "modal-endpoint";
   modelsConfig = {
     providers = {
-      evroc = {
-        baseUrl = "https://models.think.evroc.com/v1";
+      modal-labs = {
+        baseUrl = "https://modal-labs-lukas-dev--ep-kimi-k3-server.us-west.modal.direct/v1";
         api = "openai-completions";
         apiKey = "!cat ${config.age.secrets.${apiKey}.path}";
         models = [
           {
-            id = "moonshotai/Kimi-K2.5";
-            name = "Kimi K2.5";
+            id = "moonshotai/Kimi-K3";
+            name = "Kimi K3";
             input = [
               "text"
               "image"
             ];
-            contextWindow = 200000;
-            reasoning = true;
-          }
-          {
-            id = "moonshotai/Kimi-K2.6";
-            name = "Kimi K2.6";
-            input = [
-              "text"
-              "image"
-            ];
-            contextWindow = 200000;
-            reasoning = true;
-          }
-          {
-            id = "zai-org/GLM-5.2";
-            name = "GLM 5.2";
-            input = [
-              "text"
-              "image"
-            ];
-            contextWindow = 200000;
+            contextWindow = 1048576;
             reasoning = true;
           }
         ];
@@ -51,8 +31,8 @@ let
   };
 
   settings = {
-    defaultProvider = "evroc";
-    defaultModel = "zai-org/GLM-5.2";
+    defaultProvider = "modal-labs";
+    defaultModel = "moonshotai/Kimi-K3";
   };
 
 in
@@ -78,12 +58,9 @@ in
       };
     };
 
-    # TODO: repeat API key for the opencode module. Put it as a separate agenix
-    # secret and on a different path now, but should be able to share this.
-    # Figure out some good abstraction.
     age.secrets.${apiKey} = {
-      file = ../../secrets/evroc-think-api-key.age;
-      path = "${config.home.homeDirectory}/.secrets/EVROC_THINK_API";
+      file = ../../secrets/modal-endpoint.age;
+      path = "${config.home.homeDirectory}/.secrets/MODAL_ENDPOINT_API";
     };
   };
 }
