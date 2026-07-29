@@ -114,7 +114,7 @@
   (def url (string (read-cfg :url)
                    "/"
                    (read-cfg :location)
-                   "?format="
+                   "?M&format="
                    (read-cfg :fmt)))
   (log "fetch: url=%j" url)
   # TODO: double free when this gets cancelled, presumably from the tls layer.
