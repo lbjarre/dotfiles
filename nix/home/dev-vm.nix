@@ -107,11 +107,6 @@ in
       username # I trust myself, big mistake.
       "root"
     ];
-    # Extra options as suggested by devenv.
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-    '';
   };
 
   # Let Home Manager install and manage itself.
