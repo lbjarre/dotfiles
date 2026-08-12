@@ -19,6 +19,8 @@ program = "ssh-keygen"
 
 [git]
 sign-on-push = true
+# Private commits: refuse to push commits that starts with 'PRIVATE:'.
+private-commits = "subject(glob:'PRIVATE:*')"
 
 [ui]
 default-command = ["log", "--no-pager"]
