@@ -50,6 +50,10 @@ restack = ["rebase", "--source", "roots(mutable())", "--destination", "trunk()"]
 # Maybe want to jj git push also? Keeping it off for now.
 sync = ["util", "exec", "bash", "--", "-c", "jj git fetch && jj restack"]
 
+[revsets]
+# Default log revset: pretty much the default, but show some more trunk ancestors.
+log = 'present(@) | ancestors(immutable_heads().., 3) | ancestors(trunk(), 3)'
+
 [revset-aliases]
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
 "closest_nonempty(to)" = "heads(::to ~ empty())"
