@@ -54,6 +54,16 @@ sync = {
     # TODO: Maybe want to jj git push also? Keeping it off for now.
     definition = ["util", "exec", "bash", "--", "-c", "jj git fetch && jj restack"],
 }
+stack-bookmarks = {
+    doc = "Local bookmarks in substack().",
+    definition = [
+        "log",
+        "--revision", "substack()",
+        "--template", "self.local_bookmarks().map(|b| b.name()).join(' ') ++ ' '",
+        "--no-graph",
+        "--reversed",
+    ],
+}
 
 [revsets]
 # Default log revset: pretty much the default, but show some more trunk ancestors.
@@ -75,5 +85,45 @@ log = 'present(@) | ancestors(immutable_heads().., 3) | ancestors(trunk(), 3)'
 "closest_nonempty(to)" = {
     doc = "The closest non-empty revision in the ancestors of 'to'.",
     definition = "heads(::to ~ empty())",
+}
+"stack()" = {
+    doc = "All revisions of the current stack.",
+    definition = "stack(@)",
+}
+"stack(to)" = {
+    doc = "All revisions in the stack that revision 'to' belongs to.",
+    definition = "stack_bottom(to)::stack_top(to)",
+}
+"substack()" = {
+    doc = "stack(@) but upper capped at '@'.",
+    definition = "substack(@)",
+}
+"substack(to)" = {
+    doc = "stack(to) but upper capped at 'to'.",
+    definition = "stack_bottom(to)::to",
+}
+"stack_bottom()" = {
+    doc = "Bottom of the current stack.",
+    definition = "stack_bottom(@)",
+}
+"stack_bottom(to)" = {
+    doc = "Bottom of the stack that revision 'to' belongs to.",
+    definition = "roots(mutable() & ::to)",
+}
+"stack_top()" = {
+    doc = "Top of the current stack.",
+    definition = "stack_top(@)",
+}
+"stack_top(to)" = {
+    doc = "Top of the stack that revision 'to' belongs to. Must resolve to exactly one revision.",
+    definition = "exactly(stack_heads(to), 1)",
+}
+"stack_heads()" = {
+    doc = "Heads of the current stack.",
+    definition = "stack_heads(@)",
+}
+"stack_heads(to)" = {
+    doc = "Heads of the stack that revision 'to' belongs to.",
+    definition = "heads(mutable() & to::)",
 }
 
