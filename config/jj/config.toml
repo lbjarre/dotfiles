@@ -28,12 +28,14 @@ diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
 
 [templates]
 draft_commit_description = '''
-concat(
+join("\n",
   builtin_draft_commit_description,
-  "\nJJ: The rest of this file is ignored after the next line\nJJ: ignore-rest\n",
-  "\nJJ: diff.stat():\n",
+  "JJ: The rest of this file is ignored after the next line",
+  "JJ: ignore-rest",
+  "",
+  "JJ: diff.stat():",
   diff.stat(),
-  "\nJJ: diff.git():\n",
+  "JJ: diff.git():",
   diff.git(),
 )
 '''
