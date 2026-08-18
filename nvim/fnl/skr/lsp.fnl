@@ -18,6 +18,16 @@
                                      client (vim.lsp.get_client_by_id ev.data.client_id)]
                                  (on_attach client bufnr)))})
   ;; Rust
+  (vim.lsp.config :rust_analyzer
+                  {:settings {:rust-analyzer {:rustfmt {:extraArgs [:+nightly]}
+                                              :check {;; Run Clippy instead of just cargo check
+                                                      :command :clippy
+                                                      ;; Don't pass --all-targets.
+                                                      :allTargets false
+                                                      ;; Don't pass --workspace, i.e. only check the current package.
+                                                      :workspace :false}
+                                              ;; Give a little more juice to proc macro expansion.
+                                              :procMacro {:processes 8}}}})
   (vim.lsp.enable :rust_analyzer)
   ;; Go
   (vim.lsp.config :gopls
