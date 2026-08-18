@@ -3,7 +3,7 @@ name = "Lukas Bjarre"
 email = "lukas.bjarre@gmail.com"
 
 [[--scope]]
---when.repositories = ["~/src/github.com/modal-labs"]
+--when.repositories = ["~/src/github.com/modal-labs", "~/src/github.com/modal-projects"]
 [--scope.user]
 email = "lukas@modal.com"
 [--scope.signing]
