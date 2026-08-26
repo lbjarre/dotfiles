@@ -125,6 +125,8 @@
       {:dependencies [:nvim-lua/plenary.nvim] :config (setup :diffview)})
  ;; Another diff viewer/editor.
  (pkg :julienvincent/hunk.nvim {:cmd [:DiffEditor] :config (setup :hunk)})
+ ;; GitHub review plugin, testing out.
+ (pkg :gh-tui-tools/gh-review.nvim)
  ;; File explorer.
  (pkg :stevearc/oil.nvim
       {:dependencies [:nvim-tree/nvim-web-devicons]
