@@ -24,6 +24,17 @@ let
             ];
             contextWindow = 1048576;
             reasoning = true;
+            # Most of the thinking levels are turned off for the model, server will respond with
+            # 400 to unsupported levels.
+            thinkingLevelMap = {
+              low = "low";
+              high = "high";
+              max = "max";
+              off = null;
+              minimal = null;
+              medium = null;
+              xhigh = null;
+            };
           }
         ];
       };
