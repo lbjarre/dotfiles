@@ -30,18 +30,26 @@
       vmUsername = "ec2-user";
       overlays = [
         agenix.overlays.default
-        (final: prev: {
-          buildJanetApp = (prev.callPackage ./nix/lib/janet { }).packages.default;
-          wttr = prev.callPackage ./cmd/wttr { };
+        (
+          final: prev:
+          let
+            system = prev.stdenv.hostPlatform.system;
+            stable = nixpkgs-stable.legacyPackages.${system};
+          in
+          {
+            buildJanetApp = (prev.callPackage ./nix/lib/janet { }).packages.default;
+            wttr = prev.callPackage ./cmd/wttr { };
 
-          # Packages to build from stable because of various reasons.
-          #
-          # Keep devenv from stable, have some repos that does not build on v2
-          # which is in unstable.
-          devenv = nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.devenv;
-          # git-branchless fails to build on unstable right now.
-          git-branchless = nixpkgs-stable.legacyPackages.${prev.stdenv.hostPlatform.system}.git-branchless;
-        })
+            # Packages to build from stable because of various reasons.
+            inherit (stable)
+              # Keep devenv from stable, have some repos that does not build on v2
+              # which is in unstable.
+              devenv
+              # git-branchless fails to build on unstable right now.
+              git-branchless
+              ;
+          }
+        )
       ];
       addOverlays.nixpkgs.overlays = overlays;
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
