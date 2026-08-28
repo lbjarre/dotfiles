@@ -5,36 +5,20 @@
   ...
 }:
 let
-  homeDirectory =
-    let
-      rootDir = if pkgs.stdenv.isLinux then "home" else "Users";
-    in
-    "/${rootDir}/${username}";
-  dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
+  inherit (config.home) homeDirectory;
 in
 {
   imports = [
-    ./lua-fennel.nix
-    ./neovim.nix
-    ./devtools.nix
-    ./opencode.nix
-    ./tmux
-    ./pi
+    ./skr.nix
   ];
 
   skr.home = {
-    lua.enable = true;
-    neovim.enable = true;
-    devtools.enable = true;
-    opencode.enable = false;
-    tmux.enable = true;
-    pi.enable = true;
+    enable = true;
+    inherit username;
   };
 
   home = {
-    inherit username homeDirectory;
     stateVersion = "24.11";
-
     packages = with pkgs; [
       file
       git-branchless
@@ -42,9 +26,6 @@ in
       glibcLocales
 
       agenix
-
-      nixd
-      nixfmt
 
       docker
       docker-compose
@@ -69,27 +50,9 @@ in
       tilt
       krew
     ];
-
-    sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
-  };
-
-  programs.zsh = {
-    enable = true;
-    dotDir = "${config.xdg.configHome}/zsh";
-
-    autosuggestion.enable = true;
-
-    initContent = ''
-      source ${dotfiles}/.zshrc
-    '';
   };
 
   age = {
-    identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
-
     secrets = {
       github-token = {
         file = ../secrets/modal-github-key.age;
@@ -97,24 +60,6 @@ in
       };
     };
   };
-
-  nix = {
-    enable = true;
-    package = pkgs.nix;
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    settings.trusted-users = [
-      username # I trust myself, big mistake.
-      "root"
-    ];
-  };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  services.ssh-agent.enable = true;
 
   nixpkgs.config.allowUnfreePredicate = _: true;
 }

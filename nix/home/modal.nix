@@ -5,43 +5,26 @@
   ...
 }:
 let
-  username = "skr";
-  homeDirectory =
-    let
-      rootDir = if pkgs.stdenv.isLinux then "home" else "Users";
-    in
-    "/${rootDir}/${username}";
+  inherit (config.home) homeDirectory;
+  inherit (config.skr.home) dotfilesDirectory;
 
-  dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
-  mkSymlink = p: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${p}";
+  mkSymlink = p: config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/${p}";
 in
 {
   imports = [
     agenix.homeManagerModules.default
-    ./lua-fennel.nix
-    ./neovim.nix
-    ./devtools.nix
-    ./tmux
-    ./pi
+    ./skr.nix
   ];
 
   skr.home = {
-    lua.enable = true;
-    neovim.enable = true;
-    devtools.enable = true;
-    tmux.enable = true;
-    pi.enable = true;
+    enable = true;
   };
 
   home = {
-    inherit username homeDirectory;
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      zsh
       pkgs.agenix
-      nixd
-      nixfmt
       cargo
       rust-analyzer
       rustfmt
@@ -55,27 +38,9 @@ in
       # $HOME/bin for now, but would be nice to have them in a standard place.
       "bin".source = mkSymlink "bin";
     };
-
-    sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
-  };
-
-  programs.zsh = {
-    enable = true;
-    dotDir = "${config.xdg.configHome}/zsh";
-
-    autosuggestion.enable = true;
-
-    initContent = ''
-      source ${dotfiles}/.zshrc
-    '';
   };
 
   age = {
-    identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
-
     secrets = {
       modal-github-key = {
         file = ../secrets/modal-github-key.age;
@@ -83,6 +48,4 @@ in
       };
     };
   };
-
-  programs.home-manager.enable = true;
 }

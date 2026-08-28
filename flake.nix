@@ -68,16 +68,12 @@
 
       # Darwin config for mbp.
       darwinConfigurations."mbp" = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit agenix; };
         modules = [
+          addOverlays
           ./nix/darwin/mbp.nix
           agenix.darwinModules.default
           home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.users.skr = ./nix/home/mbp.nix;
-            home-manager.extraSpecialArgs = { inherit agenix; };
-          }
-          addOverlays
         ];
       };
 
@@ -89,7 +85,6 @@
           ./nix/darwin/modal.nix
           agenix.darwinModules.default
           home-manager.darwinModules.home-manager
-          addOverlays
         ];
       };
 
