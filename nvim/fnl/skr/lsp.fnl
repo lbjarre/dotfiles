@@ -20,9 +20,7 @@
   ;; Rust
   (vim.lsp.config :rust_analyzer
                   {:settings {:rust-analyzer {:rustfmt {:extraArgs [:+nightly]}
-                                              :check {;; Run Clippy instead of just cargo check
-                                                      :command :clippy
-                                                      ;; Don't pass --all-targets.
+                                              :check {;; Don't pass --all-targets.
                                                       :allTargets false
                                                       ;; Don't pass --workspace, i.e. only check the current package.
                                                       :workspace :false}
