@@ -62,7 +62,7 @@ in
       buf
       yamlfmt
       svelte-language-server
-      typescript-go
+      typescript
       prettier
       zk
     ];
