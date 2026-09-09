@@ -24,6 +24,7 @@
       rustfmt
       rustc
       claude-code
+      protobuf
     ];
 
     file = {

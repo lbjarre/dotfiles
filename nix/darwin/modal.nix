@@ -36,6 +36,8 @@ in
     awscli2
     tailscale-gui
     tailscale
+
+    vscode
   ];
 
   fonts.packages = with pkgs; [
