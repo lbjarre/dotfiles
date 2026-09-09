@@ -34,8 +34,8 @@ config.window_decorations = "RESIZE"
 -- SSH domains: configure domain for accessing the remote dev machine.
 config.ssh_domains = {
 	{
-		name = "modal-dev",
-		remote_address = "modal-dev-ssm",
+		name = "devbox",
+		remote_address = "devbox",
 		-- Wezterm is managed by Nix on the remote machine as well, so it's not in
 		-- a standard location.
 		remote_wezterm_path = "/home/ec2-user/.nix-profile/bin/wezterm",
@@ -83,6 +83,11 @@ config.keys = {
 	{
 		mods = "SUPER|ALT",
 		key = "p",
+		action = wezterm.action.ActivateCommandPalette,
+	},
+	{
+		mods = "SUPER",
+		key = "k",
 		action = wezterm.action.ActivateCommandPalette,
 	},
 	{
