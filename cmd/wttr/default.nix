@@ -1,7 +1,7 @@
 {
   lib,
   buildJanetApp,
-  openssl_3,
+  openssl,
 }:
 buildJanetApp {
   name = "wttr";
@@ -14,5 +14,5 @@ buildJanetApp {
     ];
   };
   bin = "wttr";
-  buildInputs = [ openssl_3 ];
+  buildInputs = [ openssl ];
 }
