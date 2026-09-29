@@ -123,7 +123,7 @@ if cmd-exists kubectl; then
     alias k=kubectl
     compdef __start_kubectl k
 
-    if cmd-exists kubectl-krew; then
+    if cmd-exists krew; then
         export PATH="${PATH}:${HOME}/.krew/bin"
     fi
 fi

@@ -67,6 +67,7 @@ in
 
       claude-code
       tilt
+      krew
     ];
   };
 
