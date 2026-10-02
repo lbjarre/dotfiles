@@ -79,22 +79,10 @@ in
     identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
 
     secrets = {
-      # anthropic-key = {
-      #   file = ../secrets/anthropic-key.age;
-      #   path = "${homeDirectory}/.secrets/ANTHROPIC_API_KEY";
-      # };
-      # evroc-atlassian-key = {
-      #   file = ../secrets/evroc-atlassian-key.age;
-      #   path = "${homeDirectory}/.secrets/JIRA_API_TOKEN";
-      # };
-      # github-key = {
-      #   file = ../secrets/github-key.age;
-      #   path = "${homeDirectory}/.secrets/GITHUB_API_TOKEN";
-      # };
-      # evroc-gitlab-token = {
-      #   file = ../secrets/evroc-gitlab-token.age;
-      #   path = "${homeDirectory}/.secrets/GITLAB_API_TOKEN";
-      # };
+      github-token = {
+        file = ../secrets/modal-github-key.age;
+        path = "${homeDirectory}/.secrets/GITHUB_TOKEN";
+      };
     };
   };
 
