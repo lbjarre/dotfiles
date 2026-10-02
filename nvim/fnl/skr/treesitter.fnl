@@ -45,7 +45,8 @@
                          :dockerfile
                          :terraform
                          :caddy
-                         :promql])
+                         :promql
+                         :wgsl])
 
 (fn not-installed []
   "Get the delta between ensure-installed and installed grammars, i.e. which ones to install."
@@ -57,7 +58,7 @@
   to-install)
 
 (fn installed? [ft]
-  ""
+  "Check whether the given filetype has the grammar installed."
   (let [installed-langs (ts.get_installed)
         lang (vim.treesitter.language.get_lang ft)]
     (vim.list_contains installed-langs lang)))
