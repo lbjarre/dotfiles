@@ -11,7 +11,6 @@ let
     in
     "/${rootDir}/${username}";
   dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
-  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
   imports = [
@@ -40,6 +39,7 @@ in
       file
       git-branchless
       util-linux
+      glibcLocales
 
       agenix
 
@@ -69,10 +69,22 @@ in
       tilt
       krew
     ];
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
   };
 
-  home.file = {
-    ".zshrc".source = mkSymlink "${dotfiles}/.zshrc";
+  programs.zsh = {
+    enable = true;
+    dotDir = "${config.xdg.configHome}/zsh";
+
+    autosuggestion.enable = true;
+
+    initContent = ''
+      source ${dotfiles}/.zshrc
+    '';
   };
 
   age = {

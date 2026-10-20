@@ -6,33 +6,10 @@ export PATH="${HOME}/bin:${PATH}"
 # Checks if a command exists (either executable file or zsh function.)
 cmd-exists() { command -v "${1}" 1>/dev/null 2>&1; }
 
-# Autocomplete stuff
-cmd-exists brew && fpath=(
-    $(brew --prefix)/share/zsh/site-functions
-    $(brew --prefix)/share/zsh-completions
-    $fpath
-)
-cmd-exists nix && fpath=(
-    "$HOME/.nix-profile/share/zsh/site-functions"
-    "$HOME/.nix-profile/share/zsh/vendor-completions"
-    $fpath
-)
-autoload -Uz compinit
-compinit
-
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-# If we are on macOS: I want to have some homebrew binaries earlier in PATH so
-# we prefer them from native binaries from the OS.
-if [ $(uname -s) = "Darwin" ] && cmd-exists brew; then
-    export PATH="$(brew --prefix)/opt/sqlite/bin:${PATH}"
-fi
-
-## Export TTY for GPG, needed for the password prompt
-export GPG_TTY=$(tty)
-
-## I did not choose the vim life---it chose me
+## I did not choose the vim life; it chose me.
 export EDITOR=nvim
 alias vim=nvim
 alias vi=nvim

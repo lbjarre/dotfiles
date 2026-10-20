@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   username = "skr";
   homeDirectory =
@@ -6,6 +6,8 @@ let
       rootDir = if pkgs.stdenv.isLinux then "home" else "Users";
     in
     "/${rootDir}/${username}";
+
+  dotfiles = "${homeDirectory}/src/github.com/lbjarre/dotfiles";
 in
 {
   imports = [
@@ -42,5 +44,21 @@ in
       ansible
       vault
     ];
+
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
+
+  programs.zsh = {
+    enable = true;
+    dotDir = "${config.xdg.configHome}/zsh";
+
+    autosuggestion.enable = true;
+
+    initContent = ''
+      source ${dotfiles}/.zshrc
+    '';
   };
 }
