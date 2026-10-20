@@ -44,7 +44,7 @@
  ;; Automatic buffer resizing when new buffers are added/removed in a window,
  ;; e.g. toggling the terminal.
  (pkg :kwkarlwang/bufresize.nvim {:config (setup :bufresize)})
- (pkg :mrjones2014/smart-splits.nvim {:config (setup :skr.smart-splits)})
+ (pkg :smart-splits-nvim/smart-splits.nvim {:config (setup :skr.smart-splits)})
  ;; Wrapper around builtin terminal with easy toggling.
  (pkg :akinsho/toggleterm.nvim {:config (setup :skr.toggleterm)})
  ;; Completions.

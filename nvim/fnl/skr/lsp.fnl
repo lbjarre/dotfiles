@@ -70,8 +70,8 @@
   (vim.lsp.enable :ruff)
   ;; Deno
   (vim.lsp.enable :denols)
-  ;; Node ; (vim.lsp.config :ts_ls {:single_file_support false}) ; (vim.lsp.enable :ts_ls)
-  (vim.lsp.enable :tsgo)
+  ;; Node / TypeScript
+  (vim.lsp.enable :tsc)
   ;; Svelte
   (vim.lsp.enable :svelte)
   ;; Shell
