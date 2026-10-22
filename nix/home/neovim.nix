@@ -2,13 +2,11 @@
   pkgs,
   lib,
   config,
+  skr,
   ...
 }:
 let
   cfg = config.skr.home.neovim;
-
-  dotfiles = "${config.home.homeDirectory}/src/github.com/lbjarre/dotfiles";
-  mkSymlink = config.lib.file.mkOutOfStoreSymlink;
 
   # Fetches a docset for the Fennel language server to understand nvim modules.
   #
@@ -35,7 +33,7 @@ in
 
     xdg = {
       enable = true;
-      configFile.nvim.source = mkSymlink "${dotfiles}/nvim";
+      configFile.nvim.source = skr.mkDotfilesSymlink "nvim";
       dataFile."fennel-ls/docsets/nvim.lua".source = "${nvimDocset}/nvim.lua";
     };
   };

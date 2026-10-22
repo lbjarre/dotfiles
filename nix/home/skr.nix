@@ -66,6 +66,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    _module.args.skr = {
+      # Make a symlink to a file inside the dotfiles repo, relative to the repo root.
+      mkDotfilesSymlink = p: config.lib.file.mkOutOfStoreSymlink "${cfg.dotfilesDirectory}/${p}";
+    };
+
     skr.home = {
       lua.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;

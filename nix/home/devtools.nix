@@ -4,13 +4,11 @@
   lib,
   config,
   pkgs,
+  skr,
   ...
 }:
 let
   cfg = config.skr.home.devtools;
-
-  dotfiles = "${config.home.homeDirectory}/src/github.com/lbjarre/dotfiles";
-  mkSymlink = p: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${p}";
 in
 {
   options.skr.home.devtools = {
@@ -70,11 +68,11 @@ in
     xdg = {
       enable = true;
       configFile = {
-        "git".source = mkSymlink "config/git";
-        "jj/config.toml".source = mkSymlink "config/jj/config.toml";
-        "atuin".source = mkSymlink "config/atuin";
-        "starship.toml".source = mkSymlink "config/starship.toml";
-        "wezterm".source = mkSymlink "config/wezterm";
+        "git".source = skr.mkDotfilesSymlink "config/git";
+        "jj/config.toml".source = skr.mkDotfilesSymlink "config/jj/config.toml";
+        "atuin".source = skr.mkDotfilesSymlink "config/atuin";
+        "starship.toml".source = skr.mkDotfilesSymlink "config/starship.toml";
+        "wezterm".source = skr.mkDotfilesSymlink "config/wezterm";
       };
     };
   };

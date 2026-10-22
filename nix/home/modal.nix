@@ -2,13 +2,11 @@
   agenix,
   config,
   pkgs,
+  skr,
   ...
 }:
 let
   inherit (config.home) homeDirectory;
-  inherit (config.skr.home) dotfilesDirectory;
-
-  mkSymlink = p: config.lib.file.mkOutOfStoreSymlink "${dotfilesDirectory}/${p}";
 in
 {
   imports = [
@@ -36,7 +34,7 @@ in
       # TODO: local executables. There is an XDG standard for this,
       # $HOME/.local/bin, but home-manager doesn't support it. I've had these in
       # $HOME/bin for now, but would be nice to have them in a standard place.
-      "bin".source = mkSymlink "bin";
+      "bin".source = skr.mkDotfilesSymlink "bin";
     };
   };
 

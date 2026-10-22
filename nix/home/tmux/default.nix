@@ -2,13 +2,11 @@
   lib,
   config,
   pkgs,
+  skr,
   ...
 }:
 let
   cfg = config.skr.home.tmux;
-
-  dotfiles = "${config.home.homeDirectory}/src/github.com/lbjarre/dotfiles";
-  mkSymlink = p: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${p}";
 
   # Fuzzy-search switcher for tmux windows.
   #
@@ -92,7 +90,7 @@ in
 
     xdg = {
       enable = true;
-      configFile.tmux.source = mkSymlink "config/tmux";
+      configFile.tmux.source = skr.mkDotfilesSymlink "config/tmux";
     };
   };
 }
