@@ -46,6 +46,7 @@ in
       watchman
       gh
 
+      codex
       claude-code
       tilt
       krew
