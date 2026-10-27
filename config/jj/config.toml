@@ -41,11 +41,19 @@ join("\n",
 '''
 
 [aliases]
+sl = {
+    doc = "Stack log, show the log for the current stack.",
+    definition = ["log", "--revision", "stack()"],
+}
 tug = {
     doc = "Move closest bookmark to the closest non-empty change.",
     definition = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_nonempty(@)"],
 }
 restack = {
+    doc = "Rebase current work-in-progress stack changes onto trunk.",
+    definition = ["rebase", "--source", "roots(stack())", "--destination", "trunk()"],
+}
+restack-all = {
     doc = "Rebase all work-in-progress local changes onto trunk.",
     definition = ["rebase", "--source", "roots(mutable())", "--destination", "trunk()"],
 }
