@@ -1,13 +1,9 @@
 {
   agenix,
-  config,
   pkgs,
   skr,
   ...
 }:
-let
-  inherit (config.home) homeDirectory;
-in
 {
   imports = [
     agenix.homeManagerModules.default
@@ -35,15 +31,6 @@ in
       # $HOME/.local/bin, but home-manager doesn't support it. I've had these in
       # $HOME/bin for now, but would be nice to have them in a standard place.
       "bin".source = skr.mkDotfilesSymlink "bin";
-    };
-  };
-
-  age = {
-    secrets = {
-      modal-github-key = {
-        file = ../secrets/modal-github-key.age;
-        path = "${homeDirectory}/.secrets/MODAL_GITHUB_API_TOKEN";
-      };
     };
   };
 }

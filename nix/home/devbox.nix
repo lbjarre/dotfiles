@@ -1,12 +1,8 @@
 {
   pkgs,
-  config,
   username,
   ...
 }:
-let
-  inherit (config.home) homeDirectory;
-in
 {
   imports = [
     ./skr.nix
@@ -51,15 +47,6 @@ in
       tilt
       krew
     ];
-  };
-
-  age = {
-    secrets = {
-      github-token = {
-        file = ../secrets/modal-github-key.age;
-        path = "${homeDirectory}/.secrets/GITHUB_TOKEN";
-      };
-    };
   };
 
   nixpkgs.config.allowUnfreePredicate = _: true;
