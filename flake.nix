@@ -88,14 +88,14 @@
         ];
       };
 
-      # Standalone home-manager config for work dev VM.
+      # Standalone home-manager config for work devbox.
       homeConfigurations.${vmUsername} = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "x86_64-linux"; };
         extraSpecialArgs = {
           username = vmUsername;
         };
         modules = [
-          ./nix/home/dev-vm.nix
+          ./nix/home/devbox.nix
           addOverlays
           agenix.homeManagerModules.default
         ];
