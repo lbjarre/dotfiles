@@ -11,13 +11,13 @@ let
   modelsConfig = {
     providers = {
       modal-labs = {
-        baseUrl = "https://modal-labs-lukas-dev--ep-kimi-k3-server.us-west.modal.direct/v1";
+        baseUrl = "https://modal-labs-lukas-dev--ep-kimi-k3-1-pro-server.us-west.modal.direct/v1";
         api = "openai-completions";
         apiKey = "!cat ${config.age.secrets.${apiKey}.path}";
         models = [
           {
-            id = "moonshotai/Kimi-K3";
-            name = "Kimi K3";
+            id = "moonshotai/Kimi-K3.1-Pro";
+            name = "Kimi K3.1 Pro";
             input = [
               "text"
               "image"
