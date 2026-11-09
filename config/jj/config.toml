@@ -18,7 +18,6 @@ key = "~/.ssh/id_ed25519.pub"
 program = "ssh-keygen"
 
 [git]
-sign-on-push = true
 # Private commits: refuse to push commits that starts with 'PRIVATE:'.
 private-commits = "subject(glob:'PRIVATE:*')"
 
@@ -76,6 +75,8 @@ stack-bookmarks = {
 [revsets]
 # Default log revset: pretty much the default, but show some more trunk ancestors.
 log = 'present(@) | ancestors(immutable_heads().., 3) | ancestors(trunk(), 3)'
+# Revset for commits to sign on push.
+git-sign-on-push = "~signed() & mine()"
 
 [revset-aliases]
 "closest_bookmark()" = {
