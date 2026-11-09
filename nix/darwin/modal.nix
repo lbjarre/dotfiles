@@ -36,6 +36,7 @@ in
     awscli2
     tailscale-gui
     tailscale
+    bitwarden-desktop
 
     vscode
   ];
@@ -68,6 +69,7 @@ in
         { app = "/Applications/Nix Apps/AeroSpace.app"; }
         { app = "/Applications/Nix Apps/Slack.app"; }
         { app = "/Applications/Nix Apps/Tailscale.app"; }
+        { app = "/Applications/Nix Apps/Bitwarden.app"; }
         { app = "/Applications/Nix Apps/Spotify.app"; }
       ];
     };
