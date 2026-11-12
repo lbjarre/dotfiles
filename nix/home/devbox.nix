@@ -50,5 +50,6 @@
     ];
   };
 
+  services.ssh-agent.enable = false;
   nixpkgs.config.allowUnfreePredicate = _: true;
 }
