@@ -19,8 +19,7 @@
                                  (on_attach client bufnr)))})
   ;; Rust
   (vim.lsp.config :rust_analyzer
-                  {:settings {:rust-analyzer {:rustfmt {:extraArgs [:+nightly]}
-                                              :check {;; Don't pass --all-targets.
+                  {:settings {:rust-analyzer {:check {;; Don't pass --all-targets.
                                                       :allTargets false
                                                       ;; Don't pass --workspace, i.e. only check the current package.
                                                       :workspace :false}
