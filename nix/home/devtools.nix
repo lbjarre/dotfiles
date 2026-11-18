@@ -63,6 +63,7 @@ in
       typescript
       prettier
       zk
+      gh
     ];
 
     xdg = {
