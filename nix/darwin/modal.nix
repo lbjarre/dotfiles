@@ -27,7 +27,10 @@ in
     tmux
     wezterm
     aerospace
-    firefox
+    (firefox.override {
+      # macOS 27 restricts the default Firefox data directory to Mozilla-signed apps.
+      appDataDir = "/Users/${name}/Library/Application Support/org.nixos.firefox";
+    })
     spotify
     wttr
     agenix
