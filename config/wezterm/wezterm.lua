@@ -31,6 +31,9 @@ config.window_padding = {
 -- real estate. NONE does not work with aerospace.
 config.window_decorations = "RESIZE"
 
+-- Use the SSH agent managed by Nix.
+config.default_ssh_auth_sock = wezterm.home_dir .. "/.ssh/ssh_auth_sock"
+
 -- SSH domains: configure domain for accessing the remote dev machine.
 config.ssh_domains = {
 	{
