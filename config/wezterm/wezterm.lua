@@ -31,8 +31,11 @@ config.window_padding = {
 -- real estate. NONE does not work with aerospace.
 config.window_decorations = "RESIZE"
 
--- Use the SSH agent managed by Nix.
-config.default_ssh_auth_sock = wezterm.home_dir .. "/.ssh/ssh_auth_sock"
+-- Use the SSH agent managed by Nix, if on a workstation with a SSH agent.
+local host_role = os.getenv("SKR_HOST_ROLE")
+if host_role == "workstation" then
+	config.default_ssh_auth_sock = wezterm.home_dir .. "/.ssh/ssh_auth_sock"
+end
 
 -- SSH domains: configure domain for accessing the remote dev machine.
 config.ssh_domains = {

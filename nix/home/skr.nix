@@ -63,6 +63,20 @@ in
         Darwin hosts are managed by Determinate Nix (for now).
       '';
     };
+
+    hostRole = lib.mkOption {
+      default = "workstation";
+      type = lib.types.enum [
+        "workstation"
+        "headless"
+      ];
+      # TODO: feels maybe a bit off to configure this on home-manager level,
+      # but as long as the remote devbox is not NixOS...
+      description = ''
+        Type of role of the host: a workstation (e.g. a laptop), or a headless
+        remote machine.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -91,6 +105,7 @@ in
       sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
+        SKR_HOST_ROLE = cfg.hostRole;
       };
     };
 

@@ -11,6 +11,7 @@
   skr.home = {
     enable = true;
     inherit username;
+    hostRole = "headless";
   };
 
   home = {

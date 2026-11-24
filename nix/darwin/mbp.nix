@@ -1,6 +1,7 @@
 { agenix, pkgs, ... }:
 let
   name = "skr";
+  hostRole = "workstation";
 in
 {
   users.users.${name} = {
@@ -82,6 +83,10 @@ in
       Bluetooth = true;
       Sound = true;
     };
+  };
+
+  launchd.user.envVariables = {
+    SKR_HOST_ROLE = hostRole;
   };
 
   # Enable sudo with TouchID.
